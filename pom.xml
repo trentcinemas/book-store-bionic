@@ -1,4 +1,5 @@
-<version>0.2:</version>
+<version>0.5:</version>
 <groupid>1</groupid>
 <artifactid>1</artifactid>
-<title>hello</title> 
+<title>hello</title>
+<for-checkout>1</for-checkout>
