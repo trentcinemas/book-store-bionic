@@ -1,4 +1,4 @@
-"Book Store"
+Book Store
 =================
 
 Bionic Tech Summer School project <b>"Book Store"</b>
