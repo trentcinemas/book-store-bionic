@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <version>0.1</version>
+=======
+<version>0.2:</version>
+>>>>>>> 5cdd5888aa5c41e03ea22c34edb6de5c7984fb06
 <groupid>1</groupid>
 <artifactid>1</artifactid>
 <title>hello</title>
