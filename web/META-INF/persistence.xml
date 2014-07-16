@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+    <persistence-unit name="persistenceUnit">
+        <class>entities.AuthorEntity</class>
+        <class>entities.BookEntity</class>
+        <class>entities.CommentEntity</class>
+        <class>entities.DistributorEntity</class>
+        <class>entities.GenreEntity</class>
+        <class>entities.PurchasedBookEntity</class>
+        <class>entities.UserEntity</class>
+        <class>entities.UserGroupEntity</class>
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:mysql://favorite.mysql.ukraine.com.ua/favorite_bs"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.username" value="favorite_bs"/>
+            <property name="hibernate.connection.password" value="b2846epa"/>
+        </properties>
+    </persistence-unit>
+</persistence>

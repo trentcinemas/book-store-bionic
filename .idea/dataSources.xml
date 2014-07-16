@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="1817563006">
+    <data-source source="LOCAL" name="MySQL - favorite_bs@favorite.mysql.ukraine.com.ua" uuid="c8f65b1c-292e-4a6a-8281-44d5ec448677">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://favorite.mysql.ukraine.com.ua/favorite_bs</jdbc-url>
+      <user-name>favorite_bs</user-name>
+      <user-password>dfc8df98df92df9edf9cdfcfdfdadfcb</user-password>
+      <driver-properties>
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+      </driver-properties>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+
