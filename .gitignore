@@ -1,0 +1,8 @@
+# Dont change this
+
+target/
+out/
+.idea/
+bionic-book-store.iml
+pom.xml
+web/
