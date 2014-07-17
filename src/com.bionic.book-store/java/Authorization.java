@@ -1,9 +1,12 @@
+import dao.daoInterfaces.DaoUserInterface;
+import entities.User;
 import util.DaoFactory;
+import util.Logger;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+
+import static util.Logger.Type.*;
 
 /**
  * Created by Evgeniy Baranuk on 16.07.14.
@@ -11,15 +14,23 @@ import javax.ws.rs.core.Response;
 @Path("/")
 public class Authorization {
 
-    @GET
+    @POST
     @Path("authorize")
-    public Response login(@HeaderParam("email") String login,
-                          @HeaderParam("password") String password) {
+    public Response authorize(@FormParam("email") String email,
+                          @FormParam("password") String password) {
 
-        System.out.println(DaoFactory.getDaoUserInstance().selectByEmail("m@m.com"));
-        System.out.println(DaoFactory.getDaoUserInstance().selectById(1));
+        DaoUserInterface dao = DaoFactory.getDaoUserInstance();
+        User user = dao.selectByEmail(email);
 
-        return Response.ok().build();
+        if (user != null) {
+            if (user.getPassword().equals(password)) {
+                Logger.log(PROCESS, "Authorized : " + email);
+                return Response.ok().header("Access-Control-Allow-Origin", "*").build();
+            }
+        }
+
+        Logger.log(PROCESS, "Not authorized : " + email);
+        return Response.status(400).build();
     }
 
 }
