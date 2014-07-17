@@ -1,5 +1,7 @@
 package dao.daoInterfaces;
 
+import entities.Book;
+import entities.Comment;
 import entities.User;
 
 import java.util.List;
@@ -9,4 +11,8 @@ import java.util.List;
  */
 public interface DaoUserInterface {
     public List<User> selectAll();
+    public List<Book> selectUserBooks();
+    public List<Comment> selectComments();
+    public User selectById(int id);
+    public User selectByEmail(String login);
 }

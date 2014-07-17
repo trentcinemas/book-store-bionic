@@ -1,31 +1,23 @@
-import dao.DaoUser;
-import dao.daoInterfaces.DaoUserInterface;
-import entities.User;
-import util.Logger;
+import util.DaoFactory;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static util.Logger.Type.*;
 
 /**
  * Created by Evgeniy Baranuk on 16.07.14.
  */
 @Path("/")
 public class Authorization {
+
     @GET
     @Path("authorize")
-    public Response login(@HeaderParam("login") String login,
+    public Response login(@HeaderParam("email") String login,
                           @HeaderParam("password") String password) {
 
-        DaoUserInterface daoUser = new DaoUser();
-        List<User> users = daoUser.selectAll();
-        for (User u : users) {
-            System.out.println(u);
-        }
+        System.out.println(DaoFactory.getDaoUserInstance().selectByEmail("m@m.com"));
+        System.out.println(DaoFactory.getDaoUserInstance().selectById(1));
 
         return Response.ok().build();
     }
