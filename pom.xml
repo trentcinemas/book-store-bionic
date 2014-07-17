@@ -25,6 +25,13 @@
             <version>1.8</version>
         </dependency>
 
+        <!-- Jersey JSON support-->
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>1.8</version>
+        </dependency>
+
         <!-- Hibernate JPA -->
         <dependency>
             <groupId>mysql</groupId>
