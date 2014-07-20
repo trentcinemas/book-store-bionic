@@ -3,10 +3,12 @@ import entities.User;
 import util.DaoFactory;
 import util.Logger;
 
-import javax.ws.rs.*;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
-import static util.Logger.Type.*;
+import static util.Logger.Type.PROCESS;
 
 /**
  * Created by Evgeniy Baranuk on 16.07.14.
@@ -16,7 +18,7 @@ public class Authorization {
 
     @POST
     @Path("authorize")
-    public Response authorize(@FormParam("email") String email,
+        public Response authorize(@FormParam("email") String email,
                           @FormParam("password") String password) {
 
         DaoUserInterface dao = DaoFactory.getDaoUserInstance();
