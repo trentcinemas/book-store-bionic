@@ -1,7 +1,5 @@
 package util;
 
-import com.sun.javafx.binding.StringFormatter;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,8 +13,10 @@ import java.util.Date;
 public class Logger {
     // single instance
     private static Logger instance = new Logger();
-
-    private final String FILE_PATH = "log.txt";
+// не хотіло створювати файл в потоній папці , програма вилітала
+    //дописав конкретний диск в корені
+    //треба це рішити
+    private final String FILE_PATH = "D:\\log.txt";
     private BufferedWriter writer;
 
     private Logger() {
@@ -33,7 +33,7 @@ public class Logger {
      * @param msg text which will be logged
      */
     public static void log(Type type, String msg) {
-        instance.logMessage(type, msg);
+         instance.logMessage(type, msg);
     }
 
     public void logMessage(Type type, String msg) {

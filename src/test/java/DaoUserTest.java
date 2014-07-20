@@ -12,6 +12,6 @@ public class DaoUserTest {
 
     @Test
     public void testDaoFactory() throws Exception {
-        assertEquals(null, daoUser.selectById(-1));
+        assertEquals(1, daoUser.selectById(1).getUserId());
     }
 }
