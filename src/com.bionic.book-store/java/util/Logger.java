@@ -17,7 +17,7 @@ public class Logger {
 // не хотіло створювати файл в потоній папці , програма вилітала
     //дописав конкретний диск в корені
     //треба це рішити
-    private final String FILE_PATH = "log.txt";
+    private final String FILE_PATH = "D:\\log.txt";
     private BufferedWriter writer;
 
     private Logger() {

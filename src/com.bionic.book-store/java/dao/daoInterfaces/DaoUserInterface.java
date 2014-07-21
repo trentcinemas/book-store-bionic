@@ -14,6 +14,7 @@ public interface DaoUserInterface {
     public User selectByEmail(String login);
     public User selectByUserGroup(UserGroup group);
     public User selectByUserGroupType(String type);
+    boolean exist(String email);
     void insert(User user);
     void update(User user);
     void delete(User user);
