@@ -4,6 +4,7 @@ import dao.daoInterfaces.DaoUserInterface;
 import entities.Book;
 import entities.Comment;
 import entities.User;
+import entities.UserGroup;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -23,20 +24,6 @@ public class DaoUser implements DaoUserInterface {
     @Override
     public List<User> selectAll() {
         Query query = session.createQuery("FROM User");
-        return query.list();
-    }
-
-    @Override
-    public List<Book> selectUserBooks() {
-
-        Query query = session.createQuery("select books from User user join user.booksByUserId books");
-        return query.list();
-    }
-
-    @Override
-    public List<Comment> selectComments() {
-
-        Query query = session.createQuery("select comments from User user join user.commentsByUserId comments");
         return query.list();
     }
 
@@ -85,5 +72,15 @@ public class DaoUser implements DaoUserInterface {
     @Override
     public void delete(int id) {
 
+    }
+
+    @Override
+    public User selectByUserGroup(UserGroup group) {
+        return null;
+    }
+
+    @Override
+    public User selectByUserGroupType(String type) {
+        return null;
     }
 }
