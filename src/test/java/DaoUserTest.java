@@ -1,4 +1,3 @@
-import
 
 import dao.DaoUser;
 import jdk.nashorn.internal.ir.annotations.Ignore;
@@ -17,11 +16,11 @@ public class DaoUserTest {
         /*
         list of users isn't empty
          */
-        assertTrue(daoUser.selectAll().isEmpty());
+        assertFalse(daoUser.selectAll().isEmpty());
         /*
         count of users
          */
-        assertEquals(0, daoUser.selectAll().size());
+        assertEquals(1, daoUser.selectAll().size());
     }
 
     @Test
@@ -29,7 +28,6 @@ public class DaoUserTest {
         /*
         create new user
          */
-
         User testUser = new User();
         testUser.setName("eklierka");
         testUser.setPassword(DigestUtils.md5Hex("password"));
@@ -50,5 +48,6 @@ public class DaoUserTest {
     public void testUserInfo() throws Exception {
         assertEquals(5, daoUser.selectById(5).getUserId());
         assertEquals("", daoUser.selectById(5).getEmail());
+        assertEquals(DigestUtils.md5Hex("password"), daoUser.selectById(5).getPassword());
     }
 }
