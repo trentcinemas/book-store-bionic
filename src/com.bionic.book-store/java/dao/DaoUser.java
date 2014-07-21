@@ -76,4 +76,14 @@ public class DaoUser implements DaoUserInterface {
     public void update(User user) {
 
     }
+
+    @Override
+    public void delete(User user) {
+
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
 }

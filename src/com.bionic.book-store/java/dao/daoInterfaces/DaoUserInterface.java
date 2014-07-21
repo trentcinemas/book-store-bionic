@@ -17,4 +17,6 @@ public interface DaoUserInterface {
     public User selectByEmail(String login);
     void insert(User user);
     void update(User user);
+    void delete(User user);
+    void delete(int id);
 }
