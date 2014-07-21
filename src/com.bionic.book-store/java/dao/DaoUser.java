@@ -94,6 +94,7 @@ public class DaoUser implements DaoUserInterface {
     public User selectByUserGroupType(String type) {
         return null;
     }
+<<<<<<< HEAD
 
     @Override
     public boolean exist(String email) {
@@ -109,4 +110,10 @@ public class DaoUser implements DaoUserInterface {
             return false;
         }
     }
+=======
+<<<<<<< HEAD
+=======
+    
+>>>>>>> b378d0763d87f0f21cc7ebeb564f671998ab7340
+>>>>>>> 5aaf60e539d135ac30b3e53a1b32a0b923c7c955
 }
