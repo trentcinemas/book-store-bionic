@@ -44,7 +44,7 @@ public class DaoUser implements DaoUserInterface {
 
     @Override
     public User selectByEmail(String email) {
-        session.close();
+        session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("select user from User user where user.email='" +
                 email + "'");
         if (!query.list().isEmpty()){
@@ -101,7 +101,7 @@ public class DaoUser implements DaoUserInterface {
     @Override
     public boolean exist(String email) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query= session.createQuery("From User where email="+email);
+        Query query= session.createQuery("From User where email="+"'"+email+"'");
         if (!query.list().isEmpty()){
             session.close();
             return true;
