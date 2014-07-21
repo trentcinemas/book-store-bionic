@@ -6,6 +6,7 @@ import entities.Comment;
 import entities.User;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import util.HibernateUtil;
 
 import java.util.Date;
@@ -72,16 +73,32 @@ public class DaoComments implements DaoCommentInterface {
 
     @Override
     public void update(Comment comment) {
-
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.update(comment);
+            tx.commit();
+        }
+        catch (Exception e) {
+            if (tx!=null) tx.rollback();
+        }
+        finally {
+            session.close();
+        }
     }
 
     @Override
     public void delete(Comment comment) {
-
+        session = HibernateUtil.getSessionFactory().openSession();
+        session.delete(comment);
     }
 
     @Override
     public void delete(int id) {
-
+        session = HibernateUtil.getSessionFactory().openSession();
+        Query query= session.createQuery("select comment from Comment comment where id="+id);
+        Comment comment=(Comment)query.list().get(0);
+        session.delete(comment);
     }
 }

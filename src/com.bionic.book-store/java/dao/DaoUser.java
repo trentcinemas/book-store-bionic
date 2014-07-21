@@ -5,6 +5,7 @@ import entities.User;
 import entities.UserGroup;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import util.HibernateUtil;
 
 import java.util.List;
@@ -75,7 +76,19 @@ public class DaoUser implements DaoUserInterface {
 
     @Override
     public void update(User user) {
-
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.update(user);
+            tx.commit();
+        }
+        catch (Exception e) {
+            if (tx!=null) tx.rollback();
+        }
+        finally {
+            session.close();
+        }
     }
 
     @Override
