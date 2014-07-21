@@ -46,8 +46,8 @@ public class DaoUser implements DaoUserInterface {
     @Override
     public User selectByEmail(String email) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("select user from User user where user.email='" +
-                email+"'");
+        Query query = session.createQuery(
+                "select user from User user where user.email='" + email+"'");
         return (User)query.list().get(0);
     }
 }

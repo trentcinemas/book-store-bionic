@@ -13,13 +13,13 @@ import static util.Logger.Type.*;
  */
 @Path("/")
 public class Authorization {
+    private DaoUserInterface dao = DaoFactory.getDaoUserInstance();
 
     @POST
     @Path("authorize")
     public Response authorize(@FormParam("email") String email,
                           @FormParam("password") String password) {
 
-        DaoUserInterface dao = DaoFactory.getDaoUserInstance();
         User user = dao.selectByEmail(email);
 
         if (user != null) {

@@ -36,6 +36,7 @@
         </element>
       </element>
       <element id="javaee-facet-resources" facet="bionic-book-store/web/Web" />
+      <element id="library" level="project" name="Maven: junit:junit:4.11" />
     </root>
   </artifact>
 </component>
