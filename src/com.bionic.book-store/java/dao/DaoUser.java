@@ -16,9 +16,10 @@ import java.util.List;
 public class DaoUser implements DaoUserInterface {
     private Session session;
 
-    public DaoUser(){
+    public DaoUser() {
         session = HibernateUtil.getSessionFactory().openSession();
     }
+
     @Override
     public List<User> selectAll() {
         Query query = session.createQuery("FROM User");
@@ -44,27 +45,35 @@ public class DaoUser implements DaoUserInterface {
 
         Query query = session.createQuery("select user from User user where user.id=" +
                 Integer.toString(id));
-        if(!query.list().isEmpty())
-        return (User)query.list().get(0);
+        if (!query.list().isEmpty())
+            return (User) query.list().get(0);
         else return null;
     }
 
     @Override
     public User selectByEmail(String email) {
         Query query = session.createQuery("select user from User user where user.email='" +
-                email+"'");
-        if(!query.list().isEmpty())
-            return (User)query.list().get(0);
+                email + "'");
+        if (!query.list().isEmpty())
+            return (User) query.list().get(0);
         else return null;
     }
+
     @Override
-    public void insert(User user){
+    public void insert(User user) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        session.save(user);
-        session.getTransaction().commit();
+        try {
+            session.beginTransaction();
+            session.persist("User", user);
+            if (!session.getTransaction().wasCommitted())
+                session.getTransaction().commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        }
     }
+
     @Override
-    public void update(User user){
+    public void update(User user) {
 
     }
 }
