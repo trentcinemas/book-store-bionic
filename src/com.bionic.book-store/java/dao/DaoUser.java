@@ -1,8 +1,6 @@
 package dao;
 
 import dao.daoInterfaces.DaoUserInterface;
-import entities.Book;
-import entities.Comment;
 import entities.User;
 import entities.UserGroup;
 import org.hibernate.Query;
@@ -83,4 +81,8 @@ public class DaoUser implements DaoUserInterface {
     public User selectByUserGroupType(String type) {
         return null;
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> b378d0763d87f0f21cc7ebeb564f671998ab7340
 }
