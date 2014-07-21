@@ -1,7 +1,8 @@
 package dao.daoInterfaces;
 
 import entities.Book;
-import entities.Comment;
+import entities.Distributor;
+import entities.User;
 
 import java.util.List;
 
@@ -10,11 +11,12 @@ import java.util.List;
  */
 public interface DaoBookInterface {
     public List<Book> selectAll();
-    public List<Book> selectUserBooks();
-    public List<Book> selectUserPurchasedBooks();
-    public List<Comment> selectComments();
     public Book selectById(int id);
     public List<Book> selectByTitle(String title);
+    public List<Book> selectByUser(User user);
+    public List<Book> selectByUserId(int id);
+    public List<Book> selectByDistributor(Distributor distr);
+    public List<Book> selectByDistributorId(int id);
     void insert(Book book);
     void update(Book user);
     void delete(Book book);
