@@ -15,11 +15,10 @@ import static util.Logger.Type.PROCESS;
 /**
  * Created by Джон on 21.07.2014.
  */
-/*@Path("/")*/
+@Path("register")
 public class Registration {
 
     @POST
-    @Path("register")
     public Response authorize(@FormParam("email") String email,
                               @FormParam("password") String password,
                               @FormParam("name") String name) {
@@ -29,6 +28,8 @@ public class Registration {
         user.setName(name);
         user.setEmail(email);
         user.setPassword(DigestUtils.md5Hex(password));
+        // TODO Додати групу юзера
+        //  user.setUserGroupByGroupId();
         Logger.log(PROCESS, "Registered : " + email);
         dao.insert(user);
         return Response.ok().header("Access-Control-Allow-Origin", "*").build();

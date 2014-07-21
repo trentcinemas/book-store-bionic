@@ -7,6 +7,9 @@ import java.util.Collection;
  * Created by jsarafajr on 17.07.14.
  */
 @Entity
+@org.hibernate.annotations.Entity(
+        dynamicInsert = true
+)
 public class User {
     private int userId;
     private String email;

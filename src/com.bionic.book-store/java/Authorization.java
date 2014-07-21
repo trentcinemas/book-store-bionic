@@ -14,12 +14,11 @@ import static util.Logger.Type.PROCESS;
 /**
  * Created by Evgeniy Baranuk on 16.07.14.
  */
-@Path("/")
+@Path("authorize")
 public class Authorization {
     private DaoUserInterface dao = DaoFactory.getDaoUserInstance();
 
     @POST
-    @Path("authorize")
         public Response authorize(@FormParam("email") String email,
                           @FormParam("password") String password) {
 
