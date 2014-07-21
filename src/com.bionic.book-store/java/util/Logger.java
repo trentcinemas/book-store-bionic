@@ -1,8 +1,7 @@
 package util;
 
-import com.sun.javafx.binding.StringFormatter;
-
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -15,12 +14,16 @@ import java.util.Date;
 public class Logger {
     // single instance
     private static Logger instance = new Logger();
-
+// не хотіло створювати файл в потоній папці , програма вилітала
+    //дописав конкретний диск в корені
+    //треба це рішити
     private final String FILE_PATH = "log.txt";
     private BufferedWriter writer;
 
     private Logger() {
         try {
+            File f = new File(FILE_PATH);
+            System.out.println(f.getAbsolutePath());
             writer = new BufferedWriter(new FileWriter(FILE_PATH));
         } catch (IOException e) {
             System.out.println("Can not create Logger");
@@ -33,7 +36,7 @@ public class Logger {
      * @param msg text which will be logged
      */
     public static void log(Type type, String msg) {
-        instance.logMessage(type, msg);
+         instance.logMessage(type, msg);
     }
 
     public void logMessage(Type type, String msg) {

@@ -58,5 +58,12 @@
             <version>4.11</version>
         </dependency>
 
+        <!-- Commons libs (MD5 hex) -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
+        </dependency>
+
     </dependencies>
 </project>

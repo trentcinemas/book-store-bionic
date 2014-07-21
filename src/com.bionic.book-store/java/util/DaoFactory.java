@@ -10,4 +10,12 @@ public class DaoFactory {
     public static DaoUser getDaoUserInstance(){
         return userDAO;
     }
+
+
+
+
+
+    private DaoFactory() {
+
+    }
 }

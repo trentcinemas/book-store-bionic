@@ -14,40 +14,57 @@ import java.util.List;
  * Created by jsarafajr on 17.07.14.
  */
 public class DaoUser implements DaoUserInterface {
+    private Session session;
+
+    public DaoUser(){
+        session = HibernateUtil.getSessionFactory().openSession();
+    }
     @Override
     public List<User> selectAll() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("FROM User");
         return query.list();
     }
 
     @Override
     public List<Book> selectUserBooks() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+
         Query query = session.createQuery("select books from User user join user.booksByUserId books");
         return query.list();
     }
 
     @Override
     public List<Comment> selectComments() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+
         Query query = session.createQuery("select comments from User user join user.commentsByUserId comments");
         return query.list();
     }
 
     @Override
     public User selectById(int id) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+
         Query query = session.createQuery("select user from User user where user.id=" +
                 Integer.toString(id));
+        if(!query.list().isEmpty())
         return (User)query.list().get(0);
+        else return null;
     }
 
     @Override
     public User selectByEmail(String email) {
+        Query query = session.createQuery("select user from User user where user.email='" +
+                email+"'");
+        if(!query.list().isEmpty())
+            return (User)query.list().get(0);
+        else return null;
+    }
+    @Override
+    public void insert(User user){
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery(
-                "select user from User user where user.email='" + email+"'");
-        return (User)query.list().get(0);
+        session.save(user);
+        session.getTransaction().commit();
+    }
+    @Override
+    public void update(User user){
+
     }
 }
