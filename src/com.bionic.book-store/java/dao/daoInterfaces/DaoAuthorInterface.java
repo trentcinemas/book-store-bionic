@@ -14,8 +14,8 @@ public interface DaoAuthorInterface {
     public Author selectById(int id);
     public List<Author> selectByFirstName(String fname);
     public List<Author> selectByLastName(String lname);
-    void insert(Author author);
-    void update(Author author);
-    void delete(Author author);
-    void delete(int id);
+    public void insert(Author author);
+    public void update(Author author);
+    public void delete(Author author);
+    public void delete(int id);
 }
