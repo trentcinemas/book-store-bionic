@@ -16,37 +16,49 @@ public class DaoUser implements DaoUserInterface {
     private Session session;
 
     public DaoUser() {
-        session = HibernateUtil.getSessionFactory().openSession();
+
     }
 
     @Override
     public List<User> selectAll() {
+        session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("FROM User");
+        session.close();
         return query.list();
     }
 
     @Override
     public User selectById(int id) {
-
+        session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("select user from User user where user.id=" +
                 Integer.toString(id));
-        if (!query.list().isEmpty())
+        if (!query.list().isEmpty()) {
+            session.close();
             return (User) query.list().get(0);
-        else return null;
+        }
+        else session.close();
+        return null;
     }
 
     @Override
     public User selectByEmail(String email) {
+        session.close();
         Query query = session.createQuery("select user from User user where user.email='" +
                 email + "'");
-        if (!query.list().isEmpty())
+        if (!query.list().isEmpty()){
+            session.close();
             return (User) query.list().get(0);
-        else return null;
+        }
+
+        else {
+            session.close();
+            return null;
+        }
     }
 
     @Override
     public void insert(User user) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             session.persist("User", user);
@@ -55,6 +67,7 @@ public class DaoUser implements DaoUserInterface {
         } catch (Exception e) {
             session.getTransaction().rollback();
         }
+        session.close();
     }
 
     @Override
@@ -82,7 +95,25 @@ public class DaoUser implements DaoUserInterface {
         return null;
     }
 <<<<<<< HEAD
+
+    @Override
+    public boolean exist(String email) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query= session.createQuery("From User where email="+email);
+        if (!query.list().isEmpty()){
+            session.close();
+            return true;
+        }
+
+        else {
+            session.close();
+            return false;
+        }
+    }
+=======
+<<<<<<< HEAD
 =======
     
 >>>>>>> b378d0763d87f0f21cc7ebeb564f671998ab7340
+>>>>>>> 5aaf60e539d135ac30b3e53a1b32a0b923c7c955
 }
