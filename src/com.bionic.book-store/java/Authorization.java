@@ -24,8 +24,10 @@ public class Authorization {
 
         User user = dao.selectByEmail(email);
 
+        String hexedPassword = DigestUtils.md5Hex(password);
+
         if (user != null) {
-            if (user.getPassword().equals(DigestUtils.md5(password))) {
+            if (hexedPassword.equals(user.getPassword())) {
                 Logger.log(PROCESS, "Authorized : " + email);
                 return Response.ok().header("Access-Control-Allow-Origin", "*").build();
             }
