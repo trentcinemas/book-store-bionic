@@ -19,7 +19,7 @@ public class Authorization {
     private DaoUserInterface dao = DaoFactory.getDaoUserInstance();
 
     @POST
-        public Response authorize(@FormParam("email") String email,
+    public Response authorize(@FormParam("email") String email,
                           @FormParam("password") String password) {
 
         User user = dao.selectByEmail(email);

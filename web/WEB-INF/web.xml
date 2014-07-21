@@ -17,6 +17,7 @@
         </init-param>
     </servlet>
 
+
     <servlet-mapping>
         <servlet-name>jersey-serlvet</servlet-name>
         <url-pattern>/rest/*</url-pattern>

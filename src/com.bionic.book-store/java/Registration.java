@@ -19,7 +19,7 @@ import static util.Logger.Type.PROCESS;
 public class Registration {
 
     @POST
-    public Response authorize(@FormParam("email") String email,
+    public Response register(@FormParam("email") String email,
                               @FormParam("password") String password,
                               @FormParam("name") String name) {
 
