@@ -20,7 +20,7 @@ public class DaoUserTest {
         /*
         count of users
          */
-        assertEquals(1, daoUser.selectAll().size());
+        assertEquals(3, daoUser.selectAll().size());
     }
 
     @Test

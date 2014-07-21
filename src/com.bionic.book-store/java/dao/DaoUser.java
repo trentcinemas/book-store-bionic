@@ -23,8 +23,9 @@ public class DaoUser implements DaoUserInterface {
     public List<User> selectAll() {
         session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("FROM User");
+        List<User> result =query.list();
         session.close();
-        return query.list();
+        return result;
     }
 
     @Override
@@ -33,8 +34,9 @@ public class DaoUser implements DaoUserInterface {
         Query query = session.createQuery("select user from User user where user.id=" +
                 Integer.toString(id));
         if (!query.list().isEmpty()) {
+            User result=(User)query.list().get(0);
             session.close();
-            return (User) query.list().get(0);
+            return result;
         }
         else session.close();
         return null;
@@ -46,8 +48,9 @@ public class DaoUser implements DaoUserInterface {
         Query query = session.createQuery("select user from User user where user.email='" +
                 email + "'");
         if (!query.list().isEmpty()){
+            User result = (User)query.list().get(0);
             session.close();
-            return (User) query.list().get(0);
+            return result;
         }
 
         else {
@@ -103,7 +106,6 @@ public class DaoUser implements DaoUserInterface {
             session.close();
             return true;
         }
-
         else {
             session.close();
             return false;
