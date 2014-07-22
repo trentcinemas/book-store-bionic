@@ -18,7 +18,7 @@ public interface DaoBookInterface {
     public List<Book> selectByDistributor(Distributor distr);
     public List<Book> selectByDistributorId(int id);
     void insert(Book book);
-    void update(Book user);
+    void update(Book book);
     void delete(Book book);
     void delete(int id);
 }
