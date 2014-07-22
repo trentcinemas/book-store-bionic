@@ -3,6 +3,7 @@ package dao;
 import dao.daoInterfaces.DaoUserInterface;
 import entities.User;
 import entities.UserGroup;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -24,7 +25,7 @@ public class DaoUser implements DaoUserInterface {
     public List<User> selectAll() {
         session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("FROM User");
-        List<User> result =query.list();
+        List<User> result = query.list();
         session.close();
         return result;
     }
@@ -35,11 +36,10 @@ public class DaoUser implements DaoUserInterface {
         Query query = session.createQuery("select user from User user where user.id=" +
                 Integer.toString(id));
         if (!query.list().isEmpty()) {
-            User result=(User)query.list().get(0);
+            User result = (User) query.list().get(0);
             session.close();
             return result;
-        }
-        else session.close();
+        } else session.close();
         return null;
     }
 
@@ -48,13 +48,11 @@ public class DaoUser implements DaoUserInterface {
         session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("select user from User user where user.email='" +
                 email + "'");
-        if (!query.list().isEmpty()){
-            User result = (User)query.list().get(0);
+        if (!query.list().isEmpty()) {
+            User result = (User) query.list().get(0);
             session.close();
             return result;
-        }
-
-        else {
+        } else {
             session.close();
             return null;
         }
@@ -82,23 +80,38 @@ public class DaoUser implements DaoUserInterface {
             tx = session.beginTransaction();
             session.update(user);
             tx.commit();
-        }
-        catch (Exception e) {
-            if (tx!=null) tx.rollback();
-        }
-        finally {
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+        } finally {
             session.close();
         }
     }
 
     @Override
     public void delete(User user) {
-
+        try {
+            session.beginTransaction();
+            session.delete(user);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
     }
 
     @Override
     public void delete(int id) {
-
+        session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("select user from User user where id=" + id);
+        User user = (User) query.list().get(0);
+        try {
+            session.beginTransaction();
+            session.delete(user);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
     }
 
     @Override
@@ -114,12 +127,11 @@ public class DaoUser implements DaoUserInterface {
     @Override
     public boolean exist(String email) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query= session.createQuery("From User where email="+"'"+email+"'");
-        if (!query.list().isEmpty()){
+        Query query = session.createQuery("From User where email=" + "'" + email + "'");
+        if (!query.list().isEmpty()) {
             session.close();
             return true;
-        }
-        else {
+        } else {
             session.close();
             return false;
         }

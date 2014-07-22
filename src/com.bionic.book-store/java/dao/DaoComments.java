@@ -43,6 +43,14 @@ public class DaoComments implements DaoCommentInterface {
 
     @Override
     public List<Comment> selectByUser(User user) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("select comment,user from Comment comment join comment.userByUserId.id user");
+        if (!query.list().isEmpty()) {
+            List<Comment> result=query.list();
+            session.close();
+            return result;
+        }
+        else session.close();
         return null;
     }
 
@@ -92,6 +100,7 @@ public class DaoComments implements DaoCommentInterface {
     public void delete(Comment comment) {
         session = HibernateUtil.getSessionFactory().openSession();
         session.delete(comment);
+        session.close();
     }
 
     @Override

@@ -1,7 +1,6 @@
 import dao.daoInterfaces.DaoUserInterface;
 import entities.User;
 import org.apache.commons.codec.digest.DigestUtils;
-import sun.security.provider.MD5;
 import util.DaoFactory;
 import util.Logger;
 

@@ -50,4 +50,10 @@ public class DaoUserTest {
         assertEquals("", daoUser.selectById(5).getEmail());
         assertEquals(DigestUtils.md5Hex("password"), daoUser.selectById(5).getPassword());
     }
+
+    @Test
+    public void testDeleteUser() throws Exception{
+        daoUser.delete(daoUser.selectById(5));
+        assertEquals(null,daoUser.selectById(5));
+    }
 }
