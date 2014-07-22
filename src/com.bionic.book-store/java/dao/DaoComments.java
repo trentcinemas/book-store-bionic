@@ -16,10 +16,10 @@ import java.util.List;
  * Created by Джон on 21.07.2014.
  */
 public class DaoComments implements DaoCommentInterface {
-    private Session session;
+
     @Override
     public List<Comment> selectAll() {
-        session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("FROM Comment");
         List<Comment> result =query.list();
         session.close();
@@ -28,7 +28,7 @@ public class DaoComments implements DaoCommentInterface {
 
     @Override
     public Comment selectById(int id) {
-        session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("select comment from Comment comment where comment.id=" +
                 Integer.toString(id));
         if (!query.list().isEmpty()) {
@@ -43,8 +43,8 @@ public class DaoComments implements DaoCommentInterface {
 
     @Override
     public List<Comment> selectByUser(User user) {
-        session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("select comment,user from Comment comment join comment.userByUserId.id user");
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("select comment from Comment comment where comment.userByUserId="+user);
         if (!query.list().isEmpty()) {
             List<Comment> result=query.list();
             session.close();
@@ -56,32 +56,73 @@ public class DaoComments implements DaoCommentInterface {
 
     @Override
     public List<Comment> selectByUserId(int id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("select comment from Comment comment where comment.userByUserId.id="+Integer.toString(id));
+        if (!query.list().isEmpty()) {
+            List<Comment> result=query.list();
+            session.close();
+            return result;
+        }
+        else session.close();
         return null;
     }
 
     @Override
     public List<Comment> selectByBook(Book book) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("select comment from Comment comment where Comment.bookByBookId="+book);
+        if (!query.list().isEmpty()) {
+            List<Comment> result=query.list();
+            session.close();
+            return result;
+        }
+        else session.close();
         return null;
     }
 
     @Override
     public List<Comment> selectByBookId(int id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("select comment from Comment comment where comment.bookByBookId.id="+Integer.toString(id));
+        if (!query.list().isEmpty()) {
+            List<Comment> result=query.list();
+            session.close();
+            return result;
+        }
+        else session.close();
         return null;
     }
 
     @Override
     public List<Comment> selectByDate(Date date) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("select comment from Comment comment where Comment.date="+date);
+        if (!query.list().isEmpty()) {
+            List<Comment> result=query.list();
+            session.close();
+            return result;
+        }
+        else session.close();
         return null;
     }
 
     @Override
     public void insert(Comment comment) {
-
+      Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            session.persist("Comment", comment);
+            if (!session.getTransaction().wasCommitted())
+                session.getTransaction().commit();
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        }
+        session.close();
     }
 
     @Override
     public void update(Comment comment) {
-        session = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -98,15 +139,15 @@ public class DaoComments implements DaoCommentInterface {
 
     @Override
     public void delete(Comment comment) {
-        session = HibernateUtil.getSessionFactory().openSession();
+        Session  session = HibernateUtil.getSessionFactory().openSession();
         session.delete(comment);
         session.close();
     }
 
     @Override
     public void delete(int id) {
-        session = HibernateUtil.getSessionFactory().openSession();
-        Query query= session.createQuery("select comment from Comment comment where id="+id);
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query= session.createQuery("select comment from Comment comment where id="+Integer.toString(id));
         Comment comment=(Comment)query.list().get(0);
         session.delete(comment);
     }
