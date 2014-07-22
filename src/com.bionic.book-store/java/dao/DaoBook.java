@@ -16,10 +16,9 @@ import java.util.List;
  */
 public class DaoBook implements DaoBookInterface {
 
-    private Session session;
-
     @Override
     public List<Book> selectAll() {
+        Session session;
         session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("FROM Book");
         if (!query.list().isEmpty()){
@@ -34,6 +33,7 @@ public class DaoBook implements DaoBookInterface {
 
     @Override
     public Book selectById(int id) {
+        Session session;
         session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("select book from Book book where book.id=" +
                 Integer.toString(id));
@@ -50,6 +50,7 @@ public class DaoBook implements DaoBookInterface {
 
     @Override
     public List<Book> selectByTitle(String title) {
+        Session session;
         session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("select book from Book book where book.title='" +
                 title + "'");
@@ -66,6 +67,7 @@ public class DaoBook implements DaoBookInterface {
 
     @Override
     public List<Book> selectByUser(User user) {
+        Session session;
         session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("select book from Book book where book.title='" +
                 user + "'");
@@ -82,6 +84,7 @@ public class DaoBook implements DaoBookInterface {
 
     @Override
     public List<Book> selectByUserId(int id) {
+        Session session;
         session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("select book from Book book join User user " +
                 "where user.id = "+ Integer.toString(id));
@@ -98,6 +101,7 @@ public class DaoBook implements DaoBookInterface {
 
     @Override
     public List<Book> selectByDistributor(Distributor distr) {
+        Session session;
         session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("select book from Book book where book.title='" +
                 distr + "'");
@@ -114,6 +118,7 @@ public class DaoBook implements DaoBookInterface {
 
     @Override
     public List<Book> selectByDistributorId(int id) {
+        Session session;
         session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("select book from Book book join Distributor distributor " +
                 "where distributor.id = "+ Integer.toString(id));
@@ -130,6 +135,7 @@ public class DaoBook implements DaoBookInterface {
 
     @Override
     public void insert(Book book) {
+        Session session;
         session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
@@ -144,6 +150,7 @@ public class DaoBook implements DaoBookInterface {
 
     @Override
     public void update(Book book) {
+        Session session;
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         try {
@@ -161,6 +168,7 @@ public class DaoBook implements DaoBookInterface {
 
     @Override
     public void delete(Book book) {
+        Session session;
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         try {
@@ -179,6 +187,7 @@ public class DaoBook implements DaoBookInterface {
 
     @Override
     public void delete(int id) {
+        Session session;
         session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         try {
