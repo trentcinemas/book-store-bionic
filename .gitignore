@@ -1,6 +1,7 @@
 # Dont change this
 target/
 out/
-.idea/
+.idea/workspace.xml
+.idea/tasks.xml
 bionic-book-store.iml
 web/
