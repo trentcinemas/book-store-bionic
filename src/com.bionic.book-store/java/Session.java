@@ -4,10 +4,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import util.DaoFactory;
 import util.Logger;
 
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
@@ -23,28 +20,6 @@ public class Session {
 
     private DaoUserInterface dao = DaoFactory.getDaoUserInstance();
 
-  /*  @POST
-    @Path("/")
-    public Response index(@CookieParam("user") String user) {
-        if (user == null) {
-            Logger.log(PROCESS, "user is in");
-            try {
-                java.net.URI location = new java.net.URI("localhost:8080/");
-                return Response.temporaryRedirect(location).build();
-            }
-            catch(URISyntaxException e){}
-        }
-        else {
-            Logger.log(PROCESS,user+" is in");
-            try {
-                java.net.URI location = new java.net.URI("localhost:8080/user-cabinet");
-                return Response.temporaryRedirect(location).build();
-            }
-            catch(URISyntaxException e){}
-        }
-        return Response.status(400).build();
-    }
-*/
     @POST
     @Path("login")
     public Response login(@FormParam("email") String email,
@@ -62,7 +37,7 @@ public class Session {
         // Wrong user password
         if (!hexedPassword.equals(user.getPassword())) {
             Logger.log(PROCESS, "Invalid password : " + email);
-            return Response.status(409).entity("Неправильні дані авторизації").build();
+            return Response.status(400).entity("Неправильні дані авторизації").build();
         }
 
         // All OK :
@@ -71,24 +46,38 @@ public class Session {
         NewCookie cookie = new NewCookie("user", email);
         Logger.log(PROCESS, email + " cookie saved");
 
-        return Response.ok()
-                .header(RESPONSE_HEADER, "*").cookie(cookie).build();
+        // HTTP 307 - Redirect
+        return Response.status(307).entity("book_add.html")
+                .cookie(cookie).build();
+
+    }
+
+    @GET
+    @Path("get-user")
+    @Produces("application/json")
+    public jsonClasses.User getUser(@CookieParam("user") String userEmail) {
+        entities.User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
+        jsonClasses.User requestedUserObject = new jsonClasses.User();
+        requestedUserObject.setEmail(user.getEmail());
+        requestedUserObject.setName(user.getName());
+        
+        return requestedUserObject;
     }
 
 
     @POST
     @Path("logout")
-    public Response logout(@CookieParam("user") String user) {
-        if (user == null) {
+    public Response logout(@CookieParam("user") String userEmail) {
+        if (userEmail == null) {
             Logger.log(PROCESS, "Not login user");
             return Response.status(400).entity("User not signed in").build();
         }
 
-        Cookie cookie = new Cookie("user", user);
+        Cookie cookie = new Cookie("user", userEmail);
         NewCookie authorizedCookie =
                 new NewCookie(cookie, "Removed authorized profile cookie", 0, true); // Cookie age = 0
 
-        Logger.log(PROCESS, "Logout : " + user);
+        Logger.log(PROCESS, "Logout : " + userEmail);
 
         return Response.ok()
                 .header(RESPONSE_HEADER, "*").cookie(authorizedCookie).build();
