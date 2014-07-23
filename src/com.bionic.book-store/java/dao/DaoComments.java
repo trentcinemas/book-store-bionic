@@ -4,9 +4,9 @@ import dao.daoInterfaces.DaoCommentInterface;
 import entities.Book;
 import entities.Comment;
 import entities.User;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import util.HibernateUtil;
 
 import java.util.Date;
@@ -114,23 +114,26 @@ public class DaoComments implements DaoCommentInterface {
             session.persist("Comment", comment);
             if (!session.getTransaction().wasCommitted())
                 session.getTransaction().commit();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
+            if(session!=null)
             session.getTransaction().rollback();
         }
-        session.close();
-    }
+        finally {
+            session.close();
+        }
+     }
 
     @Override
     public void update(Comment comment) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = null;
         try {
-            tx = session.beginTransaction();
+            session.beginTransaction();
             session.update(comment);
-            tx.commit();
+            if(!session.getTransaction().wasCommitted())
+            session.getTransaction().commit();
         }
-        catch (Exception e) {
-            if (tx!=null) tx.rollback();
+        catch (HibernateException e) {
+            if (session!=null) session.getTransaction().rollback();
         }
         finally {
             session.close();
@@ -139,16 +142,36 @@ public class DaoComments implements DaoCommentInterface {
 
     @Override
     public void delete(Comment comment) {
-        Session  session = HibernateUtil.getSessionFactory().openSession();
-        session.delete(comment);
-        session.close();
+        Session session= HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.beginTransaction();
+            session.delete(comment);
+            if (!session.getTransaction().wasCommitted())
+                session.getTransaction().commit();
+        } catch (HibernateException e) {
+            if(session!=null)
+                session.getTransaction().rollback();
+        }
+        finally {
+            session.close();
+        }
     }
 
     @Override
     public void delete(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query= session.createQuery("select comment from Comment comment where id="+Integer.toString(id));
-        Comment comment=(Comment)query.list().get(0);
-        session.delete(comment);
-    }
+        Query query = session.createQuery("select comment from Comment comment where id=" + id);
+        User user = (User) query.list().get(0);
+        try {
+            session.beginTransaction();
+            session.delete(user);
+            if (!session.getTransaction().wasCommitted())
+                session.getTransaction().commit();
+        } catch (HibernateException e) {
+            if(session!=null)
+                session.getTransaction().rollback();
+        }
+        finally{
+            session.close();
+        }    }
 }

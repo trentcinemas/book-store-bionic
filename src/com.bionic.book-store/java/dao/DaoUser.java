@@ -6,7 +6,6 @@ import entities.UserGroup;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import util.HibernateUtil;
 
 import java.util.List;
@@ -32,8 +31,7 @@ public class DaoUser implements DaoUserInterface {
     @Override
     public User selectById(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("select user from User user where user.id=" +
-                Integer.toString(id));
+        Query query = session.createQuery("select user from User user where user.id="+ id);
         if (!query.list().isEmpty()) {
             User result = (User) query.list().get(0);
             session.close();
@@ -66,21 +64,24 @@ public class DaoUser implements DaoUserInterface {
             if (!session.getTransaction().wasCommitted())
                 session.getTransaction().commit();
         } catch (Exception e) {
+            if(session!=null)
             session.getTransaction().rollback();
         }
-        session.close();
+        finally {
+            session.close();
+        }
     }
 
     @Override
     public void update(User user) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = null;
         try {
-            tx = session.beginTransaction();
+            session.beginTransaction();
             session.update(user);
-            tx.commit();
+            if (!session.getTransaction().wasCommitted())
+                session.getTransaction().commit();
         } catch (Exception e) {
-            if (tx != null) tx.rollback();
+            if (session != null) session.getTransaction().rollback();
         } finally {
             session.close();
         }
@@ -92,10 +93,14 @@ public class DaoUser implements DaoUserInterface {
         try {
             session.beginTransaction();
             session.delete(user);
+            if (!session.getTransaction().wasCommitted())
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            if(session!=null)
             session.getTransaction().rollback();
+        }
+        finally {
+            session.close();
         }
     }
 
@@ -107,10 +112,14 @@ public class DaoUser implements DaoUserInterface {
         try {
             session.beginTransaction();
             session.delete(user);
+            if (!session.getTransaction().wasCommitted())
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            if(session!=null)
             session.getTransaction().rollback();
+        }
+        finally{
+            session.close();
         }
     }
 

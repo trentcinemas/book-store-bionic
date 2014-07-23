@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface DaoDistributorInterface {
     public List<Distributor> selectAll();
-    public Distributor selectById(String url);
+    public Distributor selectById(int id);
     public Distributor selectByUrl(String url);
     void insert(Distributor distributor);
     void update(Distributor distributor);

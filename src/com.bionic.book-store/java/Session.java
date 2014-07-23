@@ -62,7 +62,7 @@ public class Session {
         // Wrong user password
         if (!hexedPassword.equals(user.getPassword())) {
             Logger.log(PROCESS, "Invalid password : " + email);
-            return Response.status(400).entity("Неправильні дані авторизації").build();
+            return Response.status(409).entity("Неправильні дані авторизації").build();
         }
 
         // All OK :

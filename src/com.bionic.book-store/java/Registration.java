@@ -1,20 +1,16 @@
 import dao.daoInterfaces.DaoUserInterface;
 import entities.User;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.hibernate.annotations.LazyToOneOption;
 import util.DaoFactory;
 import util.Logger;
 
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static util.Logger.Type.ERROR;
 import static util.Logger.Type.PROCESS;
 
 /**
