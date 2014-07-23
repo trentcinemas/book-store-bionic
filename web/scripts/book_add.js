@@ -7,10 +7,9 @@ $(document).ready(function() {
     $.ajax({
         type: 'get',
         url: '/rest/session/get-user',
-        crossDomain: true,
         response: 'json', // response type
         success: function(data) {
-
+            setUser(data.name, data.email);
         },
         error: function(data) {
             alert(data.responseText);
@@ -18,3 +17,8 @@ $(document).ready(function() {
     });
 
 });
+
+function setUser(userName, userEmail) {
+    $('#user_email').html(userEmail);
+    $('#user_name').html(userName);
+}
