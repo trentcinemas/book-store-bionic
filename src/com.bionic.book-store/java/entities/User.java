@@ -1,6 +1,9 @@
 package entities;
 
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
 import java.util.Collection;
 
 /**
@@ -21,7 +24,7 @@ public class User {
     private UserGroup userGroupByGroupId;
 
     @Id
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false, insertable = true, updatable = true)
     public int getUserId() {
         return userId;
     }
@@ -31,7 +34,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "email")
+    @Column(name = "email", nullable = true, insertable = true, updatable = true, length = 45)
     public String getEmail() {
         return email;
     }
@@ -41,7 +44,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "password")
+    @Column(name = "password", nullable = true, insertable = true, updatable = true, length = 32)
     public String getPassword() {
         return password;
     }
@@ -51,7 +54,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = true, insertable = true, updatable = true, length = 50)
     public String getName() {
         return name;
     }

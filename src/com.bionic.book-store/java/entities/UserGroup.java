@@ -13,7 +13,7 @@ public class UserGroup {
     private Collection<User> usersByUserGroupId;
 
     @Id
-    @Column(name = "userGroup_id")
+    @Column(name = "userGroup_id", nullable = false, insertable = true, updatable = true)
     public int getUserGroupId() {
         return userGroupId;
     }
@@ -23,7 +23,7 @@ public class UserGroup {
     }
 
     @Basic
-    @Column(name = "type")
+    @Column(name = "type", nullable = true, insertable = true, updatable = true, length = 45)
     public String getType() {
         return type;
     }

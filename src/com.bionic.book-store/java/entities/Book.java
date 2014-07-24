@@ -24,9 +24,10 @@ public class Book {
     private Distributor distributorByDistrId;
     private Collection<Comment> commentsByBookId;
     private Collection<PurchasedBook> purchasedBooksByBookId;
+    private String path;
 
     @Id
-    @Column(name = "book_id")
+    @Column(name = "book_id", nullable = false, insertable = true, updatable = true)
     public int getBookId() {
         return bookId;
     }
@@ -36,7 +37,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "title")
+    @Column(name = "title", nullable = true, insertable = true, updatable = true, length = 100)
     public String getTitle() {
         return title;
     }
@@ -46,7 +47,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "date_pub")
+    @Column(name = "date_pub", nullable = true, insertable = true, updatable = true)
     public Timestamp getDatePub() {
         return datePub;
     }
@@ -56,7 +57,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "downloads_cnt")
+    @Column(name = "downloads_cnt", nullable = true, insertable = true, updatable = true)
     public Integer getDownloadsCnt() {
         return downloadsCnt;
     }
@@ -66,7 +67,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "review_cnt")
+    @Column(name = "review_cnt", nullable = true, insertable = true, updatable = true)
     public Integer getReviewCnt() {
         return reviewCnt;
     }
@@ -76,7 +77,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "pages_cnt")
+    @Column(name = "pages_cnt", nullable = true, insertable = true, updatable = true)
     public Integer getPagesCnt() {
         return pagesCnt;
     }
@@ -86,7 +87,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "description")
+    @Column(name = "description", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getDescription() {
         return description;
     }
@@ -96,7 +97,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "cover")
+    @Column(name = "cover", nullable = true, insertable = true, updatable = true, length = 255)
     public String getCover() {
         return cover;
     }
@@ -106,7 +107,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "price")
+    @Column(name = "price", nullable = false, insertable = true, updatable = true, precision = 0)
     public int getPrice() {
         return price;
     }
@@ -205,5 +206,15 @@ public class Book {
 
     public void setPurchasedBooksByBookId(Collection<PurchasedBook> purchasedBooksByBookId) {
         this.purchasedBooksByBookId = purchasedBooksByBookId;
+    }
+
+    @Basic
+    @Column(name = "path", nullable = true, insertable = true, updatable = true, length = 255)
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

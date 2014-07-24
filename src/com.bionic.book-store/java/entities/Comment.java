@@ -14,7 +14,7 @@ public class Comment {
     private Book bookByBookId;
 
     @Id
-    @Column(name = "comm_id")
+    @Column(name = "comm_id", nullable = false, insertable = true, updatable = true)
     public int getCommId() {
         return commId;
     }
@@ -24,7 +24,7 @@ public class Comment {
     }
 
     @Basic
-    @Column(name = "date")
+    @Column(name = "date", nullable = true, insertable = true, updatable = true)
     public Timestamp getDate() {
         return date;
     }

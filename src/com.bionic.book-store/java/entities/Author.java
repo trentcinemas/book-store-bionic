@@ -16,7 +16,7 @@ public class Author {
     private Collection<Book> booksByAuthorId;
 
     @Id
-    @Column(name = "author_id")
+    @Column(name = "author_id", nullable = false, insertable = true, updatable = true)
     public int getAuthorId() {
         return authorId;
     }
@@ -26,7 +26,7 @@ public class Author {
     }
 
     @Basic
-    @Column(name = "firstname")
+    @Column(name = "firstname", nullable = true, insertable = true, updatable = true, length = 45)
     public String getFirstname() {
         return firstname;
     }
@@ -36,7 +36,7 @@ public class Author {
     }
 
     @Basic
-    @Column(name = "lastname")
+    @Column(name = "lastname", nullable = true, insertable = true, updatable = true, length = 45)
     public String getLastname() {
         return lastname;
     }
@@ -46,7 +46,7 @@ public class Author {
     }
 
     @Basic
-    @Column(name = "description")
+    @Column(name = "description", nullable = true, insertable = true, updatable = true, length = 2147483647)
     public String getDescription() {
         return description;
     }
@@ -56,7 +56,7 @@ public class Author {
     }
 
     @Basic
-    @Column(name = "photo")
+    @Column(name = "photo", nullable = true, insertable = true, updatable = true, length = 255)
     public String getPhoto() {
         return photo;
     }

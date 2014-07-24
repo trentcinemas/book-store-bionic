@@ -14,7 +14,7 @@ public class PurchasedBook {
     private Book bookByBookId;
 
     @Id
-    @Column(name = "pur_id")
+    @Column(name = "pur_id", nullable = false, insertable = true, updatable = true)
     public int getPurId() {
         return purId;
     }
@@ -24,7 +24,7 @@ public class PurchasedBook {
     }
 
     @Basic
-    @Column(name = "date")
+    @Column(name = "date", nullable = true, insertable = true, updatable = true)
     public Timestamp getDate() {
         return date;
     }

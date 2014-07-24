@@ -13,7 +13,7 @@ public class Distributor {
     private Collection<Book> booksByDistrId;
 
     @Id
-    @Column(name = "distr_id")
+    @Column(name = "distr_id", nullable = false, insertable = true, updatable = true)
     public int getDistrId() {
         return distrId;
     }
@@ -23,7 +23,7 @@ public class Distributor {
     }
 
     @Basic
-    @Column(name = "url")
+    @Column(name = "url", nullable = true, insertable = true, updatable = true, length = 255)
     public String getUrl() {
         return url;
     }

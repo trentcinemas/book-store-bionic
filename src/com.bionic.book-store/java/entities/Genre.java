@@ -13,7 +13,7 @@ public class Genre {
     private Collection<Book> booksByGenreId;
 
     @Id
-    @Column(name = "genre_id")
+    @Column(name = "genre_id", nullable = false, insertable = true, updatable = true)
     public int getGenreId() {
         return genreId;
     }
@@ -23,7 +23,7 @@ public class Genre {
     }
 
     @Basic
-    @Column(name = "type")
+    @Column(name = "type", nullable = true, insertable = true, updatable = true, length = 45)
     public String getType() {
         return type;
     }
