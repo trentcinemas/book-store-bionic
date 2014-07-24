@@ -1,4 +1,6 @@
-
+/**
+ * Created by Eklerka on 7/24/2014.
+ */
 import dao.DaoUser;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.apache.commons.codec.digest.DigestUtils;
