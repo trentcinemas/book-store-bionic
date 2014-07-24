@@ -69,7 +69,7 @@ public class DaoBook implements DaoBookInterface {
     public List<Book> selectByUser(User user) {
         Session session;
         session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("select book from Book book where book.title='" +
+        Query query = session.createQuery("select book from Book book where book.userByUserId='" +
                 user + "'");
         if (!query.list().isEmpty()) {
             List <Book> result = query.list();
@@ -78,7 +78,7 @@ public class DaoBook implements DaoBookInterface {
         }
         else {
             session.close();
-            return null;
+           return null;
         }
     }
 
@@ -86,8 +86,7 @@ public class DaoBook implements DaoBookInterface {
     public List<Book> selectByUserId(int id) {
         Session session;
         session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("select book from Book book join User user " +
-                "where user.id = "+ Integer.toString(id));
+        Query query = session.createQuery("select b from Book b join b.userByUserId c where c.userId ="+id);
         if(!query.list().isEmpty()){
             List<Book> result = query.list();
             session.close();
@@ -103,7 +102,7 @@ public class DaoBook implements DaoBookInterface {
     public List<Book> selectByDistributor(Distributor distr) {
         Session session;
         session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("select book from Book book where book.title='" +
+        Query query = session.createQuery("select book from Book book where book.distributorByDistrId ='" +
                 distr + "'");
         if (!query.list().isEmpty()) {
             List <Book> result = query.list();
@@ -120,8 +119,7 @@ public class DaoBook implements DaoBookInterface {
     public List<Book> selectByDistributorId(int id) {
         Session session;
         session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("select book from Book book join Distributor distributor " +
-                "where distributor.id = "+ Integer.toString(id));
+        Query query = session.createQuery("select b from Book b join b.distributorByDistrId c where c.distrId ="+id);
         if(!query.list().isEmpty()){
             List<Book> result = query.list();
             session.close();
