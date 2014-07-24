@@ -18,7 +18,8 @@
       <mapping class="entities.PurchasedBook"/>
       <mapping class="entities.User"/>
       <mapping class="entities.UserGroup"/>
+      <mapping class="entities.ReplyMessage"/>
 
-    <!-- <property name="hbm2ddl.auto">update</property> -->
+      <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>
 </hibernate-configuration>
