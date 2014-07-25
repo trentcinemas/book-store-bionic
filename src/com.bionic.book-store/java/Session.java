@@ -57,11 +57,8 @@ public class Session {
     @Produces("application/json")
     public jsonClasses.User getUser(@CookieParam("user") String userEmail) {
         entities.User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
-        jsonClasses.User requestedUserObject = new jsonClasses.User();
-        requestedUserObject.setEmail(user.getEmail());
-        requestedUserObject.setName(user.getName());
-        
-        return requestedUserObject;
+       
+        return new jsonClasses.User(user);
     }
 
 

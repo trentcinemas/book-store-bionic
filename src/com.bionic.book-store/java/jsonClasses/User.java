@@ -7,6 +7,11 @@ public class User {
     private String email;
     private String name;
 
+    public User(entities.User user) {
+        this.email = user.getEmail();
+        this.name = user.getName();
+    }
+
     public String getEmail() {
         return email;
     }
