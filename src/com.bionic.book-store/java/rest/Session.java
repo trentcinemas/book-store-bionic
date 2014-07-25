@@ -1,3 +1,5 @@
+package rest;
+
 import dao.daoInterfaces.DaoUserInterface;
 import entities.User;
 import org.apache.commons.codec.digest.DigestUtils;

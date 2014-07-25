@@ -1,3 +1,5 @@
+package rest;
+
 import entities.User;
 import util.DaoFactory;
 import util.Logger;
