@@ -17,7 +17,7 @@ public class Book {
     private Integer pagesCnt;
     private String description;
     private String cover;
-    private int price;
+    private double price;
     private Author authorByAuthorId;
     private User userByUserId;
     private Genre genreByGenreId;
@@ -25,6 +25,8 @@ public class Book {
     private Collection<Comment> commentsByBookId;
     private Collection<PurchasedBook> purchasedBooksByBookId;
     private String path;
+
+
 
     @Id
     @Column(name = "book_id", nullable = false, insertable = true, updatable = true)
@@ -107,14 +109,10 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "price", nullable = false, insertable = true, updatable = true, precision = 0)
-    public int getPrice() {
-        return price;
-    }
+    @Column(name = "price", nullable = false, insertable = true, updatable = true, precision = 2)
+    public double getPrice(){return price;}
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
+    public void setPrice(double pr){price=pr;}
 
     @Override
     public boolean equals(Object o) {
@@ -146,7 +144,7 @@ public class Book {
         result = 31 * result + (pagesCnt != null ? pagesCnt.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (cover != null ? cover.hashCode() : 0);
-        result = 31 * result + price;
+        result = 31 * result + (int)Math.round(price);
         return result;
     }
 
