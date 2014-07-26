@@ -7,12 +7,13 @@ import javax.persistence.Id;
 import java.sql.Timestamp;
 
 /**
- * Created by jsarafajr on 24.07.14.
+ * Created by jsarafajr on 26.07.14.
  */
 @Entity
 public class ReplyMessage {
     private int messageId;
     private String email;
+    private String receiver;
     private String text;
     private Timestamp date;
     private Byte removed;
@@ -35,6 +36,16 @@ public class ReplyMessage {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Basic
+    @Column(name = "receiver")
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 
     @Basic
@@ -77,6 +88,7 @@ public class ReplyMessage {
         if (messageId != that.messageId) return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        if (receiver != null ? !receiver.equals(that.receiver) : that.receiver != null) return false;
         if (removed != null ? !removed.equals(that.removed) : that.removed != null) return false;
         if (text != null ? !text.equals(that.text) : that.text != null) return false;
 
@@ -87,6 +99,7 @@ public class ReplyMessage {
     public int hashCode() {
         int result = messageId;
         result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (receiver != null ? receiver.hashCode() : 0);
         result = 31 * result + (text != null ? text.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (removed != null ? removed.hashCode() : 0);
