@@ -2,6 +2,7 @@ package rest;
 
 import dao.daoInterfaces.DaoUserInterface;
 import entities.User;
+import jsonClasses.UserJson;
 import org.apache.commons.codec.digest.DigestUtils;
 import util.DaoFactory;
 import util.Logger;
@@ -49,18 +50,17 @@ public class Session {
         Logger.log(PROCESS, email + " cookie saved");
 
         // HTTP 307 - Redirect
-        return Response.status(307).entity("book_add.html")
+        return Response.status(307).entity("index.html")
                 .cookie(cookie).build();
-
     }
 
     @GET
     @Path("get-user")
     @Produces("application/json")
-    public jsonClasses.User getUser(@CookieParam("user") String userEmail) {
-        entities.User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
-       
-        return new jsonClasses.User(user);
+    public UserJson getUser(@CookieParam("user") String userEmail) {
+        User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
+
+        return new UserJson(user);
     }
 
 

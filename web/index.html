@@ -3,13 +3,15 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/index.js"></script>
 </head>
 <body>
 
 <span>АВТОРИЗАЦІЯ : </span>
 <br>
 <div id="authorization">
-    <form id="login_form" method="post">
+    <form id="login_form" action="none" method="post">
         <label id="login_message"></label>
         <br>
         <label>e-mail : </label><input type="text" id="login_email">
@@ -34,7 +36,7 @@
 <hr>
 
 <span>НАПИСАТИ ДО ВИДАВНИЦТВА : </span>
-<form id="reply_form" method="post">
+<form id="reply_form">
     <label>До кого : </label>
     <select id="reply_receiver">
         <option>Адміністратор</option>

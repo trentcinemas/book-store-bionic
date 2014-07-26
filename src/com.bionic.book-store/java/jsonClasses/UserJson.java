@@ -3,13 +3,18 @@ package jsonClasses;
 /**
  * Created by jsarafajr on 23.07.14.
  */
-public class User {
+public class UserJson {
     private String email;
     private String name;
 
-    public User(entities.User user) {
-        this.email = user.getEmail();
-        this.name = user.getName();
+    public UserJson(entities.User user) {
+        if (user == null) {
+            this.email = null;
+            this.name = null;
+        } else {
+            this.email = user.getEmail();
+            this.name = user.getName();
+        }
     }
 
     public String getEmail() {
