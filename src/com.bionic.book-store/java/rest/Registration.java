@@ -24,8 +24,6 @@ import static util.Logger.Type.PROCESS;
  */
 @Path("register")
 public class Registration {
-    private final String RESPONSE_HEADER = "Access-Control-Allow-Origin";
-
     @POST
     public Response register(@FormParam("email") String email,
                               @FormParam("password") String password,
@@ -35,20 +33,20 @@ public class Registration {
 
         if (!checkEmail(email)) {
             Logger.log(PROCESS, "Invalid email : " + email);
-            return Response.status(400).header(RESPONSE_HEADER, "*")
+            return Response.status(400)
                     .entity("Введена неправильна e-mail адреса").build();
         }
 
         if (name.length() < 3 || name.length() > 30) {
             Logger.log(PROCESS, "Invalid name " + name);
-            return Response.status(400).header(RESPONSE_HEADER, "*")
+            return Response.status(400)
                     .entity("Введене неправильне ім'я").build();
         }
 
         // HTTP 409 (Conflict)
         if (daoUser.exist(email)) {
             Logger.log(PROCESS, email + " already exist");
-            return Response.status(409).header(RESPONSE_HEADER, "*")
+            return Response.status(409)
                     .entity("Користувач з таким іменем уже зареєстрований").build();
         }
 
@@ -64,7 +62,7 @@ public class Registration {
 
         daoUser.insert(user);
 
-        return Response.ok().header("Access-Control-Allow-Origin", "*").build();
+        return Response.ok().build();
     }
 
     private boolean checkEmail(String email) {

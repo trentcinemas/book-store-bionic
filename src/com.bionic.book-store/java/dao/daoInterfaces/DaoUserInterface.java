@@ -12,8 +12,8 @@ public interface DaoUserInterface {
     public List<User> selectAll();
     public User selectById(int id);
     public User selectByEmail(String login);
-    public User selectByUserGroup(UserGroup group);
-    public User selectByUserGroupType(String type);
+    public List<User> selectByUserGroup(UserGroup group);
+    public List<User> selectByUserGroupType(String type);
     boolean exist(String email);
     void insert(User user);
     void update(User user);

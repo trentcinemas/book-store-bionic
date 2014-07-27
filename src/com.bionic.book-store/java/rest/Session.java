@@ -19,7 +19,8 @@ import static util.Logger.Type.PROCESS;
  */
 @Path("/session")
 public class Session {
-    private final String RESPONSE_HEADER = "Access-Control-Allow-Origin";
+    private final String COOKIE_PATH = "/";
+    private final String COOKIE_DOMAIN = "";
 
     private DaoUserInterface dao = DaoFactory.getDaoUserInstance();
 
@@ -46,7 +47,8 @@ public class Session {
         // All OK :
         Logger.log(PROCESS, email + " authorized");
 
-        NewCookie cookie = new NewCookie("user", email);
+        NewCookie cookie = new NewCookie("user", email, COOKIE_PATH, COOKIE_DOMAIN, "",3600,false);
+
         Logger.log(PROCESS, email + " cookie saved");
 
         // HTTP 307 - Redirect
@@ -72,14 +74,13 @@ public class Session {
             return Response.status(400).entity("User not signed in").build();
         }
 
-        Cookie cookie = new Cookie("user", userEmail);
         NewCookie authorizedCookie =
-                new NewCookie(cookie, "Removed authorized profile cookie", 0, true); // Cookie age = 0
+                new NewCookie("user", userEmail, COOKIE_PATH, COOKIE_DOMAIN, "", 0, false); // Cookie age = 0
 
         Logger.log(PROCESS, "Logout : " + userEmail);
 
         return Response.ok()
-                .header(RESPONSE_HEADER, "*").cookie(authorizedCookie).build();
+                .cookie(authorizedCookie).build();
     }
 
 }

@@ -5,15 +5,14 @@ import entities.ReplyMessage;
 import java.util.List;
 
 /**
- * Created by jsarafajr on 26.07.14.
+ * Created by Eklerka on 7/24/2014.
  */
 public interface DaoReplyMessageInterface {
     List<ReplyMessage> selectAll();
-    List<ReplyMessage> getModeratorMessages();
-    List<ReplyMessage> getAdminMessages();
     ReplyMessage selectById(int id);
-    void insert(ReplyMessage message);
-    void update(ReplyMessage message);
-    void delete(ReplyMessage message);
+    void insert(ReplyMessage replyMessage);
+    void update(ReplyMessage replyMessage);
+    void delete(ReplyMessage replyMessage);
     void delete(int id);
+    List<ReplyMessage> selectByReceiver(String receiver);
 }

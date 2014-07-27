@@ -124,29 +124,24 @@ public class DaoUser implements DaoUserInterface {
     }
 
     @Override
-    public User selectByUserGroup(UserGroup group) {
+    public List<User> selectByUserGroup(UserGroup group) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("select user from User user where user.userGroupByGroupId=" +
-                group);
-        if (!query.list().isEmpty()) {
-            User result = (User) query.list().get(0);
-            session.close();
-            return result;
-        } else session.close();
-        return null;
+                group.getUserGroupId());
+        List<User> result = query.list();
+        session.close();
+        return result;
     }
 
     @Override
-    public User selectByUserGroupType(String type) {
+    public List<User> selectByUserGroupType(String type) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("select user from User user where user.userGroupByGroupId.type=" +
                 type);
-        if (!query.list().isEmpty()) {
-            User result = (User) query.list().get(0);
-            session.close();
-            return result;
-        } else session.close();
-        return null;
+
+        List<User> result = query.list();
+        session.close();
+        return result;
     }
 
     @Override

@@ -19,7 +19,7 @@ public class ReplyMessage {
     private Byte removed;
 
     @Id
-    @Column(name = "messageId")
+    @Column(name = "messageId", nullable = false, insertable = true, updatable = true)
     public int getMessageId() {
         return messageId;
     }
@@ -29,7 +29,7 @@ public class ReplyMessage {
     }
 
     @Basic
-    @Column(name = "email")
+    @Column(name = "email", nullable = true, insertable = true, updatable = true)
     public String getEmail() {
         return email;
     }
@@ -39,7 +39,7 @@ public class ReplyMessage {
     }
 
     @Basic
-    @Column(name = "receiver")
+    @Column(name = "receiver", nullable = true, insertable = true, updatable = true)
     public String getReceiver() {
         return receiver;
     }
@@ -49,7 +49,7 @@ public class ReplyMessage {
     }
 
     @Basic
-    @Column(name = "text")
+    @Column(name = "text", nullable = true, insertable = true, updatable = true)
     public String getText() {
         return text;
     }
@@ -59,7 +59,7 @@ public class ReplyMessage {
     }
 
     @Basic
-    @Column(name = "date")
+    @Column(name = "date", nullable = true, insertable = true, updatable = true)
     public Timestamp getDate() {
         return date;
     }
@@ -69,7 +69,7 @@ public class ReplyMessage {
     }
 
     @Basic
-    @Column(name = "removed")
+    @Column(name = "removed", nullable = true, insertable = true, updatable = true)
     public Byte getRemoved() {
         return removed;
     }

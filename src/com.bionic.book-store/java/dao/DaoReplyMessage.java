@@ -5,12 +5,13 @@ import entities.ReplyMessage;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import util.HibernateUtil;
 
 import java.util.List;
 
 /**
- * Created by Evgeniy Baranuk on 26.07.14.
+ * Created by Eklerka on 7/24/2014.
  */
 public class DaoReplyMessage implements DaoReplyMessageInterface {
 
@@ -24,29 +25,10 @@ public class DaoReplyMessage implements DaoReplyMessageInterface {
     }
 
     @Override
-    public List<ReplyMessage> getModeratorMessages() {
-        String moder = "moder";
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("select msg from ReplyMessage msg where msg.receiver="+ moder);
-        List<ReplyMessage> result = query.list();
-        session.close();
-        return result;
-    }
-
-    @Override
-    public List<ReplyMessage> getAdminMessages() {
-        String moder = "admin";
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("select msg from ReplyMessage msg where msg.receiver="+ moder);
-        List<ReplyMessage> result = query.list();
-        session.close();
-        return result;
-    }
-
-    @Override
     public ReplyMessage selectById(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("select msg from ReplyMessage msg where msg.id="+ id);
+        Query query = session.createQuery("select replyMessage from ReplyMessage replyMessage"+
+                " where replyMessage.messageId="+ id);
         if (!query.list().isEmpty()) {
             ReplyMessage result = (ReplyMessage) query.list().get(0);
             session.close();
@@ -56,11 +38,11 @@ public class DaoReplyMessage implements DaoReplyMessageInterface {
     }
 
     @Override
-    public void insert(ReplyMessage message) {
+    public void insert(ReplyMessage replyMessage) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            session.persist("ReplyMessage", message);
+            session.persist("ReplyMessage", replyMessage);
             if (!session.getTransaction().wasCommitted())
                 session.getTransaction().commit();
         } catch (Exception e) {
@@ -73,30 +55,33 @@ public class DaoReplyMessage implements DaoReplyMessageInterface {
     }
 
     @Override
-    public void update(ReplyMessage message) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+    public void update(ReplyMessage replyMessage) {
+        Session session;
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
         try {
-            session.beginTransaction();
-            session.update(message);
-            if (!session.getTransaction().wasCommitted())
-                session.getTransaction().commit();
-        } catch (Exception e) {
-            if (session != null) session.getTransaction().rollback();
-        } finally {
+            tx = session.beginTransaction();
+            session.update(replyMessage);
+            tx.commit();
+        }
+        catch (Exception e) {
+            if (tx!=null) tx.rollback();
+        }
+        finally {
             session.close();
         }
     }
 
     @Override
-    public void delete(ReplyMessage message) {
+    public void delete(ReplyMessage replyMessage) {
         Session session= HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
-            session.delete(message);
+            session.delete(replyMessage);
             if (!session.getTransaction().wasCommitted())
                 session.getTransaction().commit();
         } catch (HibernateException e) {
-            if(session != null)
+            if(session!=null)
                 session.getTransaction().rollback();
         }
         finally {
@@ -107,19 +92,30 @@ public class DaoReplyMessage implements DaoReplyMessageInterface {
     @Override
     public void delete(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("select msg from ReplyMessage msg where id=" + id);
-        ReplyMessage msg = (ReplyMessage) query.list().get(0);
+        Query query = session.createQuery("select replyMessage " +
+                "from ReplyMessage replyMessage where replyMessage.messageId=" + id);
+        ReplyMessage replyMessage = (ReplyMessage) query.list().get(0);
         try {
             session.beginTransaction();
-            session.delete(msg);
+            session.delete(replyMessage);
             if (!session.getTransaction().wasCommitted())
                 session.getTransaction().commit();
         } catch (HibernateException e) {
-            if(session != null)
+            if(session!=null)
                 session.getTransaction().rollback();
         }
         finally{
             session.close();
         }
+    }
+
+    @Override
+    public List<ReplyMessage> selectByReceiver(String receiver) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("SELECT replyMessage FROM ReplyMessage " +
+                "replyMessage WHERE replyMessage.receiver=" + receiver);
+        List<ReplyMessage> result = query.list();
+        session.close();
+        return result;
     }
 }
