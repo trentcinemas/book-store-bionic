@@ -14,6 +14,7 @@ public class DaoFactory {
     private static DaoReplyMessage daoReplyMessage = new DaoReplyMessage();
     private static DaoUser userDAO = new DaoUser();
     private static DaoUserGroup daoUserGroup = new DaoUserGroup();
+    private static DaoPurchasedBook daoPurchasedBook = new DaoPurchasedBook();
 
     public static DaoUser getDaoUserInstance(){
         return userDAO;
@@ -45,6 +46,10 @@ public class DaoFactory {
 
     public static DaoUserGroup getDaoUserGroupInstance() {
         return daoUserGroup;
+    }
+
+    public static DaoPurchasedBook getDaoPurchasedBookInstance() {
+        return daoPurchasedBook;
     }
 
     private DaoFactory() {
