@@ -9,6 +9,7 @@ import util.FileUpload;
 import util.Logger;
 import util.MultipartRequestMap;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ public class BookRest extends HttpServlet {
     @Path("upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @POST
-    public Response addBook(@CookieParam("user") String enteredUser, @Context HttpServletRequest request) throws Exception {
+    public Response addBook(@CookieParam("user") String enteredUser, @Context HttpServletRequest request) {
 
        User user = DaoFactory.getDaoUserInstance().selectByEmail(enteredUser);
 
@@ -52,36 +54,39 @@ public class BookRest extends HttpServlet {
         enBook.setDownloadsCnt(0);
         enBook.setPagesCnt(Integer.parseInt(map.getStringParameter("page_count")));
 
-
         String mainPath = FileUpload.SERVER_UPLOAD_LOCATION_FOLDER + "BOOKS\\" + enBook.getTitle();
         File myDir = new File(mainPath);
         myDir.mkdirs();
 
-        Part photoPart = request.getPart("photo");
-        Part pdfPart = request.getPart("pdf");
-        Part docPart = request.getPart("doc");
-        Part fb2Part = request.getPart("fb2");
-        InputStream photoStream = photoPart.getInputStream();
-        InputStream pdfStream = pdfPart.getInputStream();
-        InputStream docStream =docPart.getInputStream();
-        InputStream fb2Stream =fb2Part.getInputStream();
-        String photoPath = mainPath + "\\" + photoPart.getSubmittedFileName();
-        String pdfPath = mainPath+"\\"+pdfPart.getSubmittedFileName();
-        String docPath = mainPath+"\\"+docPart.getSubmittedFileName();
-        String fb2Path = mainPath+"\\"+fb2Part.getSubmittedFileName();
+        try {
+            Part photoPart = request.getPart("photo");
+            Part pdfPart = request.getPart("pdf");
+            Part docPart = request.getPart("doc");
+            Part fb2Part = request.getPart("fb2");
+            InputStream photoStream = photoPart.getInputStream();
+            InputStream pdfStream = pdfPart.getInputStream();
+            InputStream docStream =docPart.getInputStream();
+            InputStream fb2Stream =fb2Part.getInputStream();
+            String photoPath = mainPath + "\\" + photoPart.getSubmittedFileName();
+            String pdfPath = mainPath+"\\"+pdfPart.getSubmittedFileName();
+            String docPath = mainPath+"\\"+docPart.getSubmittedFileName();
+            String fb2Path = mainPath+"\\"+fb2Part.getSubmittedFileName();
 
+            FileUpload.saveFile(photoStream, photoPath);
+            FileUpload.saveFile(pdfStream,pdfPath);
+            FileUpload.saveFile(docStream,docPath);
+            FileUpload.saveFile(fb2Stream,fb2Path);
 
-        FileUpload.saveFile(photoStream, photoPath);
-        FileUpload.saveFile(pdfStream,pdfPath);
-        FileUpload.saveFile(docStream,docPath);
-        FileUpload.saveFile(fb2Stream,fb2Path);
+            enBook.setCover(photoPath);
+            enBook.setPath(mainPath);
 
-        enBook.setCover(photoPath);
-        enBook.setPath(mainPath);
+            DaoFactory.getDaoBookInstance().insert(enBook);
 
-        DaoFactory.getDaoBookInstance().insert(enBook);
+            return Response.ok().build();
+        } catch (ServletException | IOException e) {
+            return Response.serverError().entity("Помилка на сервері").build();
+        }
 
-        return Response.ok().build();
     }
 
     @Path("listAll")
