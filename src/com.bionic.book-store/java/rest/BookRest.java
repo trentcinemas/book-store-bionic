@@ -1,5 +1,7 @@
 package rest;
 
+import entities.Book;
+import entities.PurchasedBook;
 import entities.User;
 import jsonClasses.BookJson;
 import util.DaoFactory;
@@ -19,6 +21,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 @Path("book/")
 @MultipartConfig(location = "/upload", maxFileSize = 10485760L) // 10MB.
@@ -66,7 +69,7 @@ public class BookRest extends HttpServlet {
         String pdfPath = mainPath+"\\"+pdfPart.getSubmittedFileName();
         String docPath = mainPath+"\\"+docPart.getSubmittedFileName();
         String fb2Path = mainPath+"\\"+fb2Part.getSubmittedFileName();
-        
+
 
         FileUpload.saveFile(photoStream, photoPath);
         FileUpload.saveFile(pdfStream,pdfPath);
@@ -81,23 +84,51 @@ public class BookRest extends HttpServlet {
         return Response.ok().build();
     }
 
-
     @Path("listAll")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<BookJson> getUserBooks() {
-        ArrayList<BookJson> books = new ArrayList<BookJson>();
-        for (entities.Book book : DaoFactory.getDaoBookInstance().selectAll()) {
-            BookJson BookJson = new BookJson();
-            BookJson.setTitle(book.getTitle());
-            BookJson.setDescription(book.getDescription());
-            BookJson.setPrice(book.getPrice());
-            BookJson.setCover(book.getCover());
-            books.add(BookJson);
+    @Produces("application/json")
+    public ArrayList<BookJson> getAllBooks() {
+        ArrayList<BookJson> booksJson = new ArrayList<BookJson>();
+        List<Book> books = DaoFactory.getDaoBookInstance().selectAll();
+
+        for (entities.Book book : books) {
+            BookJson bookJson = new BookJson(book);
+            booksJson.add(bookJson);
         }
-        return books;
+
+        return booksJson;
     }
 
+    @GET
+    @Path("getUserBooks")
+    @Produces("application/json")
+    public ArrayList<BookJson> getAllBooks(@CookieParam("user") String userEmail) {
+        if (userEmail == null) {
+            return new ArrayList<>();
+        }
+
+        User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
+
+        if (!checkUser(user)) {
+            return new ArrayList<>();
+        }
+
+        ArrayList<BookJson> booksJson = new ArrayList<BookJson>();
+        List<PurchasedBook> purchasedBooks = DaoFactory.getDaoPurchasedBookInstance().selectByUser(user);
+
+        for (entities.PurchasedBook purchasedBook : purchasedBooks) {
+            BookJson bookJson = new BookJson(purchasedBook);
+            booksJson.add(bookJson);
+        }
+
+        return booksJson;
+    }
+
+    /**
+     * Returns true if user has access
+     * @param user
+     * @return
+     */
     private boolean checkUser(User user) {
         if (user == null) return false;
         // TODO check user group

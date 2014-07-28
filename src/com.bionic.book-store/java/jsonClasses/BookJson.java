@@ -1,5 +1,8 @@
 package jsonClasses;
 
+import entities.Book;
+import entities.PurchasedBook;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -11,6 +14,36 @@ public class BookJson {
     String description;
     double price;
     String cover;
+
+    public BookJson(Book book) {
+        if (book == null) {
+            this.title = null;
+            this.description = null;
+            this.price = 0;
+            this.cover = null;
+        } else {
+            this.title = book.getTitle();
+            this.description = book.getDescription();
+            this.price = book.getPrice();
+            this.cover = book.getCover();
+        }
+    }
+
+    public BookJson(PurchasedBook book) {
+        if (book == null) {
+            this.title = null;
+            this.description = null;
+            this.price = 0;
+            this.cover = null;
+        } else {
+            this.title = book.getBookByBookId().getTitle();
+            this.description = book.getBookByBookId().getDescription();
+            this.price = book.getBookByBookId().getPrice();
+            this.cover = book.getBookByBookId().getCover();
+        }
+    }
+
+    public BookJson() {}
 
     public String getCover() {
         return cover;
