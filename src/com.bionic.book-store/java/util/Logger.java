@@ -14,20 +14,9 @@ import java.util.Date;
 public class Logger {
     // single instance
     private static Logger instance = new Logger();
-// не хотіло створювати файл в потоній папці , програма вилітала
-    //дописав конкретний диск в корені
-    //треба це рішити
-    private final String FILE_PATH = "D:\\log.txt";
-    private BufferedWriter writer;
+    private final String FILE_PATH = MultipartRequestMap.UPLOAD_PATH + "/log.txt";
 
     private Logger() {
-        try {
-            File f = new File(FILE_PATH);
-            System.out.println(f.getAbsolutePath());
-            writer = new BufferedWriter(new FileWriter(FILE_PATH));
-        } catch (IOException e) {
-            System.out.println("Can not create Logger");
-        }
     }
 
     /**
@@ -41,8 +30,8 @@ public class Logger {
 
     public void logMessage(Type type, String msg) {
         System.out.printf("%19s %-7s : %s \n", getCurrentTime(), type.toString(), msg);
-        try {
-            writer.write(String.format("%19s %-7s : %s \n", getCurrentTime(), type.toString(), msg));
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
+            writer.append(String.format("%19s %-7s : %s \n", getCurrentTime(), type.toString(), msg));
         } catch (IOException e) {
             System.out.println("Can not write to" + FILE_PATH);
         }
