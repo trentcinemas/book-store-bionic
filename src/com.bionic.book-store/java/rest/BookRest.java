@@ -53,7 +53,8 @@ public class BookRest extends HttpServlet {
         enBook.setReviewCnt(0);
         enBook.setDownloadsCnt(0);
         enBook.setPagesCnt(Integer.parseInt(map.getStringParameter("page_count")));
-        enBook.setCover(map.getStringParameter("title")+"/"+map.getFileParameter("photo").getAbsoluteFile().getName());
+        enBook.setCover(map.getStringParameter("title")+"/"+map.getFileParameter("sm-cover").getAbsoluteFile().getName());
+        enBook.setBigCover(map.getStringParameter("title")+"/"+map.getFileParameter("big-cover").getAbsoluteFile().getName());
         enBook.setPdfPath(map.getStringParameter("title")+"/"+map.getFileParameter("pdf").getAbsoluteFile().getName());
         enBook.setDocPath(map.getStringParameter("title")+"/"+map.getFileParameter("doc").getAbsoluteFile().getName());
         enBook.setFb2Path(map.getStringParameter("title")+"/"+map.getFileParameter("fb2").getAbsoluteFile().getName());
@@ -124,13 +125,11 @@ public class BookRest extends HttpServlet {
         return booksJson;
     }
 
-    @Path("search")
-    @POST
+    @Path("search/{searchstring}")
+    @GET
     @Produces("application/json")
-    public ArrayList<BookJson> search(String s) {
-        String[] words = s.split(" ");
+    public ArrayList<BookJson> search(@PathParam("searchstring")String s) {
         List<Book> books = DaoFactory.getDaoBookInstance().search(s);
-
         ArrayList<BookJson> result = new ArrayList<BookJson>();
         for (Book b : books){
             BookJson book = new BookJson(b);
