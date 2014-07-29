@@ -1,11 +1,12 @@
 package entities;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Collection;
 
 /**
- * Created by jsarafajr on 17.07.14.
+ * Created by Eklerka on 7/29/2014.
  */
 @Entity
 public class Book {
@@ -17,19 +18,21 @@ public class Book {
     private Integer pagesCnt;
     private String description;
     private String cover;
-    private double price;
+    private BigDecimal price;
+    private String bigCover;
+    private String pdfPath;
+    private String docPath;
+    private String fb2Path;
+    private String preview;
     private Author authorByAuthorId;
     private User userByUserId;
     private Genre genreByGenreId;
     private Distributor distributorByDistrId;
     private Collection<Comment> commentsByBookId;
     private Collection<PurchasedBook> purchasedBooksByBookId;
-    private String path;
-
-
 
     @Id
-    @Column(name = "book_id", nullable = false, insertable = true, updatable = true)
+    @Column(name = "book_id")
     public int getBookId() {
         return bookId;
     }
@@ -39,7 +42,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "title", nullable = true, insertable = true, updatable = true, length = 100)
+    @Column(name = "title")
     public String getTitle() {
         return title;
     }
@@ -49,7 +52,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "date_pub", nullable = true, insertable = true, updatable = true)
+    @Column(name = "date_pub")
     public Timestamp getDatePub() {
         return datePub;
     }
@@ -59,7 +62,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "downloads_cnt", nullable = true, insertable = true, updatable = true)
+    @Column(name = "downloads_cnt")
     public Integer getDownloadsCnt() {
         return downloadsCnt;
     }
@@ -69,7 +72,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "review_cnt", nullable = true, insertable = true, updatable = true)
+    @Column(name = "review_cnt")
     public Integer getReviewCnt() {
         return reviewCnt;
     }
@@ -79,7 +82,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "pages_cnt", nullable = true, insertable = true, updatable = true)
+    @Column(name = "pages_cnt")
     public Integer getPagesCnt() {
         return pagesCnt;
     }
@@ -89,7 +92,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "description", nullable = true, insertable = true, updatable = true, length = 2147483647)
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -99,7 +102,7 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "cover", nullable = true, insertable = true, updatable = true, length = 255)
+    @Column(name = "cover")
     public String getCover() {
         return cover;
     }
@@ -109,10 +112,64 @@ public class Book {
     }
 
     @Basic
-    @Column(name = "price", nullable = false, insertable = true, updatable = true, precision = 2)
-    public double getPrice(){return price;}
+    @Column(name = "price")
+    public BigDecimal getPrice() {
+        return price;
+    }
 
-    public void setPrice(double pr){price=pr;}
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    @Basic
+    @Column(name = "big_cover")
+    public String getBigCover() {
+        return bigCover;
+    }
+
+    public void setBigCover(String bigCover) {
+        this.bigCover = bigCover;
+    }
+
+    @Basic
+    @Column(name = "pdf_path")
+    public String getPdfPath() {
+        return pdfPath;
+    }
+
+    public void setPdfPath(String pdfPath) {
+        this.pdfPath = pdfPath;
+    }
+
+    @Basic
+    @Column(name = "doc_path")
+    public String getDocPath() {
+        return docPath;
+    }
+
+    public void setDocPath(String docPath) {
+        this.docPath = docPath;
+    }
+
+    @Basic
+    @Column(name = "fb2_path")
+    public String getFb2Path() {
+        return fb2Path;
+    }
+
+    public void setFb2Path(String fb2Path) {
+        this.fb2Path = fb2Path;
+    }
+
+    @Basic
+    @Column(name = "preview")
+    public String getPreview() {
+        return preview;
+    }
+
+    public void setPreview(String preview) {
+        this.preview = preview;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -122,12 +179,17 @@ public class Book {
         Book book = (Book) o;
 
         if (bookId != book.bookId) return false;
-        if (price != book.price) return false;
+        if (bigCover != null ? !bigCover.equals(book.bigCover) : book.bigCover != null) return false;
         if (cover != null ? !cover.equals(book.cover) : book.cover != null) return false;
         if (datePub != null ? !datePub.equals(book.datePub) : book.datePub != null) return false;
         if (description != null ? !description.equals(book.description) : book.description != null) return false;
+        if (docPath != null ? !docPath.equals(book.docPath) : book.docPath != null) return false;
         if (downloadsCnt != null ? !downloadsCnt.equals(book.downloadsCnt) : book.downloadsCnt != null) return false;
+        if (fb2Path != null ? !fb2Path.equals(book.fb2Path) : book.fb2Path != null) return false;
         if (pagesCnt != null ? !pagesCnt.equals(book.pagesCnt) : book.pagesCnt != null) return false;
+        if (pdfPath != null ? !pdfPath.equals(book.pdfPath) : book.pdfPath != null) return false;
+        if (preview != null ? !preview.equals(book.preview) : book.preview != null) return false;
+        if (price != null ? !price.equals(book.price) : book.price != null) return false;
         if (reviewCnt != null ? !reviewCnt.equals(book.reviewCnt) : book.reviewCnt != null) return false;
         if (title != null ? !title.equals(book.title) : book.title != null) return false;
 
@@ -144,7 +206,12 @@ public class Book {
         result = 31 * result + (pagesCnt != null ? pagesCnt.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (cover != null ? cover.hashCode() : 0);
-        result = 31 * result + (int)Math.round(price);
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (bigCover != null ? bigCover.hashCode() : 0);
+        result = 31 * result + (pdfPath != null ? pdfPath.hashCode() : 0);
+        result = 31 * result + (docPath != null ? docPath.hashCode() : 0);
+        result = 31 * result + (fb2Path != null ? fb2Path.hashCode() : 0);
+        result = 31 * result + (preview != null ? preview.hashCode() : 0);
         return result;
     }
 
@@ -204,15 +271,5 @@ public class Book {
 
     public void setPurchasedBooksByBookId(Collection<PurchasedBook> purchasedBooksByBookId) {
         this.purchasedBooksByBookId = purchasedBooksByBookId;
-    }
-
-    @Basic
-    @Column(name = "path", nullable = true, insertable = true, updatable = true, length = 255)
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 }
