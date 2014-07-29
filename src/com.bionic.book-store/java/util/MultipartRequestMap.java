@@ -12,29 +12,28 @@ import java.util.List;
  * Created by Джон on 28.07.2014.
  */
 public class MultipartRequestMap extends HashMap<String, List<Object>> {
+    public static final String UPLOAD_PATH="/home/jsarafajr/book-store/storage";
+
     private final String DEFAULT_ENCODING="UTF-8";
-    private final String UPLOAD_PATH="D:\\Bionic\\Books";
     private String STORAGE="";
     private String encoding;
 
     public MultipartRequestMap(HttpServletRequest request) {
         super();
         try {
-
-
             this.encoding = request.getCharacterEncoding();
             if (this.encoding == null) {
                 try {
                     request.setCharacterEncoding(this.encoding = DEFAULT_ENCODING);
                 } catch (UnsupportedEncodingException ex) {
-                    //  Logger.getLogger(MultipartRequestMap.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.log(Logger.Type.PROCESS, "MultiPartRequestMap class : " + ex.getMessage());
                 }
             }
 
             String tempLocation=getValue(request.getPart("title"));
-            File myDir = new File(UPLOAD_PATH+"\\"+tempLocation);
+            File myDir = new File(UPLOAD_PATH+ "/" +tempLocation);
             myDir.mkdirs();
-            this.STORAGE = UPLOAD_PATH+"\\"+tempLocation;
+            this.STORAGE = UPLOAD_PATH + "/" +tempLocation;
 
             for (Part part : request.getParts()) {
                 String fileName = part.getSubmittedFileName();
@@ -45,7 +44,7 @@ public class MultipartRequestMap extends HashMap<String, List<Object>> {
                 }
             }
         } catch (IOException | ServletException ex) {
-            //Logger.getLogger(MultipartRequestMap.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.log(Logger.Type.PROCESS, "MultiPartRequestMap class : " + ex.getMessage());
         }
     }
 
