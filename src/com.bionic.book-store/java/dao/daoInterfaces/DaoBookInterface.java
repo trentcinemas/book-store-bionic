@@ -11,6 +11,7 @@ import java.util.List;
  */
 public interface DaoBookInterface {
     public List<Book> selectAll();
+    public List<Book> selectAllOrdered(String byWhat, boolean order);
     public Book selectById(int id);
     public List<Book> selectByTitle(String title);
     public List<Book> selectByUser(User user);
