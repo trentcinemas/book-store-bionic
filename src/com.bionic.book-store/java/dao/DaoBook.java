@@ -222,15 +222,17 @@ public class DaoBook implements DaoBookInterface {
 
     @Override
     public List<Book> search(String s) {
+        s = s.trim();
+        s = s.toLowerCase();
         String[] words = s.split(" ");
 
         Session session;
         session = HibernateUtil.getSessionFactory().openSession();
 
-        String selectQuery = "select b from Book b where (b.title like '%" + s + "%' or b.description like '%" + s + "%')";
+        String selectQuery = "select b from Book b where (lower(b.title) like '%" + s + "%' or lower(b.description) like '%" + s + "%')";
         for (String w : words)
-            selectQuery += " or b.title like '%" + w + "%' or b.description like '%" + w + "%' or b.authorByAuthorId in " +
-                    "(select a from Author a where a.firstname like '%" + w + "%' or a.lastname like '%" + w + "%')";
+            selectQuery += " or lower(b.title) like '%" + w + "%' or lower(b.description) like '%" + w + "%' or lower(b.authorByAuthorId) in " +
+                    "(select a from Author a where lower(a.firstname) like '%" + w + "%' or lower(a.lastname) like '%" + w + "%')";
 
 
         Query query = session.createQuery(selectQuery);
