@@ -1,5 +1,7 @@
 package util;
 
+import rest.AuthorRest;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
@@ -46,6 +48,38 @@ public class MultipartRequestMap extends HashMap<String, List<Object>> {
         } catch (IOException | ServletException ex) {
             Logger.log(Logger.Type.PROCESS, "MultiPartRequestMap class : " + ex.getMessage());
         }
+    }
+
+    public MultipartRequestMap(HttpServletRequest request, boolean isAuthor) {
+        if (!isAuthor) {
+            Logger.log(Logger.Type.ERROR, "Used wrong constructor in" + MultipartRequestMap.class.getName());
+            return;
+        }
+
+        try {
+            this.encoding = request.getCharacterEncoding();
+            if (this.encoding == null) {
+                try {
+                    request.setCharacterEncoding(this.encoding = DEFAULT_ENCODING);
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.log(Logger.Type.PROCESS, MultipartRequestMap.class.getName() + " : " + ex.getMessage());
+                }
+            }
+
+            this.STORAGE = AuthorRest.PHOTO_DIRECTORY_PATH;
+
+            for (Part part : request.getParts()) {
+                String fileName = part.getSubmittedFileName();
+                if (fileName == null) {
+                    putMulti(part.getName(), getValue(part));
+                } else {
+                    processFilePart(part, fileName);
+                }
+            }
+        } catch (IOException | ServletException ex) {
+            Logger.log(Logger.Type.PROCESS, "MultiPartRequestMap class : " + ex.getMessage());
+        }
+
     }
 
     public String getStringParameter(String name) {
