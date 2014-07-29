@@ -36,20 +36,22 @@ $('.row').ready(function(){
             var i=0;
             if (data != null) {
             $('.new').each(function(){
-                   $(this).html(" <div class = 'small-thubnail'><a href='#'><img src='"+data[i].cover+"' alt='100%x180'style='height: 203px; width: 142px; display: block;'></a></div>"+
-                       "<div class = 'b-title'>"+
-                       "<a href='#'><span class = 'title'>"+data[i].title+"</span></a> </div>"+
-                       "<div class = 'b-author'>"+
-                       "<a href = '#'><span class = 'author'>AUTHOR</span></a></div>"+
-                       "<span class = 'price'>"+data[i].price+"<span>");
+                        $(this).html(" <div class = 'small-thubnail'><a href='#'><img src='rest/file/getimage/"+data[i].sm_cover+"' alt='100%x180'style='height: 203px; width: 142px; display: block;'></a></div>"+
+                            "<div class = 'b-title'>"+
+                            "<a href='#'><span class = 'title'>"+data[i].title+"</span></a> </div>"+
+                            "<div class = 'b-author'>"+
+                            "<a href = '#'><span class = 'author'>AUTHOR</span></a></div>"+
+                            "<span class = 'price'>"+data[i].price+"<span>");
+                i++
             })
              $('.popular').each(function() {
-                 $(this).html(" <div class = 'small-thubnail'><a href='#'><img src='" + data + "' alt='100%x180'style='height: 203px; width: 142px; display: block;'></a></div>" +
-                     "<div class = 'b-title'>" +
-                     "<a href='#'><span class = 'title'>" + data + "</span></a> </div>" +
-                     "<div class = 'b-author'>" +
-                     "<a href = '#'><span class = 'author'>" + data + "</span></a></div>" +
-                     "<span class = 'price'>" + data + "<span>");
+                         $(this).html(" <div class = 'small-thubnail'><a href='#'><img src='/rest/file/getimage/"+data[i].sm_cover+"' alt='100%x180'style='height: 203px; width: 142px; display: block;'></a></div>"+
+                             "<div class = 'b-title'>"+
+                             "<a href='#'><span class = 'title'>"+data[i].title+"</span></a> </div>"+
+                             "<div class = 'b-author'>"+
+                             "<a href = '#'><span class = 'author'>AUTHOR</span></a></div>"+
+                             "<span class = 'price'>"+data[i].price+"<span>");
+                i++;
              });
 			}
         },

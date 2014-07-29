@@ -4,30 +4,27 @@
 
 $(document).ready(function() {
 
-    $('#searchForm').submit(function() {
-        var searchString = $('#searhString').val();
-
+    $("#searchString").keyup(function(e){
 
         $.ajax({
-            type: 'post',
-            url: 'rest/book/search',
-            crossDomain: true,
-            data: {'searchString': searchString},
-            response: 'text', // response type
-            success: function(data) {
-                $('#status').html("Success");
-            },
-            error: function(data) {
-                $('#status').html("Error");
+           type:"get",
+           url:"../../rest/book/search/"+$(this).val(),
+           crossDomain:true,
+           dataType:"json",
+           cache: false,
+           success:function(data) {
+               $("#result").html("");
+               for (var i = 0; i < data.length; i++) {
+                   $("#result").append("<div style='width:50px;height:50px;' id='"+data[i].id+"'>"+data[i].title + "<br>"+data[i].price+"<img src='/rest/file/getimage/" + data[i].sm_cover + "'></div>");
+               }
+           },
+            error:function(){
+
+                $("#result").html("");
+
             }
-
         });
-
-        return false;
-    });
-
-
-
+    })
 });
 
 

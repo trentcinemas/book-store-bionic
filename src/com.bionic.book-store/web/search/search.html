@@ -9,8 +9,11 @@
 <body>
     <div id="search" >
         <form id="searchForm" method="post">
-            <input type="text" placeholder="Введите запрос" name="searchString" id="searchString">
+            <input type="text" placeholder="Введите запрос" name="searchString" id="searchString" onkeypress="search(this.value)">
         </form>
     </div>
+<div id="result">
+
+</div>
 </body>
 </html>

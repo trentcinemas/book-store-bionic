@@ -30,7 +30,12 @@
       <column name="description" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
       <column name="distr_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="cover" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="price" sqlType="DECIMAL" precision="10" scale="0" nullable="false" jdbcType="3"/>
+      <column name="price" sqlType="DECIMAL" precision="10" scale="2" nullable="false" jdbcType="3"/>
+      <column name="big_cover" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="pdf_path" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="doc_path" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="fb2_path" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="preview" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="book_id"/>
       <foreign-key name="Book_fk1" columns="author_id" ref-table="Author" ref-schema="" ref-catalog="favorite_bs" ref-columns="author_id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="Book_fk2" columns="user_id" ref-table="User" ref-schema="" ref-catalog="favorite_bs" ref-columns="user_id" update-rule="3" delete-rule="3" deferrability="2"/>
@@ -76,6 +81,15 @@
       <foreign-key name="PurchasedBook_fk2" columns="book_id" ref-table="Book" ref-schema="" ref-catalog="favorite_bs" ref-columns="book_id" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="PurchasedBook_fk1" unique="false" columns="user_id"/>
       <index name="PurchasedBook_fk2" unique="false" columns="book_id"/>
+    </table>
+    <table name="ReplyMessage" schema="" catalog="favorite_bs" type="TABLE">
+      <column name="messageId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="email" sqlType="CHAR" precision="50" scale="0" nullable="true" jdbcType="1"/>
+      <column name="receiver" sqlType="CHAR" precision="50" scale="0" nullable="true" jdbcType="1"/>
+      <column name="text" sqlType="CHAR" precision="255" scale="0" nullable="true" jdbcType="1"/>
+      <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="removed" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <primary-key name="PRIMARY" columns="messageId"/>
     </table>
     <table name="User" schema="" catalog="favorite_bs" type="TABLE">
       <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
