@@ -201,4 +201,29 @@ public class DaoBook implements DaoBookInterface {
             session.close();
         }
     }
+
+    @Override
+    public List<Book> search(String s) {
+        String[] words = s.split(" ");
+
+        Session session;
+        session = HibernateUtil.getSessionFactory().openSession();
+
+        String selectQuery = "select b from Book b where (b.title like '%" + s + "%' or b.description like '%" + s + "%')";
+        for (String w : words)
+            selectQuery += " or b.title like '%" + w + "%' or b.description like '%" + w + "%' or b.authorByAuthorId in " +
+                    "(select a from Author a where a.firstname like '%" + w + "%' or a.lastname like '%" + w + "%')";
+
+
+        Query query = session.createQuery(selectQuery);
+        if (!query.list().isEmpty()) {
+            List <Book> result = query.list();
+            session.close();
+            return result;
+        }
+        else {
+            session.close();
+            return null;
+        }
+    }
 }

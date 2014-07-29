@@ -21,4 +21,5 @@ public interface DaoBookInterface {
     void update(Book book);
     void delete(Book book);
     void delete(int id);
+    public List<Book> search(String s);
 }
