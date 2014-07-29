@@ -18,10 +18,10 @@ public class User {
     private String email;
     private String password;
     private String name;
-    private Collection<Book> booksByUserId;
     private Collection<Comment> commentsByUserId;
     private Collection<PurchasedBook> purchasedBooksByUserId;
     private UserGroup userGroupByGroupId;
+    private Collection<Book> booksByUserId;
 
     @Id
     @Column(name = "user_id", nullable = false, insertable = true, updatable = true)
@@ -95,15 +95,6 @@ public class User {
     }
 
     @OneToMany(mappedBy = "userByUserId")
-    public Collection<Book> getBooksByUserId() {
-        return booksByUserId;
-    }
-
-    public void setBooksByUserId(Collection<Book> booksByUserId) {
-        this.booksByUserId = booksByUserId;
-    }
-
-    @OneToMany(mappedBy = "userByUserId")
     public Collection<Comment> getCommentsByUserId() {
         return commentsByUserId;
     }
@@ -129,5 +120,14 @@ public class User {
 
     public void setUserGroupByGroupId(UserGroup userGroupByGroupId) {
         this.userGroupByGroupId = userGroupByGroupId;
+    }
+
+    @OneToMany(mappedBy = "userByUserId")
+    public Collection<Book> getBooksByUserId() {
+        return booksByUserId;
+    }
+
+    public void setBooksByUserId(Collection<Book> booksByUserId) {
+        this.booksByUserId = booksByUserId;
     }
 }
