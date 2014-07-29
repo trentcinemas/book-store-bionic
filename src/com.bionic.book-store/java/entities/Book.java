@@ -1,7 +1,6 @@
 package entities;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Collection;
 
@@ -18,7 +17,7 @@ public class Book {
     private Integer pagesCnt;
     private String description;
     private String cover;
-    private BigDecimal price;
+    private double price;
     private String bigCover;
     private String pdfPath;
     private String docPath;
@@ -113,11 +112,11 @@ public class Book {
 
     @Basic
     @Column(name = "price")
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -174,31 +173,44 @@ public class Book {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Book)) return false;
 
         Book book = (Book) o;
 
         if (bookId != book.bookId) return false;
+        if (Double.compare(book.price, price) != 0) return false;
+        if (authorByAuthorId != null ? !authorByAuthorId.equals(book.authorByAuthorId) : book.authorByAuthorId != null)
+            return false;
         if (bigCover != null ? !bigCover.equals(book.bigCover) : book.bigCover != null) return false;
+        if (commentsByBookId != null ? !commentsByBookId.equals(book.commentsByBookId) : book.commentsByBookId != null)
+            return false;
         if (cover != null ? !cover.equals(book.cover) : book.cover != null) return false;
         if (datePub != null ? !datePub.equals(book.datePub) : book.datePub != null) return false;
         if (description != null ? !description.equals(book.description) : book.description != null) return false;
+        if (distributorByDistrId != null ? !distributorByDistrId.equals(book.distributorByDistrId) : book.distributorByDistrId != null)
+            return false;
         if (docPath != null ? !docPath.equals(book.docPath) : book.docPath != null) return false;
         if (downloadsCnt != null ? !downloadsCnt.equals(book.downloadsCnt) : book.downloadsCnt != null) return false;
         if (fb2Path != null ? !fb2Path.equals(book.fb2Path) : book.fb2Path != null) return false;
+        if (genreByGenreId != null ? !genreByGenreId.equals(book.genreByGenreId) : book.genreByGenreId != null)
+            return false;
         if (pagesCnt != null ? !pagesCnt.equals(book.pagesCnt) : book.pagesCnt != null) return false;
         if (pdfPath != null ? !pdfPath.equals(book.pdfPath) : book.pdfPath != null) return false;
         if (preview != null ? !preview.equals(book.preview) : book.preview != null) return false;
-        if (price != null ? !price.equals(book.price) : book.price != null) return false;
+        if (purchasedBooksByBookId != null ? !purchasedBooksByBookId.equals(book.purchasedBooksByBookId) : book.purchasedBooksByBookId != null)
+            return false;
         if (reviewCnt != null ? !reviewCnt.equals(book.reviewCnt) : book.reviewCnt != null) return false;
         if (title != null ? !title.equals(book.title) : book.title != null) return false;
+        if (userByUserId != null ? !userByUserId.equals(book.userByUserId) : book.userByUserId != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = bookId;
+        int result;
+        long temp;
+        result = bookId;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (datePub != null ? datePub.hashCode() : 0);
         result = 31 * result + (downloadsCnt != null ? downloadsCnt.hashCode() : 0);
@@ -206,12 +218,19 @@ public class Book {
         result = 31 * result + (pagesCnt != null ? pagesCnt.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (cover != null ? cover.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (bigCover != null ? bigCover.hashCode() : 0);
         result = 31 * result + (pdfPath != null ? pdfPath.hashCode() : 0);
         result = 31 * result + (docPath != null ? docPath.hashCode() : 0);
         result = 31 * result + (fb2Path != null ? fb2Path.hashCode() : 0);
         result = 31 * result + (preview != null ? preview.hashCode() : 0);
+        result = 31 * result + (authorByAuthorId != null ? authorByAuthorId.hashCode() : 0);
+        result = 31 * result + (userByUserId != null ? userByUserId.hashCode() : 0);
+        result = 31 * result + (genreByGenreId != null ? genreByGenreId.hashCode() : 0);
+        result = 31 * result + (distributorByDistrId != null ? distributorByDistrId.hashCode() : 0);
+        result = 31 * result + (commentsByBookId != null ? commentsByBookId.hashCode() : 0);
+        result = 31 * result + (purchasedBooksByBookId != null ? purchasedBooksByBookId.hashCode() : 0);
         return result;
     }
 

@@ -1,25 +1,6 @@
 /**
  * Created by Джон on 25.07.2014.
  */
-var photo = null, doc = null, fb2 = null, pdf = null;
-$("#photo").on("change", function (e) {
-    photo = e.target.files[0];
-
-});
-$("#pdf").on("change", function (e) {
-    pdf = e.target.files[0];
-
-});
-$("#doc").on("change", function (e) {
-    doc = e.target.files[0];
-    /*if(doc.type!="doc") {
-     doc=null;
-     }*/
-});
-$("#fb2").on("change", function (e) {
-    fb2 = e.target.files[0];
-
-});
 $("#upload").submit(function (e) {
     e.preventDefault();
 

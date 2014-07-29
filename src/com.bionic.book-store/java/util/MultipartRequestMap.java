@@ -12,28 +12,29 @@ import java.util.List;
  * Created by Джон on 28.07.2014.
  */
 public class MultipartRequestMap extends HashMap<String, List<Object>> {
-
-    private static final String DEFAULT_ENCODING = "UTF-8";
+    private final String DEFAULT_ENCODING="UTF-8";
+    private final String UPLOAD_PATH="D:\\Bionic\\Books";
+    private String STORAGE="";
     private String encoding;
-    private String tempLocation;
 
     public MultipartRequestMap(HttpServletRequest request) {
-        this(request, System.getProperty("java.io.tmpdir"));
-    }
-
-    public MultipartRequestMap(HttpServletRequest request, String tempLocation) {
         super();
         try {
-            this.tempLocation = tempLocation;
+
 
             this.encoding = request.getCharacterEncoding();
             if (this.encoding == null) {
                 try {
                     request.setCharacterEncoding(this.encoding = DEFAULT_ENCODING);
                 } catch (UnsupportedEncodingException ex) {
-                  //  Logger.getLogger(MultipartRequestMap.class.getName()).log(Level.SEVERE, null, ex);
+                    //  Logger.getLogger(MultipartRequestMap.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+
+            String tempLocation=getValue(request.getPart("title"));
+            File myDir = new File(UPLOAD_PATH+"\\"+tempLocation);
+            myDir.mkdirs();
+            this.STORAGE = UPLOAD_PATH+"\\"+tempLocation;
 
             for (Part part : request.getParts()) {
                 String fileName = part.getSubmittedFileName();
@@ -59,7 +60,7 @@ public class MultipartRequestMap extends HashMap<String, List<Object>> {
     }
 
     private void processFilePart(Part part, String fileName) throws IOException {
-        File tempFile = new File(tempLocation, fileName);
+        File tempFile = new File(STORAGE, fileName);
         tempFile.createNewFile();
         tempFile.deleteOnExit();
 

@@ -1,62 +1,11 @@
 /**
- * Created by jsarafajr on 25.07.14.
+ * Created by jsarafajr on 28.07.14.
  */
-
-$('#authorization').ready(function() {
-    // If user is Sign In show logout
-    $.ajax({
-        type: 'get',
-        url: '/rest/session/get-user',
-        crossDomain: true,
-        success: function (data) {
-            if (data.name == null) { // if response doesn't have user
-                loginFormEnable();
-            } else {
-                logoutButtonEnable(data.name);
-            }
-        }
-    });
-
-    formReplyActionSet();
-
-});
-
-
-function logoutButtonEnable(name) {
-    $('#authorization').html(
-        "<span id='user_name_logined'>Hello, " + name + "!</span><br>" +
-        "<input type='button' id='logout_button' value='Вийти'>"
-    );
-    // set on click action on logout button
-    $('#logout_button').click(function() {
-        $.ajax({
-            type: 'post',
-            url: '/rest/session/logout',
-            crossDomain: true,
-            success: function (data) {
-                location.reload();
-            },
-            error: function (data) {
-                alert("You are not signed in!")
-            }
-        });
-    });
-}
-
-function loginFormEnable() {
-    $('#authorization').html(
-            "<form id='login_form' method='post'>" +
-            "<label id='login_message'></label>" +
-            "<br>" +
-            "<label>e-mail : </label><input type='text' id='login_email'>" +
-            "<label>password : </label><input type='text' id='login_password'>" +
-            "<input type='submit'>" +
-            "</form>"
-    );
+$(document).ready(function(){
     // set action on login form
-    $('#login_form').submit(function() {
-        var email = $('#login_email').val();
-        var password = $('#login_password').val();
+    $('#login').submit(function() {
+        var email = $('#email').val();
+        var password = $('#password').val();
 
         $.ajax({
             type: 'post',
@@ -75,6 +24,102 @@ function loginFormEnable() {
         });
         return false;
     });
+});
+$('.row').ready(function(){
+  $.ajax({
+        type: "get",
+        url: "rest/book/list/5/0",
+        crossDomain: true,
+        dataType:"json",
+        cache: false,
+        success:function (data) {
+            var i=0;
+            if (data != null) {
+            $('.new').each(function(){
+                   $(this).html(" <div class = 'small-thubnail'><a href='#'><img src='"+data[i].cover+"' alt='100%x180'style='height: 203px; width: 142px; display: block;'></a></div>"+
+                       "<div class = 'b-title'>"+
+                       "<a href='#'><span class = 'title'>"+data[i].title+"</span></a> </div>"+
+                       "<div class = 'b-author'>"+
+                       "<a href = '#'><span class = 'author'>AUTHOR</span></a></div>"+
+                       "<span class = 'price'>"+data[i].price+"<span>");
+            })
+             $('.popular').each(function() {
+                 $(this).html(" <div class = 'small-thubnail'><a href='#'><img src='" + data + "' alt='100%x180'style='height: 203px; width: 142px; display: block;'></a></div>" +
+                     "<div class = 'b-title'>" +
+                     "<a href='#'><span class = 'title'>" + data + "</span></a> </div>" +
+                     "<div class = 'b-author'>" +
+                     "<a href = '#'><span class = 'author'>" + data + "</span></a></div>" +
+                     "<span class = 'price'>" + data + "<span>");
+             });
+			}
+        },
+        error: function (data) {
+            alert("Error");
+        }
+    });
+});
+$('#navbarHeader').ready(function() {
+    // If user is Sign In show logout
+    $.ajax({
+        type: 'get',
+        url: '/rest/session/get-user',
+        crossDomain: true,
+        success: function (data) {
+            if (data.name == null) { // if response doesn't have user
+                loginButtonEnable();
+            } else {
+                logoutButtonEnable(data.name);
+            }
+        }
+    });
+
+    formReplyActionSet();
+});
+
+function logoutButtonEnable(name) {
+    $('#navbarHeader').html(
+            "<ul class='nav navbar-nav pull-right'>" +
+                "<li class='active'><a href='index.html'>Головна</a></li>" +
+                "<li><a href='#'>Усі книжки</a></li>" +
+                "<li><a href='#'>Як придбати</a></li>" +
+                "<li><a href='#'>Про видавництво</a></li>" +
+                "<li><a href='#'>Кабінет</a></li>" +
+                "<li><a href='#' id = 'logout_button'>Вийти</a></li>" +
+            "</ul>" +
+            "<div id='hellouser'>" + name + "</div>"
+    );
+
+    // set on click action on logout button
+    $('#logout_button').click(function() {
+        $.ajax({
+            type: 'post',
+            url: '/rest/session/logout',
+            crossDomain: true,
+            success: function (data) {
+                location.reload();
+            },
+            error: function (data) {
+                alert("You are not signed in!")
+            }
+        });
+    });
+}
+
+function loginButtonEnable() {
+    $(('#navbarHeader')).html(
+            "<ul class='nav navbar-nav pull-right'>" +
+            "<li class='active'><a href='index.html'>Головна</a></li>" +
+            "<li><a href='#'>Усі книжки</a></li>" +
+            "<li><a href='#'>Як придбати</a></li>" +
+            "<li><a href='#'>Про видавництво</a></li>" +
+            "<li><a href='#' id = 'enter'>Увійти</a></li>" +
+            "</ul>"
+    );
+
+    $("#enter").click(function(){
+        $("#login").slideToggle("slow");
+        $(this).toggleClass("active");
+    });
 }
 
 function formReplyActionSet() {
@@ -82,8 +127,6 @@ function formReplyActionSet() {
         var email = $('#reply_email').val();
         var receiver = $('#reply_receiver').val();
         var text = $('#reply_text').val();
-
-        alert(text);
 
         $.ajax({
             type: 'post',
@@ -96,4 +139,8 @@ function formReplyActionSet() {
         });
         return false;
     });
+}
+
+function searchActionSet() {
+
 }
