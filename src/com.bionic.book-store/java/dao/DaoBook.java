@@ -16,19 +16,19 @@ import java.util.List;
  */
 public class DaoBook implements DaoBookInterface {
     @Override
-    public List<Book> selectAllOrdered(String byWhat,boolean order) {
+    public List<Book> selectAllOrdered(String byWhat, boolean order) {
         Session session;
         session = HibernateUtil.getSessionFactory().openSession();
-        Query query=null;
-        if(order==true)
-        query = session.createQuery("FROM Book order by "+byWhat+" asc");
+        Query query = null;
+        if (order == true)
+            query = session.createQuery("FROM Book order by " + byWhat + " asc");
         else
-        query = session.createQuery("FROM Book order by "+byWhat+" desc");
-        if (!query.list().isEmpty()){
+            query = session.createQuery("FROM Book order by " + byWhat + " desc");
+        if (!query.list().isEmpty()) {
             List<Book> result = query.list();
             session.close();
             return result;
-        }else{
+        } else {
             session.close();
             return null;
         }
@@ -39,11 +39,11 @@ public class DaoBook implements DaoBookInterface {
         Session session;
         session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("FROM Book");
-        if (!query.list().isEmpty()){
+        if (!query.list().isEmpty()) {
             List<Book> result = query.list();
             session.close();
             return result;
-        }else{
+        } else {
             session.close();
             return null;
         }
@@ -56,11 +56,10 @@ public class DaoBook implements DaoBookInterface {
         Query query = session.createQuery("select book from Book book where book.id=" +
                 Integer.toString(id));
         if (!query.list().isEmpty()) {
-            Book result=(Book)query.list().get(0);
+            Book result = (Book) query.list().get(0);
             session.close();
             return result;
-        }
-        else {
+        } else {
             session.close();
             return null;
         }
@@ -73,11 +72,10 @@ public class DaoBook implements DaoBookInterface {
         Query query = session.createQuery("select book from Book book where book.title='" +
                 title + "'");
         if (!query.list().isEmpty()) {
-            List <Book> result = query.list();
+            List<Book> result = query.list();
             session.close();
             return result;
-        }
-        else {
+        } else {
             session.close();
             return null;
         }
@@ -90,13 +88,12 @@ public class DaoBook implements DaoBookInterface {
         Query query = session.createQuery("select book from Book book where book.userByUserId='" +
                 user + "'");
         if (!query.list().isEmpty()) {
-            List <Book> result = query.list();
+            List<Book> result = query.list();
             session.close();
             return result;
-        }
-        else {
+        } else {
             session.close();
-           return null;
+            return null;
         }
     }
 
@@ -104,13 +101,12 @@ public class DaoBook implements DaoBookInterface {
     public List<Book> selectByUserId(int id) {
         Session session;
         session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("select b from Book b join b.userByUserId c where c.userId ="+id);
-        if(!query.list().isEmpty()){
+        Query query = session.createQuery("select b from Book b join b.userByUserId c where c.userId =" + id);
+        if (!query.list().isEmpty()) {
             List<Book> result = query.list();
             session.close();
             return result;
-        }
-        else {
+        } else {
             session.close();
             return null;
         }
@@ -123,11 +119,10 @@ public class DaoBook implements DaoBookInterface {
         Query query = session.createQuery("select book from Book book where book.distributorByDistrId ='" +
                 distr + "'");
         if (!query.list().isEmpty()) {
-            List <Book> result = query.list();
+            List<Book> result = query.list();
             session.close();
             return result;
-        }
-        else {
+        } else {
             session.close();
             return null;
         }
@@ -137,13 +132,12 @@ public class DaoBook implements DaoBookInterface {
     public List<Book> selectByDistributorId(int id) {
         Session session;
         session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("select b from Book b join b.distributorByDistrId c where c.distrId ="+id);
-        if(!query.list().isEmpty()){
+        Query query = session.createQuery("select b from Book b join b.distributorByDistrId c where c.distrId =" + id);
+        if (!query.list().isEmpty()) {
             List<Book> result = query.list();
             session.close();
             return result;
-        }
-        else {
+        } else {
             session.close();
             return null;
         }
@@ -173,11 +167,9 @@ public class DaoBook implements DaoBookInterface {
             tx = session.beginTransaction();
             session.update(book);
             tx.commit();
-        }
-        catch (Exception e) {
-            if (tx!=null) tx.rollback();
-        }
-        finally {
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+        } finally {
             session.close();
         }
     }
@@ -189,14 +181,12 @@ public class DaoBook implements DaoBookInterface {
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            Query query = session.createQuery("delete from Book book where book = '"+book+"'");
+            Query query = session.createQuery("delete from Book book where book = '" + book + "'");
             int deletedCount = query.executeUpdate();
             tx.commit();
-        }
-        catch (Exception e) {
-            if (tx!=null) tx.rollback();
-        }
-        finally {
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+        } finally {
             session.close();
         }
     }
@@ -211,11 +201,9 @@ public class DaoBook implements DaoBookInterface {
             Query query = session.createQuery("delete from Book book where book.id =" + Integer.toString(id));
             int deletedCount = query.executeUpdate();
             tx.commit();
-        }
-        catch (Exception e) {
-            if (tx!=null) tx.rollback();
-        }
-        finally {
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+        } finally {
             session.close();
         }
     }
@@ -237,11 +225,10 @@ public class DaoBook implements DaoBookInterface {
 
         Query query = session.createQuery(selectQuery);
         if (!query.list().isEmpty()) {
-            List <Book> result = query.list();
+            List<Book> result = query.list();
             session.close();
             return result;
-        }
-        else {
+        } else {
             session.close();
             return null;
         }
