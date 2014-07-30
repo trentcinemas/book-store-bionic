@@ -217,9 +217,9 @@ public class DaoBook implements DaoBookInterface {
         Session session;
         session = HibernateUtil.getSessionFactory().openSession();
 
-        String selectQuery = "select b from Book b where (lower(b.title) like '%" + s + "%' or lower(b.description) like '%" + s + "%')";
+        String selectQuery = "select b from Book b where lower(b.title) like '%" + s + "%' or lower(b.description) like '%" + s + "%'";
         for (String w : words)
-            selectQuery += " or lower(b.title) like '%" + w + "%' or lower(b.description) like '%" + w + "%' or lower(b.authorByAuthorId) in " +
+            selectQuery += "or lower(b.title) like '%" + w + "%' or lower(b.description) like '%" + w + "%' or lower(b.authorByAuthorId) in " +
                     "(select a from Author a where lower(a.firstname) like '%" + w + "%' or lower(a.lastname) like '%" + w + "%')";
 
 
@@ -229,6 +229,22 @@ public class DaoBook implements DaoBookInterface {
             session.close();
             return result;
         } else {
+            session.close();
+            return null;
+        }
+    }
+
+    @Override
+    public List<Book> selectByGenreID(int id) {
+        Session session;
+        session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("select b from Book b  where b.genreByGenreId ="+id);
+        if(!query.list().isEmpty()){
+            List<Book> result = query.list();
+            session.close();
+            return result;
+        }
+        else {
             session.close();
             return null;
         }

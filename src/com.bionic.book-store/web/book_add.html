@@ -6,27 +6,51 @@
 </head>
 <body>
 <form id="upload" name="upload" method="post" enctype="multipart/form-data">
+    <!--Назва книги-->
     <label for="title">Назва книги:</label>
     <input type="text" name="title" id="title">
     <br>
-    <label for="description" >Опис:</label>
+    <!--Автор-->
+    <input type="hidden" id="selected_author_id" name="author_id" value="">
+    <label for="title">Автор:</label>
+    <select name="author" id="author">
+    </select>
+    <br>
+    <!--Жанр-->
+    <input type="hidden" id="selected_genre_id" name="genre_id" value="">
+    <label for="title">Genre:</label>
+    <select name="genre" id="genre">
+    </select>
+    <br>
+    <!--Опис-->
+    <label for="description">Опис:</label>
     <textarea id="description" name="description"></textarea>
     <br>
+    <!--Ціна-->
     <label for="price">Ціна:</label>
     <input type="text" id="price" name="price">
     <br>
+    <!--Кількість сторінок-->
     <label for="page_count">К-сть сторінок:</label>
     <input type="number" id="page_count" name="page_count">
     <br>
-    <label for="photo">Обкладинка:</label>
-    <input type="file"  id="photo" name="photo">
+    <!--Мала обкладинка-->
+    <label for="sm-cover">Мала Обкладинка:</label>
+    <input type="file" id="sm-cover" name="sm-cover">
     <br>
+    <!--Велика обкладинка-->
+    <label for="big-cover">Велика Обкладинка:</label>
+    <input type="file" id="big-cover" name="big-cover">
+    <br>
+    <!--PDF файл-->
     <label for="pdf">PDF:</label>
     <input type="file" id="pdf" name="pdf">
     <br>
+    <!--DOC файл-->
     <label for="doc">DOC:</label>
     <input type="file" id="doc" name="doc">
     <br>
+    <!--FB2 файл-->
     <label for="fb2">FB2:</label>
     <input type="file" id="fb2" name="fb2">
     <br>

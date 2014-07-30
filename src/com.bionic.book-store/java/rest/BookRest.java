@@ -35,7 +35,7 @@ public class BookRest extends HttpServlet {
     @POST
     public Response addBook(@CookieParam("user") String enteredUser, @Context HttpServletRequest request) {
 
-       User user = DaoFactory.getDaoUserInstance().selectByEmail(enteredUser);
+        User user = DaoFactory.getDaoUserInstance().selectByEmail(enteredUser);
 
         if (!checkUser(user)) {
             Logger.log(Logger.Type.PROCESS, "Access denied : " + enteredUser);
@@ -49,15 +49,17 @@ public class BookRest extends HttpServlet {
         enBook.setDescription(map.getStringParameter("description"));
         enBook.setPrice(Float.parseFloat(map.getStringParameter("price")));
         enBook.setDatePub(new Timestamp(System.currentTimeMillis()));
+        String author_id = map.getStringParameter("author_id");
+        enBook.setAuthorByAuthorId(DaoFactory.getDaoAuthorInstance().selectById(Integer.parseInt(author_id)));
         enBook.setUserByUserId(user);
         enBook.setReviewCnt(0);
         enBook.setDownloadsCnt(0);
         enBook.setPagesCnt(Integer.parseInt(map.getStringParameter("page_count")));
-        enBook.setCover(map.getStringParameter("title")+"/"+map.getFileParameter("sm-cover").getAbsoluteFile().getName());
-        enBook.setBigCover(map.getStringParameter("title")+"/"+map.getFileParameter("big-cover").getAbsoluteFile().getName());
-        enBook.setPdfPath(map.getStringParameter("title")+"/"+map.getFileParameter("pdf").getAbsoluteFile().getName());
-        enBook.setDocPath(map.getStringParameter("title")+"/"+map.getFileParameter("doc").getAbsoluteFile().getName());
-        enBook.setFb2Path(map.getStringParameter("title")+"/"+map.getFileParameter("fb2").getAbsoluteFile().getName());
+        enBook.setCover(map.getStringParameter("title") + "/" + map.getFileParameter("sm-cover").getAbsoluteFile().getName());
+        enBook.setBigCover(map.getStringParameter("title") + "/" + map.getFileParameter("big-cover").getAbsoluteFile().getName());
+        enBook.setPdfPath(map.getStringParameter("title") + "/" + map.getFileParameter("pdf").getAbsoluteFile().getName());
+        enBook.setDocPath(map.getStringParameter("title") + "/" + map.getFileParameter("doc").getAbsoluteFile().getName());
+        enBook.setFb2Path(map.getStringParameter("title") + "/" + map.getFileParameter("fb2").getAbsoluteFile().getName());
 
         DaoFactory.getDaoBookInstance().insert(enBook);
 
@@ -84,12 +86,12 @@ public class BookRest extends HttpServlet {
     @Path("list/{limit}/{order}")
     @GET
     @Produces("application/json")
-    public ArrayList<BookJson> GetLastAddedBooks(@PathParam("limit")String limit,@PathParam("order")String order) {
+    public ArrayList<BookJson> GetLastAddedBooks(@PathParam("limit") String limit, @PathParam("order") String order) {
 
         ArrayList<BookJson> booksJson = new ArrayList<BookJson>();
         List<Book> books = DaoFactory.getDaoBookInstance().selectAllOrdered("datePub", Integer.parseInt(order) == 0 ? false : true);
-        int lim=Integer.parseInt(limit);
-        List<Book> orderedBooks=books.subList(0,lim>books.size() ? books.size() : lim);
+        int lim = Integer.parseInt(limit);
+        List<Book> orderedBooks = books.subList(0, lim > books.size() ? books.size() : lim);
 
         for (entities.Book book : books) {
             BookJson bookJson = new BookJson(book);
@@ -128,17 +130,29 @@ public class BookRest extends HttpServlet {
     @Path("search/{searchstring}")
     @GET
     @Produces("application/json")
-    public ArrayList<BookJson> search(@PathParam("searchstring")String s) {
-        List<Book> books = DaoFactory.getDaoBookInstance().search(s);
+    public ArrayList<BookJson> search(@CookieParam("user") String user, @PathParam("searchstring") String s) {
+        List<Book> books = new ArrayList<>();
         ArrayList<BookJson> result = new ArrayList<BookJson>();
-        for (Book b : books){
-            BookJson book = new BookJson(b);
-            result.add(book);
+        try {
+            books = DaoFactory.getDaoBookInstance().search(s);
+            if (books == null)
+                return result;
+            for (Book b : books) {
+                BookJson book = new BookJson(b);
+                result.add(book);
+            }
+        } catch (NullPointerException e) {
+
         }
+
+
+        // Logger.log(Logger.Type.PROCESS,"SEARCH:"+user!=null?user:"Someone"+" has found "+s);
         return result;
     }
+
     /**
      * Returns true if user has access
+     *
      * @param user
      * @return
      */

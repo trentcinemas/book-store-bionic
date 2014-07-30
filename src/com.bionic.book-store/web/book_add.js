@@ -1,6 +1,43 @@
 /**
  * Created by Джон on 25.07.2014.
  */
+var authors;
+$(document).ready(function(){
+    $.ajax({
+       type:"get",
+       dataType:"json",
+       url:"/rest/author/getAll",
+       success:function(data){
+           authors=data;
+           for(var i=0;i<authors.length;i++){
+               $("#author").append("<option value='"+authors[i].id+"'>"+authors[i].firstName+" "+authors[i].lastName+"</option>");
+
+           }
+       }
+    });
+
+    $.ajax({
+        type:"get",
+        dataType:"json",
+        url:"/rest/genre/getAll",
+        success:function(data){
+            authors=data;
+            for(var i=0;i<authors.length;i++){
+                $("#author").append("<option value='"+authors[i].id+"'>"+authors[i].firstName+" "+authors[i].lastName+"</option>");
+
+            }
+        }
+
+    });
+
+    $("#author").change(function(){
+       $("#selected_author_id").val($('#author option:selected').attr('value'));
+    });
+    $("#genre").change(function(){
+       $("#selected_genre_id").val($('#author option:selected').attr('value'));
+    });
+});
+
 $("#upload").submit(function (e) {
     e.preventDefault();
 
