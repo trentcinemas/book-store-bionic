@@ -246,4 +246,20 @@ public class DaoBook implements DaoBookInterface {
             return null;
         }
     }
+
+    @Override
+    public List<Book> selectByGenreID(int id) {
+        Session session;
+        session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("select b from Book b  where b.genreByGenreId ="+id);
+        if(!query.list().isEmpty()){
+            List<Book> result = query.list();
+            session.close();
+            return result;
+        }
+        else {
+            session.close();
+            return null;
+        }
+    }
 }
