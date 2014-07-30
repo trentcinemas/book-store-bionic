@@ -54,6 +54,8 @@ public class BookRest extends HttpServlet {
         enBook.setUserByUserId(user);
         enBook.setReviewCnt(0);
         enBook.setDownloadsCnt(0);
+        String genre_id=map.getStringParameter("genre_id");
+        enBook.setGenreByGenreId(DaoFactory.getDaoGenreInstance().selectById(Integer.parseInt(genre_id)));
         enBook.setPagesCnt(Integer.parseInt(map.getStringParameter("page_count")));
         enBook.setCover(map.getStringParameter("title") + "/" + map.getFileParameter("sm-cover").getAbsoluteFile().getName());
         enBook.setBigCover(map.getStringParameter("title") + "/" + map.getFileParameter("big-cover").getAbsoluteFile().getName());

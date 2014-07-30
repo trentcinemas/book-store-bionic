@@ -13,28 +13,29 @@ $(document).ready(function(){
                $("#author").append("<option value='"+authors[i].id+"'>"+authors[i].firstName+" "+authors[i].lastName+"</option>");
 
            }
+           $.ajax({
+               type:"get",
+               dataType:"json",
+               url:"/rest/genre/getAll",
+               success:function(data){
+                   var genres=data;
+                   for(var i=0;i<genres.length;i++){
+                       $("#genre").append("<option value='"+genres[i].id+"'>"+genres[i].type+"</option>");
+                   }
+               }
+
+           });
+
        }
-    });
-
-    $.ajax({
-        type:"get",
-        dataType:"json",
-        url:"/rest/genre/getAll",
-        success:function(data){
-            authors=data;
-            for(var i=0;i<authors.length;i++){
-                $("#author").append("<option value='"+authors[i].id+"'>"+authors[i].firstName+" "+authors[i].lastName+"</option>");
-
-            }
-        }
 
     });
+
 
     $("#author").change(function(){
        $("#selected_author_id").val($('#author option:selected').attr('value'));
     });
     $("#genre").change(function(){
-       $("#selected_genre_id").val($('#author option:selected').attr('value'));
+       $("#selected_genre_id").val($('#genre option:selected').attr('value'));
     });
 });
 
