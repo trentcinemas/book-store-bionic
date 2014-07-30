@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface DaoAuthorInterface {
     public List<Author> selectAll();
-    public List<Book> selectAuthorBooks();
+    public List<Author> selectAuthorBooks(int id);
     public Author selectById(int id);
     public List<Author> selectByFirstName(String fname);
     public List<Author> selectByLastName(String lname);

@@ -161,10 +161,10 @@ public class DaoComments implements DaoCommentInterface {
     public void delete(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("select comment from Comment comment where id=" + id);
-        User user = (User) query.list().get(0);
+        Comment comment = (Comment) query.list().get(0);
         try {
             session.beginTransaction();
-            session.delete(user);
+            session.delete(comment);
             if (!session.getTransaction().wasCommitted())
                 session.getTransaction().commit();
         } catch (HibernateException e) {

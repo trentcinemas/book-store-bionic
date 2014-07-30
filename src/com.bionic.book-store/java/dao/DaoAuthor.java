@@ -27,9 +27,12 @@ public class DaoAuthor implements DaoAuthorInterface {
     }
 
     @Override
-    public List<Book> selectAuthorBooks() {
-        // TODO
-        return null;
+    public List<Author> selectAuthorBooks(int id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("select b from Book b where b.authorByAuthorId = " + id);
+        List<Author> authors = query.list();
+        session.close();
+        return authors;
     }
 
     @Override
@@ -97,10 +100,10 @@ public class DaoAuthor implements DaoAuthorInterface {
     public void delete(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("from Author where id = " + id);
-        User user = (User) query.list().get(0);
+        Author author = (Author) query.list().get(0);
         try {
             session.beginTransaction();
-            session.delete(user);
+            session.delete(author);
             session.getTransaction().commit();
         } catch (HibernateException e) {
             e.printStackTrace();
