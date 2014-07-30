@@ -229,7 +229,7 @@ public class DaoBook implements DaoBookInterface {
         Session session;
         session = HibernateUtil.getSessionFactory().openSession();
 
-        String selectQuery = "select b from Book b where (lower(b.title) like '%" + s + "%' or lower(b.description) like '%" + s + "%')";
+        String selectQuery = "select b from Book b where lower(b.title) like '%" + s + "%' or lower(b.description) like '%" + s + "%'";
         for (String w : words)
             selectQuery += "or lower(b.title) like '%" + w + "%' or lower(b.description) like '%" + w + "%' or lower(b.authorByAuthorId) in " +
                     "(select a from Author a where lower(a.firstname) like '%" + w + "%' or lower(a.lastname) like '%" + w + "%')";

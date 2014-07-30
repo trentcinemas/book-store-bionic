@@ -10,23 +10,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "JBook")
 public class BookJson {
-    int id;
+    String id;
     String title;
     String description;
     double price;
     String sm_cover;
     String big_cover;
+    String author;
 
     public BookJson(Book book) {
         if (book == null) {
-            this.id=0;
+
+            this.id=null;
+            this.author=null;
             this.title = null;
             this.description = null;
             this.price = 0;
             this.sm_cover = null;
             this.big_cover=null;
         } else {
-            this.id=book.getBookId();
+            this.id=Integer.toString(book.getBookId());
+            this.author=book.getAuthorByAuthorId().getFirstname()+" "+book.getAuthorByAuthorId().getLastname();
             this.title = book.getTitle();
             this.description = book.getDescription();
             this.price = book.getPrice();
@@ -35,16 +39,33 @@ public class BookJson {
         }
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getId() {
+
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public BookJson(PurchasedBook book) {
         if (book == null) {
-            this.id=book.getBookByBookId().getBookId();
+            this.id=Integer.toString(book.getBookByBookId().getBookId());
             this.title = null;
             this.description = null;
             this.price = 0;
             this.sm_cover = null;
             this.big_cover=null;
         } else {
-            this.id=book.getBookByBookId().getBookId();
+            this.id=Integer.toString(book.getBookByBookId().getBookId());
             this.title = book.getBookByBookId().getTitle();
             this.description = book.getBookByBookId().getDescription();
             this.price = book.getBookByBookId().getPrice();

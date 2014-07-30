@@ -6,7 +6,7 @@ import entities.Author;
  * Created by jsarafajr on 29.07.14.
  */
 public class AuthorJson {
-    private int id;
+    private String id;
     private String firstName;
     private String lastName;
     private String description;
@@ -14,13 +14,13 @@ public class AuthorJson {
 
     public AuthorJson(Author author) {
         if (author == null) {
-            id = 0;
+            id = Integer.toString(0);
             firstName = null;
             lastName = null;
             description = null;
             photo = null;
         } else {
-            id = author.getAuthorId();
+            id = Integer.toString(author.getAuthorId());
             firstName = author.getFirstname();
             lastName = author.getLastname();
             description = author.getDescription();
@@ -28,6 +28,13 @@ public class AuthorJson {
         }
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;

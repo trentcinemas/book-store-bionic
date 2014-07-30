@@ -8,7 +8,6 @@ import util.DaoFactory;
 import util.Logger;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
@@ -47,7 +46,7 @@ public class Session {
         // All OK :
         Logger.log(PROCESS, email + " authorized");
 
-        NewCookie cookie = new NewCookie("user", email, COOKIE_PATH, COOKIE_DOMAIN, "",3600,false);
+        NewCookie cookie = new NewCookie("user", email, COOKIE_PATH, COOKIE_DOMAIN, "",8800,false);
 
         Logger.log(PROCESS, email + " cookie saved");
 
