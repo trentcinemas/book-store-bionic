@@ -55,8 +55,7 @@ public class Registration {
         user.setName(name);
         user.setEmail(email);
         user.setPassword(DigestUtils.md5Hex(password));
-        // TODO Додати групу юзера
-        //  user.setUserGroupByGroupId();
+        user.setUserGroupByGroupId(DaoFactory.getDaoUserGroupInstance().getGroupByType("Користувач"));
 
         Logger.log(PROCESS, "Registered : " + email);
 

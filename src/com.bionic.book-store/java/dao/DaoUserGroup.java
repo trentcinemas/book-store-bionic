@@ -13,6 +13,14 @@ import java.util.List;
  * Created by Джон on 23.07.2014.
  */
 public class DaoUserGroup implements DaoUserGroupInterface {
+    public UserGroup getGroupByType(String type) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("FROM UserGroup where type='" + type + "'");
+        UserGroup result = (UserGroup) query.list().get(0);
+        session.close();
+        return result;
+    }
+
     @Override
     public List<UserGroup> selectAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -20,7 +28,6 @@ public class DaoUserGroup implements DaoUserGroupInterface {
         List<UserGroup> result = query.list();
         session.close();
         return result;
-
     }
 
     // в адмінку напевно, бо не знаю, де ще пригодиться
