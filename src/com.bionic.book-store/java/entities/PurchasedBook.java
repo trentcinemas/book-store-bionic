@@ -1,5 +1,7 @@
 package entities;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -12,6 +14,7 @@ public class PurchasedBook {
     private Timestamp date;
     private User userByUserId;
     private Book bookByBookId;
+    private Bool status;
 
     @Id
     @Column(name = "pur_id", nullable = false, insertable = true, updatable = true)
@@ -31,6 +34,16 @@ public class PurchasedBook {
 
     public void setDate(Timestamp date) {
         this.date = date;
+    }
+
+    @Basic
+    @Column(name = "status", nullable = true, insertable = true, updatable = true)
+    public Bool getStatus() {
+        return status;
+    }
+
+    public void setStatus(Bool status) {
+        this.status = status;
     }
 
     @Override
