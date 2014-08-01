@@ -1,0 +1,16 @@
+#aboutUs {
+    background: #2F3438; 
+    color: white; 
+    padding: 45px 10px; 
+    margin-top: 25px; 
+    border-radius: 20px;
+    font: 18px sans-serif; 
+    box-shadow: inset 0px 0px 15px white;
+    border: 1px solid grey
+}
+#aboutUs h2 {
+    font-size: 48px;
+    color: wheat;
+    padding: 20px;
+    padding-left: 9.4%;
+}
