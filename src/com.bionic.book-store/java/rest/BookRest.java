@@ -17,6 +17,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +56,7 @@ public class BookRest extends HttpServlet {
         enBook.setUserByUserId(user);
         enBook.setReviewCnt(0);
         enBook.setDownloadsCnt(0);
-        String genre_id=map.getStringParameter("genre_id");
+        String genre_id = map.getStringParameter("genre");
         enBook.setGenreByGenreId(DaoFactory.getDaoGenreInstance().selectById(Integer.parseInt(genre_id)));
         enBook.setPagesCnt(Integer.parseInt(map.getStringParameter("page_count")));
         enBook.setCover(map.getStringParameter("title") + "/" + map.getFileParameter("sm-cover").getAbsoluteFile().getName());
@@ -66,7 +68,6 @@ public class BookRest extends HttpServlet {
         DaoFactory.getDaoBookInstance().insert(enBook);
 
         return Response.ok().build();
-
     }
 
     @Path("listAll")
@@ -127,6 +128,26 @@ public class BookRest extends HttpServlet {
         }
 
         return booksJson;
+    }
+
+    @Path("getPage/{id}")
+    @GET
+    public Response getSinglePage(@PathParam("id") String id){
+        URI location;
+        try {
+            location = new URI("../single-page.html?id="+id);
+        }
+        catch(URISyntaxException e){
+            return null;
+        }
+        return Response.temporaryRedirect(location).build();
+    }
+
+    @Path("get/{id}")
+    @GET
+    @Produces("application/json")
+    public BookJson getBook(@PathParam("id") String id){
+        return new BookJson(DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(id)));
     }
 
     @Path("search/{searchstring}")

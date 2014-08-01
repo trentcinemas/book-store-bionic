@@ -13,6 +13,14 @@ import java.util.List;
  * Created by Джон on 23.07.2014.
  */
 public class DaoGenre implements DaoGenreInterface {
+    public Genre getGenreByType(String type) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("FROM Genre where type='" + type + "'");
+        Genre result = (Genre)query.list().get(0);
+        session.close();
+        return result;
+    }
+
     @Override
     public List<Genre> selectAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();

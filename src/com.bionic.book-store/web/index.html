@@ -40,18 +40,11 @@
                 </div>
             </div>
             <div class="collapse navbar-collapse" id="navbarHeader">
-                <ul class="nav navbar-nav pull-right">
-                    <li class="active"><a href="index.html">Головна</a></li>
-                    <li><a href="#">Усі книжки</a></li>
-                    <li><a href="#">Як придбати</a></li>
-                    <li><a href="#">Про видавництво</a></li>
-                    <li><a href="#" id="enter">Увійти </a></li>
-                </ul>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <form class="navbar-form navbar-right search-tool" role="search">
+            <form class="navbar-form navbar-right search-tool" role="search" action="search-result.html">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Пошук" name="q">
+                    <input type="text" class="form-control" placeholder="Пошук" name="search">
                     <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -68,7 +61,7 @@
 
             <input id="email" type="text" onblur="if(this.value=='')this.value='Логін';"
                    onfocus="if(this.value=='Логін')this.value='';" value="Логін"/>
-            <input id="password" type="text" onblur="if(this.value=='')this.value='Пароль';"
+            <input id="password" type="password" onblur="if(this.value=='')this.value='Пароль';"
                    onfocus="if(this.value=='Пароль')this.value='';" value="Пароль"/>
         </fieldset>
         <fieldset id="actions">
@@ -80,107 +73,111 @@
 
     <div class="row">
         <a href=""><h2>Нові:</h2></a>
+        <div id="ajax_loading_div2"></div>
 
-            <div class="col-xs-6 col-sm-4 col-md-2 col-md-offset-1 new">
+        <div class="col-xs-6 col-sm-4 col-md-2 col-md-offset-1 new">
 
-            </div>
-            <div class="col-xs-6 col-md-2 col-sm-4 new">
-
-            </div>
-            <div class="col-xs-6 col-md-2 col-sm-4 new">
-
-            </div>
-            <div class="col-xs-6 col-md-2 col-sm-4 new">
-
-            </div>
-            <div class="col-xs-6 col-md-2 col-sm-4 new">
-
-
-            </div>
-            <div class="col-xs-6 col-md-2 col-sm-4 hidden-lg hidden-md new">
-
-            </div>
         </div>
-        <!-- End of row -->
-        <div class="row">
-            <a href=""><h2>Популярні:</h2></a>
 
-            <div class="col-xs-6 col-md-2 col-md-offset-1 col-sm-4 popular">
+        <div class="col-xs-6 col-md-2 col-sm-4 new">
 
-            </div>
-            <div class="col-xs-6 col-md-2 col-sm-4 popular">
-
-            </div>
-            <div class="col-xs-6 col-md-2 col-sm-4 popular">
-
-            </div>
-            <div class="col-xs-6 col-md-2 col-sm-4 popular">
-
-            </div>
-            <div class="col-xs-6 col-md-2 col-sm-4 popular">
-
-            </div>
-            <div class="col-xs-6 col-md-2 col-sm-4 hidden-lg hidden-md popular">
-
-            </div>
         </div>
-        <!-- End of row -->
+        <div class="col-xs-6 col-md-2 col-sm-4 new">
+
+        </div>
+        <div class="col-xs-6 col-md-2 col-sm-4 new">
+
+        </div>
+        <div class="col-xs-6 col-md-2 col-sm-4 new">
+
+
+        </div>
+        <div class="col-xs-6 col-md-2 col-sm-4 hidden-lg hidden-md new">
+
+        </div>
     </div>
-    <!-- End of container -->
+    <!-- End of row -->
+    <div class="row">
+        <a href=""><h2>Популярні:</h2></a>
+        <div id="ajax_loading_div1"></div>
+
+        <div class="col-xs-6 col-md-2 col-md-offset-1 col-sm-4 popular">
+
+        </div>
+        <div class="col-xs-6 col-md-2 col-sm-4 popular">
+
+        </div>
+        <div class="col-xs-6 col-md-2 col-sm-4 popular">
+
+        </div>
+        <div class="col-xs-6 col-md-2 col-sm-4 popular">
+
+        </div>
+        <div class="col-xs-6 col-md-2 col-sm-4 popular">
+
+        </div>
+        <div class="col-xs-6 col-md-2 col-sm-4 hidden-lg hidden-md popular">
+
+        </div>
+    </div>
+    <!-- End of row -->
 </div>
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-lg-offset-1 col-md-6 col-sm-6 col-xs-10 col-xs-offset-1" id="callback">
-                    <span>Написати до видавництва</span>
+<!-- End of container -->
+</div>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-1 col-md-6 col-sm-6 col-xs-10 col-xs-offset-1" id="callback">
+                <span>Написати до видавництва</span>
 
-                    <form>
-                        <p>До кого</p>
+                <form id="reply_form">
+                    <p>До кого</p>
 
-                        <p><select>
-                            <option>Менеджер</option>
-                            <option>Редактор</option>
-                        </select>
-                        </p>
-                        <p>Ваша електронна адреса</p>
+                    <p><select id="reply_receiver">
+                        <option>Менеджер</option>
+                        <option>Редактор</option>
+                    </select>
+                    </p>
+                    <p>Ваша електронна адреса</p>
 
-                        <p><input type="text" required="Заповніть це поле" name="email" placeholder="Введіть email"
-                                  style="color:black;"></p>
+                    <p><input type="text" required="Заповніть це поле" id="reply_email" name="email" placeholder="Введіть email"
+                              style="color:black;"></p>
 
-                        <p>Текст повідомлення</p>
-                        <textarea name="message" rows="4" cols="32"></textarea>
+                    <p>Текст повідомлення</p>
+                    <textarea name="message" id="" rows="4" cols="32"></textarea>
 
-                        <div>
-                            <input type="submit" name="submit" class="btn btn-success">
+                    <div>
+                        <input type="submit" name="submit" class="btn btn-success">
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-8 col-xs-offset-2 clearfix" id="searchFooter" method="get"
+                 action="search-result.html">
+                <span>Пошук</span>
+
+                <div>
+                    <form class="navbar-form search-tool pull-left" role="search" action="search-result.html" method="get">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Пошук" name="search" >
+                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i>
+                            </button>
                         </div>
                     </form>
                 </div>
+                <div class="pull-left">
+                    <p><a href="#">Як придбати книгу</a></p>
 
-                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-8 col-xs-offset-2 clearfix" id="searchFooter">
-                    <span>Пошук</span>
+                    <p><a href="#">Умови надання послуг</a></p>
 
-                    <div>
-                        <form class="navbar-form search-tool pull-left" role="search">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Пошук" name="q">
-                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="pull-left">
-                        <p><a href="#">Як придбати книгу</a></p>
-
-                        <p><a href="#">Умови надання послуг</a></p>
-
-                        <p><span>© Видавництво "Розумна книга"</span></p>
-                    </div>
+                    <p><span>© Видавництво "Розумна книга"</span></p>
                 </div>
-                <!-- close right footer -->
             </div>
-            <!-- close ROW -->
+            <!-- close right footer -->
         </div>
-        <!-- Close col-lg-12 -->
-    </footer>
+        <!-- close ROW -->
+    </div>
+    <!-- Close col-lg-12 -->
+</footer>
 </body>
 </html>

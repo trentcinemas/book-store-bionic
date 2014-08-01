@@ -3,5 +3,7 @@ target/
 out/
 .idea/workspace.xml
 .idea/tasks.xml
+.idea/
 bionic-book-store.iml
 web/
+src/com.bionic.book-store/web

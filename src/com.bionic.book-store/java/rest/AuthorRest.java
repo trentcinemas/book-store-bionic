@@ -71,6 +71,34 @@ public class AuthorRest extends HttpServlet {
         return authorJsons;
     }
 
+    @POST
+    @Path("remove")
+    public Response removeAuthor(@FormParam("id") String idString) {
+        int id = Integer.parseInt(idString);
+        Author author = DaoFactory.getDaoAuthorInstance().selectById(id);
+
+        String authorLog = author.getAuthorId() + " " + author.getFirstname() + " " + author.getLastname();
+        String photoPath = AuthorRest.PHOTO_DIRECTORY_PATH + author.getPhoto();
+
+        try {
+            File photo = new File(photoPath);
+            if (photo.delete()) {
+                Logger.log(PROCESS, photoPath + " removed from storage");
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            Logger.log(PROCESS, photoPath + " remove failed!");
+        }
+
+
+        DaoFactory.getDaoAuthorInstance().delete(id);
+
+        Logger.log(PROCESS, "Author removed : \"" + authorLog + "\"");
+
+        return Response.ok().build();
+    }
+
     @GET
     @Path("photo{id}")
     @Produces("image/*")

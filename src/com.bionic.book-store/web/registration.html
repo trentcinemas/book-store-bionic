@@ -17,12 +17,10 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script language="javascript" src="js/jquery-2.1.1.min.js"></script>
-     <script language="javascript" src="js/jquery.js"></script>
-	<script language="javascript" src="js/script.js"></script>
+     <script language="javascript" src="js/registration.js"></script>
   </head>
 <body>
 <div class="container" id="header-nav">
@@ -90,14 +88,14 @@
                        <!----- Регистрация --->
     
             
-                        <form id="regist_field" action="none" mathod = "post">
+                        <form id="regist_field">
                             <h1 id="ff-proof" class="ribbon">Реєстрація &nbsp;&nbsp;</h1>
                             <fieldset id="inputs">
+                                <input type="email" id="email" name="email" placeholder="Введіть e-mail" />
                                 
-                                <input type="email" id="email" name="email" onblur="if(this.value=='')this.value='Введіть e-mail';" onfocus="if(this.value=='Введіть e-mail')this.value='';" value="Введіть e-mail" />
-                                <input type="text" id="name" name="name" onblur="if(this.value=='')this.value='Ваше ім&rsquo;я';" onfocus="if(this.value=='Ваше ім&rsquo;я')this.value='';" value="Ваше ім&rsquo;я">
-                                <input type="text" id="password" name="password" onblur="if(this.value=='')this.value='Введіть пароль';" onfocus="if(this.value=='Введіть пароль')this.value='';" value="Введіть пароль" />
-                                <input type="text" id="conf_pass" onblur="if(this.value=='')this.value='Повторіть пароль';" onfocus="if(this.value=='Повторіть пароль')this.value='';" value="Повторіть пароль">
+                                <input type="text" id="name" name="name" placeholder="Введіть ім'я">
+                                <input type="password" id="password" name="password" placeholder="Введіть пароль" />
+                                <input type="password" id="conf_pass" placeholder="Повторіть пароль">
                                 <br>
                             </fieldset>
                             <fieldset id="actions">
@@ -137,9 +135,9 @@
                     </div> <!-- close left footer -->
                     <div class="col-lg-4 col-lg-offset-1">
                         <span>Пошук</span>
-                        <form class="navbar-form search-tool" role="search">
+                        <form class="navbar-form search-tool" role="search" action="search-result.html" method="get">
                             <div class="form-group" >
-                                <input type="text" class="form-control" placeholder="Пошук" name="q">
+                                <input type="text" class="form-control" placeholder="Пошук" name="search">
                                     <!--<div class="input-group-btn"> -->
                                         <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                                    <!--</div> -->

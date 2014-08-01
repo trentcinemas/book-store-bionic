@@ -1,8 +1,54 @@
 /**
  * Created by jsarafajr on 28.07.14.
  */
+
 $(document).ready(function(){
+
+    addAjaxLoader();
+
     // set action on login form
+    addAuthorization();
+    formReplyActionSet();
+
+});
+
+$('.row').ready(function(){
+  $.ajax({
+        type: "get",
+        url: "rest/book/list/5/1",
+        crossDomain: true,
+        dataType:"json",
+        cache: false,
+        success:function (data) {
+            var i=0;
+            if (data != null) {
+            $('.new').each(function(){
+                   $(this).html(" <div class = 'small-thubnail'><a href='/rest/book/getPage/"+data[i].id+"'><img src='/rest/file/getimage/"+data[i].sm_cover+"' alt='100%x180'style='height: 203px; width: 142px; display: block;'></a></div>"+
+                       "<div class = 'b-title'>"+
+                       "<a href='#'><span class = 'title'>"+data[i].title+"</span></a> </div>"+
+                       "<div class = 'b-author'>"+
+                       "<a href = '#'><span class = 'author'>"+data[i].author+"</span></a></div>"+
+                       "<span class = 'price'>"+data[i].price+" грн<span>");
+                i++
+            });
+                var i=0;
+             $('.popular').each(function() {
+
+                 $(this).html(" <div class = 'small-thubnail'><a href='/rest/book/getPage/"+data[i].id+"'><img src='/rest/file/getimage/"+data[i].sm_cover+"' alt='100%x180'style='height: 203px; width: 142px; display: block;'></a></div>"+
+                     "<div class = 'b-title'>"+
+                     "<a href='#'><span class = 'title'>"+data[i].title+"</span></a> </div>"+
+                     "<div class = 'b-author'>"+
+                     "<a href = '#'><span class = 'author'>"+data[i].author+"</span></a></div>"+
+                     "<span class = 'price'>"+data[i].price+" грн<span>");
+             i++;
+             });
+			}
+        }
+    });
+});
+
+
+function addAuthorization() {
     $('#login').submit(function() {
         var email = $('#email').val();
         var password = $('#password').val();
@@ -24,43 +70,8 @@ $(document).ready(function(){
         });
         return false;
     });
-});
-$('.row').ready(function(){
-  $.ajax({
-        type: "get",
-        url: "rest/book/list/5/1",
-        crossDomain: true,
-        dataType:"json",
-        cache: false,
-        success:function (data) {
-            var i=0;
-            if (data != null) {
-            $('.new').each(function(){
-                        $(this).html(" <div class = 'small-thubnail'><a href='#'><img src='rest/file/getimage/"+data[i].sm_cover+"' alt='100%x180'style='height: 203px; width: 142px; display: block;'></a></div>"+
-                            "<div class = 'b-title'>"+
-                            "<a href='#'><span class = 'title'>"+data[i].title+"</span></a> </div>"+
-                            "<div class = 'b-author'>"+
-                            "<a href = '#'><span class = 'author'>"+data[i].author+"</span></a></div>"+
-                            "<span class = 'price'>"+data[i].price+"<span>");
-                i++
-            })
-                i=0;
-             $('.popular').each(function() {
-                         $(this).html(" <div class = 'small-thubnail'><a href='#'><img src='/rest/file/getimage/"+data[i].sm_cover+"' alt='100%x180'style='height: 203px; width: 142px; display: block;'></a></div>"+
-                             "<div class = 'b-title'>"+
-                             "<a href='#'><span class = 'title'>"+data[i].title+"</span></a> </div>"+
-                             "<div class = 'b-author'>"+
-                             "<a href = '#'><span class = 'author'>"+data[i].author+"</span></a></div>"+
-                             "<span class = 'price'>"+data[i].price+"<span>");
-                i++;
-             });
-			}
-        },
-        error: function (data) {
-            alert("Error");
-        }
-    });
-});
+}
+
 $('#navbarHeader').ready(function() {
     // If user is Sign In show logout
     $.ajax({
@@ -72,24 +83,23 @@ $('#navbarHeader').ready(function() {
                 loginButtonEnable();
             } else {
                 logoutButtonEnable(data.name);
-            }
+            }   
         }
     });
 
-    formReplyActionSet();
 });
 
 function logoutButtonEnable(name) {
     $('#navbarHeader').html(
             "<ul class='nav navbar-nav pull-right'>" +
-                "<li class='active'><a href='index.html'>Головна</a></li>" +
-                "<li><a href='#'>Усі книжки</a></li>" +
-                "<li><a href='#'>Як придбати</a></li>" +
-                "<li><a href='#'>Про видавництво</a></li>" +
-                "<li><a href='#'>Кабінет</a></li>" +
-                "<li><a href='#' id = 'logout_button'>Вийти</a></li>" +
+                "<li class='active'><a href='/'>Головна</a></li>" +
+                "<li><a href='/allbooks.html'>Усі книжки</a></li>" +
+                "<li><a href='/how2buy.html'>Як придбати</a></li>" +
+                "<li><a href='/about.html'>Про видавництво</a></li>" +
+                "<li><a href='/user-cabinet.html'>Кабінет</a></li>" +
+                "<li><a href='javascript:void(0)' id = 'logout_button'>Вийти</a></li>" +
             "</ul>" +
-            "<div id='hellouser'>" + name + "</div>"
+            "<div id='hellouser'>Доброго дня, " + name + "</div>"
     );
 
     // set on click action on logout button
@@ -100,9 +110,6 @@ function logoutButtonEnable(name) {
             crossDomain: true,
             success: function (data) {
                 location.reload();
-            },
-            error: function (data) {
-                alert("You are not signed in!")
             }
         });
     });
@@ -111,11 +118,11 @@ function logoutButtonEnable(name) {
 function loginButtonEnable() {
     $(('#navbarHeader')).html(
             "<ul class='nav navbar-nav pull-right'>" +
-            "<li class='active'><a href='index.html'>Головна</a></li>" +
-            "<li><a href='#'>Усі книжки</a></li>" +
-            "<li><a href='#'>Як придбати</a></li>" +
-            "<li><a href='#'>Про видавництво</a></li>" +
-            "<li><a href='#' id = 'enter'>Увійти</a></li>" +
+            "<li class='active'><a href='/'>Головна</a></li>" +
+            "<li><a href='/allbooks.html'>Усі книжки</a></li>" +
+            "<li><a href='/how2buy.html'>Як придбати</a></li>" +
+            "<li><a href='/about.html'>Про видавництво</a></li>" +
+            "<li><a href='javascript:void(0)' id = 'enter'>Увійти</a></li>" +
             "</ul>"
     );
 
@@ -136,14 +143,35 @@ function formReplyActionSet() {
             url: '/rest/reply/send',
             crossDomain: true,
             data: {'email': email, 'receiver' : receiver, 'text' : text},
-            error: function (data) {
-                alert(data.error);
+            success: function() {
+                location.reload();
             }
         });
         return false;
     });
 }
 
-function searchActionSet() {
 
+function addAjaxLoader() {
+    // Setup the ajax indicator
+    $('#ajax_loading_div1').append('<div class="ajaxBusy"><img src="/images/ajax-loader_circle.gif"></div>');
+    $('#ajax_loading_div2').append('<div class="ajaxBusy"><img src="/images/ajax-loader_circle.gif"></div>');
+
+    $('.ajaxBusy').css({
+        display: "none",
+        paddingLeft: "45%",
+        paddingTop: "0px",
+        paddingBottom: "0px",
+        position: "relative",
+        right: "3px",
+        top: "3px",
+        width: "auto"
+    });
 }
+
+// Ajax activity indicator bound to ajax start/stop document events
+$(document).ajaxStart(function(){
+    $('.ajaxBusy').show();
+}).ajaxStop(function(){
+    $('.ajaxBusy').hide();
+});

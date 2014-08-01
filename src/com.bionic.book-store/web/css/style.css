@@ -33,7 +33,7 @@ header .icon-bar {background-color:#f27853;}
 header .navbar-toggle {border: 1px solid white;}
 header .navbar-form { margin-right: 20px;}
 header .navbar-form .form-control { width: 350px; }
-#hellouser {color: white; position: absolute; left: 91.5%; top: -5px;}
+#hellouser {color: white; position: absolute; right: 0%; padding-right: 30px; top: -5px;}
 
 /* MAIN */
 #content { background: url(../images/new1.png)repeat;}
@@ -117,35 +117,87 @@ footer #callback {padding: 0px 0px;}
 
 
 .b-buy{
-  -moz-border-radius: 25px;
-  -moz-box-shadow: #6E7849 0px 0px 10px;
-  -moz-transition: all 0.5s ease;
-  -ms-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  -webkit-border-radius: 25px;
-  -webkit-box-shadow: #6E7849 0 0 10px;
-  -webkit-transition: all 0.5s ease;
-  background-color: #345ec5;
-  background-image: -moz-linear-gradient(180deg, #d8deee, #345ec5);
-  background-image: -ms-linear-gradient(180deg, #d8deee, #345ec5);
-  background-image: -o-linear-gradient(180deg, #d8deee, #345ec5);
-  background-image: -webkit-linear-gradient(180deg, #d8deee, #345ec5);
-  background-image: linear-gradient(180deg, #d8deee, #345ec5);
-  border-radius: 25px;
-  border: 1px solid #ffffff;
-  box-shadow: #6E7849 0px 0px 10px;
-  color: #ffffff;
-  display: inline-block;
-  font-size: 1em;
-  margin: auto;
-  padding: 15px;
-  text-decoration: none;
-  text-shadow: #000000 5px 5px 15px;
-  transition: all 0.5s ease;
+    background-color: #ffb94b;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#C94700), to(#B84100));
+    background-image: -webkit-linear-gradient(top, #C94700, #B84100);
+    background-image: -moz-linear-gradient(top, #C94700, #B84100);
+    background-image: -ms-linear-gradient(top, #C94700, #B84100);
+    background-image: -o-linear-gradient(top, #C94700, #B84100);
+    background-image: linear-gradient(top, #C94700, #B84100);
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    text-shadow: 0 1px 0 rgba(0, 0, 0,0.7);
+     -moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 17px 2px rgba(255, 255, 255, 0.2) inset, 0 5px 5px rgba(255, 255, 255, 0.2) inset;
+     -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 17px 2px rgba(255, 255, 255, 0.2) inset, 0 5px 5px rgba(255, 255, 255, 0.2) inset;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 17px 2px rgba(255, 255, 255, 0.2) inset, 0 5px 5px rgba(255, 255, 255, 0.2) inset;
+    display: block;
+    border: none;
+    border-radius: 5px;
+	position: relative;
+    height: 35px;
+    margin-left: 0px;
+    margin-top: 30px;
+    width: 150px;
+    cursor: pointer;
+    font-size:18px ;
+    color: #FFF;
+    text-transform:  capitalize;
 }
 .b-buy:hover {
-  padding: 15px;
+  background-color: #C94700;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#B84100), to(#C94700));
+    background-image: -webkit-linear-gradient(top, #B84100, #C94700);
+    background-image: -moz-linear-gradient(top, #B84100, #C94700);
+    background-image: -ms-linear-gradient(top, #B84100, #C94700);
+    background-image: -o-linear-gradient(top, #B84100, #C94700);
+    background-image: linear-gradient(top, #B84100, #C94700);
 }
 
 .container{
 padding-bottom: 15px;}
+
+.b-title h3{font-size: 3em; padding-top: 30px;}
+.b-title h4{font-style: italic; padding-bottom: 10px; padding-top: 10px;}
+.b-title a{font-weight: bolder; font-size: 1.5em;}
+
+.b-price h3{font-size: 4em; padding-left: 30px;}
+.b-price h4{font-size: 1em;}
+.b-price li{display: inline;
+padding: 10px;}
+.b-price ul{padding: 0px;}
+
+.b-form{
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: #303539;
+    padding: 10px;
+    display: none;
+    z-index: 1000;
+    position: absolute;
+}
+.b-form label{
+    color: white;
+}
+
+#overlay{
+   display:none;
+   position:absolute;
+   top:0;
+   left:0;
+   width:100%;
+   height:100%;
+   z-index:5000;
+   background-color:#333;
+   -moz-opacity: 0.8;
+   opacity:.80;
+   filter: alpha(opacity=80);
+}
+
+.title{
+    color: #000000;
+}
+
+.author {
+
+}

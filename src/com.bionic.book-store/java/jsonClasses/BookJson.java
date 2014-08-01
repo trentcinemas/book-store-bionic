@@ -17,10 +17,15 @@ public class BookJson {
     String sm_cover;
     String big_cover;
     String author;
+    String user;
+    String date;
+    String genre;
+    int pagesCnt;
+    int downloadCnt;
+    int viewCnt;
 
     public BookJson(Book book) {
         if (book == null) {
-
             this.id=null;
             this.author=null;
             this.title = null;
@@ -36,6 +41,13 @@ public class BookJson {
             this.price = book.getPrice();
             this.sm_cover = book.getCover();
             this.big_cover= book.getBigCover();
+
+            this.user = book.getUserByUserId().getEmail();
+            this.date = book.getDatePub().toString();
+            this.genre = book.getGenreByGenreId().getType();
+            this.pagesCnt = book.getPagesCnt();
+            this.downloadCnt = book.getDownloadsCnt();
+            this.viewCnt = book.getReviewCnt();
         }
     }
 
@@ -114,5 +126,53 @@ public class BookJson {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public int getPagesCnt() {
+        return pagesCnt;
+    }
+
+    public void setPagesCnt(int pagesCnt) {
+        this.pagesCnt = pagesCnt;
+    }
+
+    public int getDownloadCnt() {
+        return downloadCnt;
+    }
+
+    public void setDownloadCnt(int downloadCnt) {
+        this.downloadCnt = downloadCnt;
+    }
+
+    public int getViewCnt() {
+        return viewCnt;
+    }
+
+    public void setViewCnt(int viewCnt) {
+        this.viewCnt = viewCnt;
     }
 }

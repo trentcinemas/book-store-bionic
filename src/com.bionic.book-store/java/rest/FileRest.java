@@ -1,6 +1,8 @@
 package rest;
 
 
+import util.MultipartRequestMap;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -13,7 +15,7 @@ import java.io.File;
  */
 @Path("file")
 public class FileRest {
-    private static final String FILE_BOOK_PATH="D:/Bionic/Books/";
+    private static final String FILE_BOOK_PATH= MultipartRequestMap.UPLOAD_PATH + "/";
 
     @GET
     @Path("getimage/{path:.+}")
@@ -28,5 +30,4 @@ public class FileRest {
         */return Response.ok(file).build();
 
     }
-
 }
