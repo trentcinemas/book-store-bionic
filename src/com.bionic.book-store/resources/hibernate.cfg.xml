@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:mysql://favorite.mysql.ukraine.com.ua/favorite_bs</property>
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="connection.username">favorite_bs</property>
+    <property name="connection.password">b2846epa</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+      <mapping class="entities.Author"/>
+      <mapping class="entities.Book"/>
+      <mapping class="entities.Comment"/>
+      <mapping class="entities.Distributor"/>
+      <mapping class="entities.Genre"/>
+      <mapping class="entities.PurchasedBook"/>
+      <mapping class="entities.User"/>
+      <mapping class="entities.UserGroup"/>
+      <mapping class="entities.ReplyMessage"/>
+
+      <!-- <property name="hbm2ddl.auto">update</property> -->
+  </session-factory>
+</hibernate-configuration>

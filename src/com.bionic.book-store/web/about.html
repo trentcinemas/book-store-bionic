@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Магазин розумних книжок</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/registration.css" rel="stylesheet">
+    <link href="css/about.css." rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/index.js"></script>
+</head>
+<body>
+<header class="container" id="header-nav">
+    <div class="row">
+        <nav class="navbar" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarHeader">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="pull-left" id="logo">
+                    <a href="index.html">
+                        <img src="images/logo-copy.png" alt="Розумна книга лого" height="50px">
+                    </a>
+                </div>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarHeader">
+                <ul class="nav navbar-nav pull-right">
+                    <li class="active"><a href="index.html">Головна</a></li>
+                    <li><a href="allbooks.html">Усі книжки</a></li>
+                    <li><a href="how2buy.html">Як придбати</a></li>
+                    <li><a href="about.html">Про видавництво</a></li>
+                    <li><a href="#" id="enter">Увійти </a></li>
+                </ul>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <form class="navbar-form navbar-right search-tool" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Пошук" name="q">
+                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+                <!-- /.navbar-collapse -->
+            </form>
+        </nav>
+    </div>
+    <!-- /ROW end -->
+</header>
+<!-- End of header -->
+<div class="container" id="content">
+    <!-- Авторизация -->
+    <form id="login" action="none" mathod="post">
+        <fieldset id="inputs">
+
+            <input id="email" type="text" onblur="if(this.value=='')this.value='Логін';"
+                   onfocus="if(this.value=='Логін')this.value='';" value="Логін"/>
+            <input id="password" type="text" onblur="if(this.value=='')this.value='Пароль';"
+                   onfocus="if(this.value=='Пароль')this.value='';" value="Пароль"/>
+        </fieldset>
+        <fieldset id="actions">
+            <input type="submit" id="submit" value="Увійти"/>
+
+            <p class="option"><a href="#">Забув пароль?</a>&nbsp;&nbsp;|<a href="registration.html">Реєстрація</a></p>
+        </fieldset>
+    </form>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2" id="aboutUs">
+        <p>Одно из крупнейших издательств в Европе, «Розумна книга» было основано в 1991 г. как дистрибутор книжной продукции. Самостоятельной издательской деятельностью компания занялась в начале 1993 года и уже к середине 90-х годов вышла в число лидеров российского книжного рынка.
+        <p>В 2005 году «Розумна книга» было удостоено почетного звания «Лидер российской экономики».
+Универсальное российское издательство «Розумна книга» работает во всех сегментах книжного рынка, за исключением школьных учебников: остросюжетная литература (включая женские, интеллектуальные и авантюрные детективы), современная проза, детская литература, отечественная и зарубежная фантастика, а также научно-популярная и прикладная литература.
+Авторский портфель издательства наcчитывает около 8000 имен.
+«Розумна книга» — акционер «Немецкой фабрики печати», «Тверского полиграфического комбината», объединенной розничной сети «Новый книжный — Буквоед», издательства «Манн Иванов и Фербер».
+        <p>В 2007 году «Розумна книга» признано лучшим работодателем России в категории «Реклама. Маркетинг. Медиа» (HR-бренд 2007)
+По результатам голосования национальных делегаций на 29-й Европейской конференции по научной фантастике в Копенгагене издательство «Розумна книга» признано лучшим Европейским издательством в области фантастической литературы.
+Издательство является одним из инициаторов и разработчиков Национальной программы поддержки развития чтения, которая расценивается как приоритетный проект в области культуры и образования.
+В 2010 году Розумна книга становится лауреатом премии PEOPLE INVESTOR 2010 — компании, инвестирующие в людей. Победа в специальной номинации «Нематериальная мотивация в управлении человеческими ресурсами».
+В 2012 году получает диплом участника PEOPLE INVESTOR 2012 за проявленную активность в области управления персоналом как компания, инвестирующая в людей.
+В 2012 и 2013 году принимает участие в выставке интранетов всероссийского форума Best Intranet Russia 2012 и 2013, где представляет внутренний сайт компании для сотрудников и дает возможность участникам форума из России и стран СНГ «в живую» познакомиться с реализованным проектом единого информационного пространства Издательства.     
+    </div>
+</div>
+</div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-lg-offset-1 col-md-6 col-sm-6 col-xs-10 col-xs-offset-1" id="callback">
+                    <span>Написати до видавництва</span>
+
+                    <form>
+                        <p>До кого</p>
+
+                        <p><select>
+                            <option>Менеджер</option>
+                            <option>Редактор</option>
+                        </select>
+                        </p>
+                        <p>Ваша електронна адреса</p>
+
+                        <p><input type="text" required="Заповніть це поле" name="email" placeholder="Введіть email"
+                                  style="color:black;"></p>
+
+                        <p>Текст повідомлення</p>
+                        <textarea name="message" rows="4" cols="32"></textarea>
+
+                        <div>
+                            <input type="submit" name="submit" class="btn btn-success">
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-8 col-xs-offset-2 clearfix" id="searchFooter">
+                    <span>Пошук</span>
+
+                    <div>
+                        <form class="navbar-form search-tool pull-left" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Пошук" name="q">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="pull-left">
+                        <p><a href="#">Як придбати книгу</a></p>
+
+                        <p><a href="#">Умови надання послуг</a></p>
+
+                        <p><span>© Видавництво "Розумна книга"</span></p>
+                    </div>
+                </div>
+                <!-- close right footer -->
+            </div>
+            <!-- close ROW -->
+        </div>
+        <!-- Close col-lg-12 -->
+    </footer>
+</body>
+</html>
