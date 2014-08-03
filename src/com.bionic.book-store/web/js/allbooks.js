@@ -2,43 +2,76 @@
  * Created by Джон on 30.07.2014.
  */
 
-
-$(document).ready(function () {
+function bookContent(data){
     addAjaxLoader();
+    for(var i=0;i<4;i++) {
+        var singleBook = document.createElement("div");
+        singleBook.className = "col-xs-6 col-sm-6 col-md-3 book";
+        $("#books_content").append(singleBook);
+    }
+    for(var i=4;i<data.length;i++) {
+        var singleBook = document.createElement("div");
+        singleBook.className = "col-xs-6 col-sm-6 col-md-3 book";
+        $("#books_content").append(singleBook);
+    }
+    var i=0;
+    $(".book").each(function () {
+        $(this).html("<div class = 'small-thubnail'><a href='rest/book/getPage/" + data[i].id + "'><img src='rest/file/getimage/" + data[i].sm_cover + "' alt='100%x180'style='height: 203px; width: 142px; display: block;'></a></div>" +
+            "<div class= 'b-title'>" +
+            "<a href='#'><span class = 'title'>" + data[i].title + "</span></a>" +
+            "</div>" +
+            "<div class = 'b-author'>" +
+            "<a href = '#'><span class = 'author'>" + data[i].author + "</span></a>" +
+            "</div>" +
+            "<span class = 'price'>" + data[i].price + "</span>");
+        i++;
+    });
+}
 
-    var books;
+function genreContent(data){
+    for(var i=0;i<data.length;i++){
+        $("#genres").append("<a href='allbooks.html?genreid="+data[i].id+"'>"+
+            "<li>"+data[i].type+"</li>"+
+            "</a>");
+    }
+}
+$(document).ready(function () {
+
+    var path=window.location.search;
+    if(path=="") {
+        $.ajax({
+            type: "get",
+            url: "rest/book/listAll",
+            dataType:"json",
+            success: function (data) {
+                bookContent(data);
+            },
+            error:function(){
+
+            }
+        });
+    }
+    else
+    {
+        var genre=path.split("?genreid=")[1];
+        $.ajax({
+            type: "get",
+            url: "rest/book/getGenreBooks/"+genre,
+            dataType:"json",
+            success: function (data) {
+                bookContent(data);
+            },
+            error:function(){
+            }
+        });
+    }
     $.ajax({
         type: "get",
-        url: "rest/book/listAll",
-        success: function ( data) {
-
-            var books = data.length;
-            for(var i=0;i<5;i++) {
-                var singleBook = document.createElement("div");
-                singleBook.className = "col-xs-6 col-sm-6 col-md-3 book";
-                $("#books_content").append(singleBook);
-            }
-            for(var i=5;i<books;i++) {
-                var singleBook = document.createElement("div");
-                singleBook.className = "col-xs-6 col-sm-6 col-md-3 book";
-                $("#books_content").append(singleBook);
-            }
-            var i=0;
-            $(".book").each(function () {
-                $(this).html("<div class = 'small-thubnail'><a href='rest/book/getPage/" + data[i].id + "'><img src='rest/file/getimage/" + data[i].sm_cover + "' alt='100%x180'style='height: 203px; width: 142px; display: block;'></a></div>" +
-                    "<div class= 'b-title'>" +
-                    "<a href='#'><span class = 'title'>" + data[i].title + "</span></a>" +
-                    "</div>" +
-                    "<div class = 'b-author'>" +
-                    "<a href = '#'><span class = 'author'>" + data[i].author + "</span></a>" +
-                    "</div>" +
-                    "<span class = 'price'>" + data[i].price + "</span>");
-                i++;
-            });
+        url: "rest/genre/getAll",
+        success:function(data){
+        genreContent(data);
         }
     });
-
-
 
     // Login
     // set action on login form

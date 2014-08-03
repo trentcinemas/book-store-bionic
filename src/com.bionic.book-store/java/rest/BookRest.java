@@ -70,8 +70,8 @@ public class BookRest extends HttpServlet {
         return Response.ok().build();
     }
 
-    @Path("listAll")
     @GET
+    @Path("listAll")
     @Produces("application/json")
     public ArrayList<BookJson> getAllBooks() {
 
@@ -120,10 +120,36 @@ public class BookRest extends HttpServlet {
         }
 
         ArrayList<BookJson> booksJson = new ArrayList<BookJson>();
-        List<PurchasedBook> purchasedBooks = DaoFactory.getDaoPurchasedBookInstance().selectByUser(user);
+        List<PurchasedBook> purchasedBooks = DaoFactory.getDaoPurchasedBookInstance().selectByUserId(user.getUserId());
 
         for (entities.PurchasedBook purchasedBook : purchasedBooks) {
+
             BookJson bookJson = new BookJson(purchasedBook);
+            booksJson.add(bookJson);
+        }
+
+        return booksJson;
+    }
+
+    @GET
+    @Path("getGenreBooks/{id}")
+    @Produces("application/json")
+    public ArrayList<BookJson> getGenreBooks(@CookieParam("user") String userEmail,@PathParam("id") String id) {
+        if (userEmail == null) {
+            return new ArrayList<>();
+        }
+
+        User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
+
+        if (!checkUser(user)) {
+            return new ArrayList<>();
+        }
+
+        ArrayList<BookJson> booksJson = new ArrayList<BookJson>();
+        List<Book> books = DaoFactory.getDaoBookInstance().selectByGenreID(Integer.parseInt(id));
+
+        for (entities.Book book : books) {
+            BookJson bookJson = new BookJson(book);
             booksJson.add(bookJson);
         }
 
