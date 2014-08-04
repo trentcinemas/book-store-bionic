@@ -241,6 +241,7 @@ public class BookRest extends HttpServlet {
         return new BookJson(DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(id)));
     }
 
+
     @Path("search/{searchstring}")
     @GET
     @Produces("application/json")

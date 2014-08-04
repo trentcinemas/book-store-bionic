@@ -1,9 +1,7 @@
 package rest;
 
-import dao.DaoUser;
 import entities.User;
 import jsonClasses.UserJson;
-import sun.rmi.runtime.Log;
 import util.DaoFactory;
 import util.Logger;
 
@@ -72,5 +70,51 @@ public class UserRest {
         }
 
         return usersJson;
+    }
+
+    @GET
+    @Path("getPage/{page}")
+    @Produces("applicaion/json")
+    public ArrayList<UserJson> getUsers(@PathParam("page")String page){
+        ArrayList<UserJson> userJsons = new ArrayList<UserJson>();
+        List<User> users = DaoFactory.getDaoUserInstance().selectPage(Integer.parseInt(page));
+
+        for(User user: users){
+            userJsons.add(new UserJson(user));
+        }
+        return userJsons;
+    }
+
+
+    @GET
+    @Path("getPageCount")
+    @Produces("text/plain")
+    public String getPageCount(){
+        return DaoFactory.getDaoUserInstance().count().toString();
+    }
+
+
+    @GET
+    @Path("search/{searchstring}")
+    @Produces("application/json")
+    public ArrayList<UserJson> search(@PathParam("searchstring") String search){
+        ArrayList<UserJson> usersJsons =new ArrayList<UserJson>();
+        List<User> users= DaoFactory.getDaoUserInstance().search(search);
+        for(User user : users){
+            usersJsons.add(new UserJson(user));
+        }
+        return usersJsons;
+    }
+
+    @GET
+    @Path("sort/{page}/{byWhat}/{order}")
+    @Produces("application/json")
+    public ArrayList<UserJson> sort(@PathParam("page")String page,@PathParam("byWhat") String byWhat,@PathParam("order") String order) {
+     ArrayList<UserJson> userJsons = new ArrayList<UserJson>();
+         List<User> users =DaoFactory.getDaoUserInstance().orderBy(byWhat,Integer.parseInt(page),Boolean.valueOf(order));
+        for(User user : users){
+            userJsons.add(new UserJson(user));
+        }
+        return userJsons;
     }
 }

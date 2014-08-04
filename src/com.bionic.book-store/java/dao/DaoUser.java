@@ -1,14 +1,15 @@
 package dao;
 
 import dao.daoInterfaces.DaoUserInterface;
-import entities.Book;
 import entities.User;
 import entities.UserGroup;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import util.HibernateUtil;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -176,6 +177,16 @@ public class DaoUser implements DaoUserInterface {
     }
 
     @Override
+    public List<User> selectPage(int page){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from User");
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15);
+        List<User> result =query.list();
+        session.close();
+        return result;
+    }
+    @Override
     public List<User> orderByName(boolean order, int page) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = null;
@@ -186,7 +197,7 @@ public class DaoUser implements DaoUserInterface {
             query = session.createQuery("from User user order by user.name desc ");
         }
         query.setFirstResult(0+15*(page-1));
-        query.setMaxResults(15*page);
+        query.setMaxResults(15);
         List<User> result = query.list();
         session.close();
         return result;
@@ -203,7 +214,7 @@ public class DaoUser implements DaoUserInterface {
             query = session.createQuery("from User user order by user.email desc ");
         }
         query.setFirstResult(0+15*(page-1));
-        query.setMaxResults(15*page);
+        query.setMaxResults(15);
         List<User> result = query.list();
         session.close();
         return result;
@@ -220,7 +231,7 @@ public class DaoUser implements DaoUserInterface {
             query = session.createQuery("from User user order by user.userGroupByGroupId.type desc ");
         }
         query.setFirstResult(0+15*(page-1));
-        query.setMaxResults(15*page);
+        query.setMaxResults(15);
         List<User> result = query.list();
         session.close();
         return result;
@@ -267,5 +278,10 @@ public class DaoUser implements DaoUserInterface {
             case "group": return orderByGroup(order,page);
             default: return null;
         }
+    }
+    public BigInteger count(){
+        Session session =HibernateUtil.getSessionFactory().openSession();
+        SQLQuery query=session.createSQLQuery("select count(1) from User");
+        return (BigInteger) (query.list().get(0));
     }
 }
