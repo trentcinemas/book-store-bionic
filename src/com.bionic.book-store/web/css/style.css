@@ -200,7 +200,7 @@ padding: 10px;}
 
 }
 
-.search-result{
+.search-result, #author-books{
     list-style-type: none;
 }
 li .title{
@@ -227,4 +227,21 @@ li .price{
     list-style-type: none;
     padding-left: 15px;
 
+}
+#author-pic{
+padding-left: 70px;
+margin-top: 15px;
+margin-bottom: 20px;
+}
+#author-books{
+-webkit-padding-start: 10px;
+}
+#author-description p{
+font-size: 1.2em;
+font-family: Trebuchet MS;
+
+}
+#author-name{
+    font-size: 2.5em;
+    margin-bottom: 15px;
 }
