@@ -53,7 +53,7 @@ public class DaoUser implements DaoUserInterface {
     public List<User> selectAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("FROM User");
-        query.set
+//        query.set
         List<User> result = query.list();
         session.close();
         return result;
@@ -262,9 +262,10 @@ public class DaoUser implements DaoUserInterface {
 
     public List<User> orderBy (String cell,int page,boolean order){
         switch (cell){
-            case "name": orderByName(order,page); break;
-            case "email": orderByeMail(order,page); break;
-            case "group": orderByGroup(order,page); break;
+            case "name": return orderByName(order,page);
+            case "email": return orderByeMail(order,page);
+            case "group": return orderByGroup(order,page);
+            default: return null;
         }
     }
 }

@@ -22,4 +22,8 @@ public interface DaoUserInterface {
     public List<User> orderByGroup(boolean order, int page);
     public List<User> orderByeMail(boolean order, int page);
     public List<User> orderByName(boolean order, int page);
+    public List<User> search(String str);
+    public List<User> selectAll(int limit, boolean order, String orderByWhat);
+    public List<User> selectByUserGroup(UserGroup group, int limit, boolean order, String orderByWhat);
+    public List<User> selectByUserGroupType(String type, int limit, boolean order, String orderByWhat);
 }
