@@ -273,6 +273,48 @@ public class BookRest extends HttpServlet {
         return Response.ok(file).header("X-FRAME-OPTIONS", "SAMEORIGIN").build();
     }
 
+
+    @GET
+    @Path("user-has")
+    public String hasUserBook(@CookieParam("user") String userEmail,
+                              @QueryParam("id") String bookIdString) {
+
+        User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
+        if (!checkUser(user)) {
+            // Unauthorized
+            return Boolean.toString(false);
+        }
+
+        Book book = DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(bookIdString));
+
+        return Boolean.toString(
+                DaoFactory.getDaoPurchasedBookInstance().exist(user, book));
+    }
+
+    @Path("buy")
+    @POST
+    public Response buyBook(@CookieParam("user") String userEmail,
+                            @FormParam("id") String bookIdString) {
+
+        User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
+        if (!checkUser(user)) {
+            // 401 - Unauthorized
+            return Response.status(401).build();
+        }
+
+        Book book = DaoFactory.getDaoBookInstance()
+                .selectById(Integer.parseInt(bookIdString));
+
+        PurchasedBook purchasedBook = new PurchasedBook();
+        purchasedBook.setUserByUserId(user);
+        purchasedBook.setBookByBookId(book);
+        purchasedBook.setDate(new Timestamp(new Date().getTime()));
+        DaoFactory.getDaoPurchasedBookInstance().insert(purchasedBook);
+
+        return Response.ok().build();
+    }
+
+
     /**
      * Returns true if user has access
      *
