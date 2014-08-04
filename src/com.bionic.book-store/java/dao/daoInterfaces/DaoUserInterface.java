@@ -19,4 +19,7 @@ public interface DaoUserInterface {
     void update(User user);
     void delete(User user);
     void delete(int id);
+    public List<User> orderByGroup(boolean order, int page);
+    public List<User> orderByeMail(boolean order, int page);
+    public List<User> orderByName(boolean order, int page);
 }
