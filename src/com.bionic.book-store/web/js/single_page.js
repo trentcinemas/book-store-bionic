@@ -10,6 +10,10 @@ $(document).ready(function(){
        dataType:"json",
        url:"/rest/book/get/"+id,
        success:function(data){
+           if(data.newb==true){
+               $('.b-badge').css("display","block");
+           }
+
             $("#athor").html(data.author);
             $("#title").html(data.title);
             $("#description").html(data.description);

@@ -1,6 +1,7 @@
 package dao;
 
 import dao.daoInterfaces.DaoUserInterface;
+import entities.Book;
 import entities.User;
 import entities.UserGroup;
 import org.hibernate.HibernateException;
@@ -14,15 +15,45 @@ import java.util.List;
  * Created by jsarafajr on 17.07.14.
  */
 public class DaoUser implements DaoUserInterface {
+    public final static String ALL = "";
 
     public DaoUser() {
 
     }
 
     @Override
+    public List<User> selectAll(int limit, boolean order, String orderByWhat) {
+        if (orderByWhat != "") {
+            if (order == true)
+                orderByWhat = "order by" + orderByWhat + " asc";
+            else
+                orderByWhat = "order by" + orderByWhat + " desc";
+        }
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from User user " +orderByWhat);
+        if(limit<0 || limit>query.list().size()) limit=query.list().size();
+        query.setFirstResult(0);
+        query.setMaxResults(limit);
+        List<User> result = query.list();
+        session.close();
+        return result;
+    }
+
+    @Override
+    public List<User> selectByUserGroup(UserGroup group, int limit, boolean order, String orderByWhat) {
+        return null;
+    }
+
+    @Override
+    public List<User> selectByUserGroupType(String type, int limit, boolean order, String orderByWhat) {
+        return null;
+    }
+
+    @Override
     public List<User> selectAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("FROM User");
+//        query.set
         List<User> result = query.list();
         session.close();
         return result;
@@ -31,7 +62,7 @@ public class DaoUser implements DaoUserInterface {
     @Override
     public User selectById(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("select user from User user where user.id="+ id);
+        Query query = session.createQuery("select user from User user where user.id=" + id);
         if (!query.list().isEmpty()) {
             User result = (User) query.list().get(0);
             session.close();
@@ -64,10 +95,9 @@ public class DaoUser implements DaoUserInterface {
             if (!session.getTransaction().wasCommitted())
                 session.getTransaction().commit();
         } catch (Exception e) {
-            if(session!=null)
-            session.getTransaction().rollback();
-        }
-        finally {
+            if (session != null)
+                session.getTransaction().rollback();
+        } finally {
             session.close();
         }
     }
@@ -89,17 +119,16 @@ public class DaoUser implements DaoUserInterface {
 
     @Override
     public void delete(User user) {
-        Session session= HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.beginTransaction();
             session.delete(user);
             if (!session.getTransaction().wasCommitted())
-            session.getTransaction().commit();
+                session.getTransaction().commit();
         } catch (HibernateException e) {
-            if(session!=null)
-            session.getTransaction().rollback();
-        }
-        finally {
+            if (session != null)
+                session.getTransaction().rollback();
+        } finally {
             session.close();
         }
     }
@@ -113,14 +142,88 @@ public class DaoUser implements DaoUserInterface {
             session.beginTransaction();
             session.delete(user);
             if (!session.getTransaction().wasCommitted())
-            session.getTransaction().commit();
+                session.getTransaction().commit();
         } catch (HibernateException e) {
-            if(session!=null)
-            session.getTransaction().rollback();
-        }
-        finally{
+            if (session != null)
+                session.getTransaction().rollback();
+        } finally {
             session.close();
         }
+    }
+
+    @Override
+    public List<User> search(String str) {
+        str = str.trim();
+        str = str.toLowerCase();
+        String[] words = str.split(" ");
+
+        Session session;
+        session = HibernateUtil.getSessionFactory().openSession();
+
+        String selectQuery = "select u from User u where lower(u.name) like '%" + str + "%' or lower(u.email) like '%" + str + "%'";
+        for (String w : words)
+            selectQuery += "or lower(u.name) like '%" + w + "%' or lower(u.email) like '%" + w + "%'";
+
+        Query query = session.createQuery(selectQuery);
+        if (!query.list().isEmpty()) {
+            List<User> result = query.list();
+            session.close();
+            return result;
+        } else {
+            session.close();
+            return null;
+        }
+    }
+
+    @Override
+    public List<User> orderByName(boolean order, int page) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true){
+            query = session.createQuery("from User user order by user.name asc ");
+        }else
+        {
+            query = session.createQuery("from User user order by user.name desc ");
+        }
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15*page);
+        List<User> result = query.list();
+        session.close();
+        return result;
+    }
+
+    @Override
+    public List<User> orderByeMail(boolean order, int page) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true){
+            query = session.createQuery("from User user order by user.email asc ");
+        }else
+        {
+            query = session.createQuery("from User user order by user.email desc ");
+        }
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15*page);
+        List<User> result = query.list();
+        session.close();
+        return result;
+    }
+
+    @Override
+    public List<User> orderByGroup(boolean order, int page) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true){
+            query = session.createQuery("from User user order by user.userGroupByGroupId.type asc ");
+        }else
+        {
+            query = session.createQuery("from User user order by user.userGroupByGroupId.type desc ");
+        }
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15*page);
+        List<User> result = query.list();
+        session.close();
+        return result;
     }
 
     @Override
@@ -154,6 +257,15 @@ public class DaoUser implements DaoUserInterface {
         } else {
             session.close();
             return false;
+        }
+    }
+
+    public List<User> orderBy (String cell,int page,boolean order){
+        switch (cell){
+            case "name": return orderByName(order,page);
+            case "email": return orderByeMail(order,page);
+            case "group": return orderByGroup(order,page);
+            default: return null;
         }
     }
 }

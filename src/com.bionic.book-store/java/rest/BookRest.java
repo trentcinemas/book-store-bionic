@@ -136,7 +136,6 @@ public class BookRest extends HttpServlet {
     @Produces("application/json")
     public ArrayList<BookJson> getGenreBooks(@PathParam("id") String id) {
 
-
         ArrayList<BookJson> booksJson = new ArrayList<BookJson>();
         List<Book> books = DaoFactory.getDaoBookInstance().selectByGenreID(Integer.parseInt(id));
 
