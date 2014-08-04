@@ -134,16 +134,7 @@ public class BookRest extends HttpServlet {
     @GET
     @Path("getGenreBooks/{id}")
     @Produces("application/json")
-    public ArrayList<BookJson> getGenreBooks(@CookieParam("user") String userEmail,@PathParam("id") String id) {
-        if (userEmail == null) {
-            return new ArrayList<>();
-        }
-
-        User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
-
-        if (!checkUser(user)) {
-            return new ArrayList<>();
-        }
+    public ArrayList<BookJson> getGenreBooks(@PathParam("id") String id) {
 
         ArrayList<BookJson> booksJson = new ArrayList<BookJson>();
         List<Book> books = DaoFactory.getDaoBookInstance().selectByGenreID(Integer.parseInt(id));
