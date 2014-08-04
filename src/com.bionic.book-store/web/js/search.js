@@ -14,10 +14,12 @@ $(document).ready(function(){
        success:function(data) {
            $(".search-result").html("");
            for (var i = 0; i < data.length; i++) {
-               $(".search-result").append("<li>" + data[i].title + "<br>" + data[i].author + "<br>" +
+               $(".search-result").append("<li>" + "<a href='/rest/book/getPage/"+data[i].id+"'><span class = 'title'>" + data[i].title + "</span></a>"+ "<br>" + "<span class = 'author'>"+data[i].author +"</span>"+ "<br>" +
                    "<a href='/rest/book/getPage/" + data[i].id+"'>"+
                    "<img width='150px' height='200px' src='/rest/file/getimage/" +
-                   data[i].sm_cover + "'></a><br><span style='font-weight: bold'>" + data[i].price + " грн.</span>" + "<li>")
+                   data[i].sm_cover + "'></a><br><span class = 'price'>" + data[i].price + " грн.</span>" + "<li>")
+
+
            }
        },
         error:function(data) {

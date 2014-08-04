@@ -23,6 +23,7 @@ body {background:#2F3438; margin: auto;}
 /* HEADER */
 header { background-color: #2F3438; }
 header nav > form {margin-right: 25px;}
+header .navbar-nav >li{font-weight: bold;}
 header .navbar-nav > li > a {color: white; }
 header .navbar-nav > li > a:hover{color: #f27853;}
 header .nav>li>a:hover {background-color: transparent;}
@@ -38,11 +39,11 @@ header .navbar-form .form-control { width: 350px; }
 /* MAIN */
 #content { background: url(../images/new1.png)repeat;}
 /*#content { background: #e5e6e6;}*/
-#content a:hover {color: black; }
+#content a:hover {color: #333; }
 #content p {padding: 0 70px; }
-#content h2 {font-size: 48px; color:black; padding: 20px; padding-left: 9.4%;}
+#content h2 {font-size: 48px; color: #333; padding: 20px; padding-left: 9.4%;}
 #content .row:last-child{padding-bottom: 25px;}
-#content span {font:20px sans-serif bold;}
+/*#content span {font:20px sans-serif bold;}*/
 .book-name  {color:#f27853;}
 .book-price {color: white;}
 .book-img {}
@@ -195,9 +196,35 @@ padding: 10px;}
 }
 
 .title{
-    color: #000000;
+    color: #333;
+
 }
 
-.author {
+.search-result{
+    list-style-type: none;
+}
+li .title{
+    font-family: "Trebuchet MS";
+    font-weight: bold;
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+li .author{
+    font-family: Trebuchet MS;
+    font-size: 1.3em;
+    color: #DF5025;
+    text-shadow: #EBD0C0 1px 1px 0px;
+    margin: 2px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+li .price{
+    font-size: 1.5em;
+    color: #333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    list-style-type: none;
+    padding-left: 15px;
 
 }
