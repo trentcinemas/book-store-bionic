@@ -12,7 +12,7 @@ function bookContent(data){
     for(var i=4;i<data.length;i++) {
         var singleBook = document.createElement("div");
         singleBook.className = "col-xs-6 col-sm-6 col-md-3 book";
-        $("#books_content").append(singleBook);
+        $("#books_content2").append(singleBook);
     }
     var i=0;
     $(".book").each(function () {

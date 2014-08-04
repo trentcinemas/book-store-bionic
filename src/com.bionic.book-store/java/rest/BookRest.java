@@ -86,13 +86,13 @@ public class BookRest extends HttpServlet {
         return booksJson;
     }
 
-    @Path("list/{limit}/{order}")
+    @Path("list/{limit}/{order}/{byWhat}")
     @GET
     @Produces("application/json")
-    public ArrayList<BookJson> GetLastAddedBooks(@PathParam("limit") String limit, @PathParam("order") String order) {
+    public ArrayList<BookJson> GetLastAddedBooks(@PathParam("limit") String limit, @PathParam("order") String order, @PathParam("byWhat")String byWhat) {
 
         ArrayList<BookJson> booksJson = new ArrayList<BookJson>();
-        List<Book> books = DaoFactory.getDaoBookInstance().selectAllOrdered("datePub", Integer.parseInt(order) == 0 ? false : true);
+        List<Book> books = DaoFactory.getDaoBookInstance().selectAllOrdered(byWhat  , Integer.parseInt(order) == 0 ? false : true);
         int lim = Integer.parseInt(limit);
         List<Book> orderedBooks = books.subList(0, lim > books.size() ? books.size() : lim);
 
@@ -160,6 +160,9 @@ public class BookRest extends HttpServlet {
     @GET
     public Response getSinglePage(@PathParam("id") String id){
         URI location;
+        Book book=DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(id));
+        book.setReviewCnt(book.getReviewCnt()+1);
+        DaoFactory.getDaoBookInstance().update(book);
         try {
             location = new URI("../single-page.html?id="+id);
         }

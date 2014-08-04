@@ -37,6 +37,9 @@ public class GenreRest {
                                 @FormParam("id") String idString) {
 
         // TODO check user
+        if(DaoFactory.getDaoUserInstance().selectByEmail(userEmail)==null){
+            return Response.serverError().build();
+        }
 
         int id = Integer.parseInt(idString);
         String title = DaoFactory.getDaoGenreInstance().selectById(id).getType();
