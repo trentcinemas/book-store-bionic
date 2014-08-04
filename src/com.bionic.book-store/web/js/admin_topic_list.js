@@ -28,18 +28,18 @@ $(document).ready(function() {
 });
 
 function removeGenre(id) {
-    var lol;
-
-    $.ajax({
-        type: 'post',
-        url: '/rest/genre/remove',
-        data: {'id': id},
-        crossDomain: true,
-        success: function (data) {
-            alert("Removed");
-            location.reload();
-        }
-    });
+    if (confirm("Видалити жанр?")) {
+        $.ajax({
+            type: 'post',
+            url: '/rest/genre/remove',
+            data: {'id': id},
+            crossDomain: true,
+            success: function (data) {
+                alert("Removed");
+                location.reload();
+            }
+        });
+    }
 }
 
 function addAjaxLoader() {
