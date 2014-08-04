@@ -70,8 +70,8 @@ public class BookRest extends HttpServlet {
         return Response.ok().build();
     }
 
-    @Path("listAll")
     @GET
+    @Path("listAll")
     @Produces("application/json")
     public ArrayList<BookJson> getAllBooks() {
 
@@ -86,13 +86,13 @@ public class BookRest extends HttpServlet {
         return booksJson;
     }
 
-    @Path("list/{limit}/{order}")
+    @Path("list/{limit}/{order}/{byWhat}")
     @GET
     @Produces("application/json")
-    public ArrayList<BookJson> GetLastAddedBooks(@PathParam("limit") String limit, @PathParam("order") String order) {
+    public ArrayList<BookJson> GetLastAddedBooks(@PathParam("limit") String limit, @PathParam("order") String order, @PathParam("byWhat")String byWhat) {
 
         ArrayList<BookJson> booksJson = new ArrayList<BookJson>();
-        List<Book> books = DaoFactory.getDaoBookInstance().selectAllOrdered("datePub", Integer.parseInt(order) == 0 ? false : true);
+        List<Book> books = DaoFactory.getDaoBookInstance().selectAllOrdered(byWhat  , Integer.parseInt(order) == 0 ? false : true);
         int lim = Integer.parseInt(limit);
         List<Book> orderedBooks = books.subList(0, lim > books.size() ? books.size() : lim);
 
@@ -120,10 +120,36 @@ public class BookRest extends HttpServlet {
         }
 
         ArrayList<BookJson> booksJson = new ArrayList<BookJson>();
-        List<PurchasedBook> purchasedBooks = DaoFactory.getDaoPurchasedBookInstance().selectByUser(user);
+        List<PurchasedBook> purchasedBooks = DaoFactory.getDaoPurchasedBookInstance().selectByUserId(user.getUserId());
 
         for (entities.PurchasedBook purchasedBook : purchasedBooks) {
+
             BookJson bookJson = new BookJson(purchasedBook);
+            booksJson.add(bookJson);
+        }
+
+        return booksJson;
+    }
+
+    @GET
+    @Path("getGenreBooks/{id}")
+    @Produces("application/json")
+    public ArrayList<BookJson> getGenreBooks(@CookieParam("user") String userEmail,@PathParam("id") String id) {
+        if (userEmail == null) {
+            return new ArrayList<>();
+        }
+
+        User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
+
+        if (!checkUser(user)) {
+            return new ArrayList<>();
+        }
+
+        ArrayList<BookJson> booksJson = new ArrayList<BookJson>();
+        List<Book> books = DaoFactory.getDaoBookInstance().selectByGenreID(Integer.parseInt(id));
+
+        for (entities.Book book : books) {
+            BookJson bookJson = new BookJson(book);
             booksJson.add(bookJson);
         }
 
@@ -134,6 +160,9 @@ public class BookRest extends HttpServlet {
     @GET
     public Response getSinglePage(@PathParam("id") String id){
         URI location;
+        Book book=DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(id));
+        book.setReviewCnt(book.getReviewCnt()+1);
+        DaoFactory.getDaoBookInstance().update(book);
         try {
             location = new URI("../single-page.html?id="+id);
         }
