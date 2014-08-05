@@ -65,4 +65,18 @@ public class GenreRest {
 
         return genreJsons;
     }
+    @GET
+    @Path("sort")
+    public ArrayList<GenreJson> sort(@QueryParam("order")String order){
+        ArrayList<GenreJson> genreJsons = new ArrayList<GenreJson>();
+        List<Genre> genres = DaoFactory.getDaoGenreInstance().orderByType(Boolean.valueOf(order));
+
+        for (entities.Genre genre : genres) {
+            GenreJson genreJson = new GenreJson(genre);
+            genreJsons.add(genreJson);
+        }
+
+        return genreJsons;
+    }
 }
+

@@ -14,4 +14,5 @@ public interface DaoGenreInterface {
     void update(Genre user);
     void delete(Genre user);
     void delete(int id);
+    public List<Genre> orderByType(boolean order);
 }
