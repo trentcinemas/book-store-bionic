@@ -25,7 +25,7 @@ header button .navbar-toggle > span {color:#f27853;}
 header .icon-bar {background-color:#f27853;}
 header .navbar-toggle {border: 1px solid white;}
 header .navbar-form { margin-right: 20px !important;}
-header .navbar-form .form-control { width: 350px; }
+header .navbar-form .form-control { width: 250px; }
 #hellouser {color: white; position: absolute; right: 0%; padding-right: 30px; top: -5px;}
 #logo img {height: 70px !important;}
 /* MAIN */
@@ -33,14 +33,15 @@ header .navbar-form .form-control { width: 350px; }
 #content a:hover {color: white; }
 #content p {padding: 0 70px; }
 #content h2 {font-size: 48px; color:black; padding: 20px; padding-left: 9.4%;}
-#content .row:last-child{padding-bottom: 25px;}
+#content .row:last-child {padding-bottom: 25px;}
 #content span {font:21px sans-serif bold; color: black;}
-#content .b-title, #content .b-author  {text-shadow: 2px 2px 1px white;}
+#content .b-title, #content .b-author  {text-shadow: 2px 2px 1px lightyellow;}
+#books_content img {height: 203px; width: 142px; display: block;}
 .book-name  {color:#f27853;}
 .book-price {color: white;}
 .book-img {}
-
 /*  FOOTER */
+
 footer select {color:black;}
 footer .row {padding: 50px 0px 40px 0px;}
 footer a {text-decoration: underline !important;}
@@ -53,10 +54,10 @@ footer #callback form > textarea {display: block;}
 footer #callback form div {float:right; }
 footer #callback form div > input {margin-top: 5px;}
 footer #searchFooter div > p:last-child {padding-top: 130px;}
-
 /* Media queries */
+
 @media (min-width:1200px){
-footer #searchFooter{padding-left:50px; margin: 0;}
+    footer #searchFooter{padding-left:50px; margin: 0;}
 }
 @media (min-width:992px) and (max-width:1200px){
     footer #callback {padding-left: 70px;}
@@ -64,10 +65,11 @@ footer #searchFooter{padding-left:50px; margin: 0;}
     footer #callback, #searchFooter {margin: 0;}
 }
 @media (min-width:767px) and (max-width:992px){
+
     #content h2 {padding-left:40%;}
-    
+
 	header div .navbar-form {margin-right: 15px !important;}
-    
+
 	footer #callback {padding-left: 70px;}
     footer #searchFooter{padding-left:50px; margin: 0;}
     footer #callback, #searchFooter{margin: 0;}
@@ -76,7 +78,8 @@ footer #searchFooter{padding-left:50px; margin: 0;}
     
 }
 @media (min-width:320px) and (max-width:767px){
-header nav > form {}    
+header .search-tool-style {width:350px !important;}
+header nav > form {}
 header #logo {position: static; text-align: center; float: none !important;}
 header .navbar-form.navbar-right:last-child{ margin-right: auto !important;}
 header .navbar-form {margin: auto; width: 400px;}
