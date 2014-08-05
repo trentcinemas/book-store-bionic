@@ -109,4 +109,23 @@ public class DaoGenre implements DaoGenreInterface {
             session.close();
         }
     }
+
+
+    @Override
+    public List<Genre> orderByType(boolean order) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true){
+            query = session.createQuery("from Genre genre order by genre.type asc ");
+        }else
+        {
+            query = session.createQuery("from Genre genre order by genre.type desc ");
+        }
+        List<Genre> result = query.list();
+        session.close();
+        return result;
+    }
+
+
+
 }

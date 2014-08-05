@@ -25,6 +25,9 @@
         <module name="bionic-book-store" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="bionic-book-store" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
 
