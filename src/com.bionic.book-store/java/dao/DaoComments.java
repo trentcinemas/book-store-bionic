@@ -174,4 +174,29 @@ public class DaoComments implements DaoCommentInterface {
         finally{
             session.close();
         }    }
+
+    @Override
+    public List<Comment> search(String str) {
+        str = str.trim();
+        str = str.toLowerCase();
+        String[] words = str.split(" ");
+
+        Session session;
+        session = HibernateUtil.getSessionFactory().openSession();
+
+        String selectQuery = "select c from Comment c where lower(c.bookByBookId) like '%" + str + "%' or lower(c.userByUserId) like '%" + str + "%'";
+        for (String w : words)
+            selectQuery += "or lower(c.bookByBookId) like '%" + w + "%' or lower(c.userByUserId) like '%" + w + "%')";
+
+
+        Query query = session.createQuery(selectQuery);
+        if (!query.list().isEmpty()) {
+            List<Comment> result = query.list();
+            session.close();
+            return result;
+        } else {
+            session.close();
+            return null;
+        }
+    }
 }
