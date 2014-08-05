@@ -1,4 +1,4 @@
-$('#navbarHeader').ready(function() {
+    $('#navbarHeader').ready(function() {
     // If user is Sign In show logout
     $.ajax({
         type: 'get',
