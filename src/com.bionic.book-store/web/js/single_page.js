@@ -5,6 +5,7 @@ $(document).ready(function(){
     var URL = window.location.search;
     var getRequest=URL.split("?")[1];
     var id=getRequest.split("=")[1];
+    $("#book").val(id);
   $.ajax({
        type:"get",
        dataType:"json",
@@ -20,6 +21,14 @@ $(document).ready(function(){
             $("#price").html(data.price + " грн");
             $("#big-cover").attr("src","/rest/file/getimage/"+data.big_cover);
        }
+    });
+
+    getComments();
+
+    $("#add_comment_form").submit(function(){
+        var comment = $("#comment").val();
+        var book =$("#book").val();
+        addComment(book,comment);
     });
 
     $('.b-buy').ready(function(){
@@ -122,7 +131,7 @@ function loginButtonEnable() {
 }
 
 function formReplyActionSet() {
-    $('#reply_form').submit(function() {
+    $('#reply_form').submit(function () {
         var email = $('#reply_email').val();
         var receiver = $('#reply_receiver').val();
         var text = $('#reply_text').val();
@@ -131,11 +140,65 @@ function formReplyActionSet() {
             type: 'post',
             url: '/rest/reply/send',
             crossDomain: true,
-            data: {'email': email, 'receiver' : receiver, 'text' : text},
-            success: function() {
+            data: {'email': email, 'receiver': receiver, 'text': text},
+            success: function () {
                 location.reload();
             }
         });
         return false;
     });
 }
+
+    function addComment(book,comm_desc)
+    {
+//        $("#add_comment_form").submit(function () {
+
+            var URL = window.location.search;
+            var getRequest = URL.split("?")[1];
+
+
+            $.ajax({
+                type: "post",
+                url: "rest/comment/addComment",
+                data: {
+                    book: book,
+                    comm_desc: comm_desc
+                },
+                success: function (data) {
+                    alert("added comment");
+                },
+                error: function (data) {
+                    alert(data);
+                }
+
+            });
+//        });
+    }
+
+        function getComments() {
+//            var URL = window.location.search;
+//            var getRequest = URL.split("?")[1];
+//            var id = getRequest.split("=")[1];
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "/rest/comment/forBook/" + id,
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        /*   $("#user").html(data[i].user);
+                         $("#date").html(data[i].date);
+                         $("#comm_desc").html(data[i].comm_desc);*/
+                        $(".comments").append("<div>" +
+                            "<h3 class='comm_desc'>" + data[i].comm_desc + "</h3>" +
+                            "<h4 class='date'>" + data[i].date + "</h4>" +
+                            "<a class='user'>" + data[i].user + "</a>" +
+                            "</div>")
+
+                    }
+                }
+            });
+        }
+
+
+
+
