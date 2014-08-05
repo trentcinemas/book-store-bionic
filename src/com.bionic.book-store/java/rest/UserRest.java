@@ -1,5 +1,7 @@
 package rest;
 
+import dao.DaoBook;
+import entities.Book;
 import entities.User;
 import jsonClasses.UserJson;
 import util.DaoFactory;
@@ -111,7 +113,7 @@ public class UserRest {
     @Produces("application/json")
     public ArrayList<UserJson> sort(@PathParam("page")String page,@PathParam("byWhat") String byWhat,@PathParam("order") String order) {
      ArrayList<UserJson> userJsons = new ArrayList<UserJson>();
-         List<User> users =DaoFactory.getDaoUserInstance().orderBy(byWhat,Integer.parseInt(page),Boolean.valueOf(order));
+         List<User> users = DaoFactory.getDaoUserInstance().orderBy(byWhat,Integer.parseInt(page),Boolean.valueOf(order));
         for(User user : users){
             userJsons.add(new UserJson(user));
         }
@@ -123,5 +125,23 @@ public class UserRest {
     public UserJson get(@CookieParam("user") String email){
         User user=DaoFactory.getDaoUserInstance().selectByEmail(email);
         return new UserJson(user);
+    }
+
+    @GET
+    @Path("recomendation-books")
+    @Produces("application/json")
+    public ArrayList<Book> getRecomendation() {
+        int count = 5;
+
+        ArrayList<Book> userRecomendations = new ArrayList<>(count);
+
+        DaoBook dao = DaoFactory.getDaoBookInstance();
+        userRecomendations.add(dao.getMostExpensiveBook());
+        userRecomendations.add(dao.getMostPopularBook());
+        userRecomendations.add(dao.getLastAddedBook());
+        userRecomendations.addAll(
+                        DaoFactory.getDaoBookInstance().gerRandomBooks(count - userRecomendations.size()));
+
+        return userRecomendations;
     }
 }
