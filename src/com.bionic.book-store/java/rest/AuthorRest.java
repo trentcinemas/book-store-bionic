@@ -4,6 +4,7 @@ import dao.DaoAuthor;
 import entities.Author;
 import entities.User;
 import jsonClasses.AuthorJson;
+import util.CheckUser;
 import util.DaoFactory;
 import util.Logger;
 import util.MultipartRequestMap;
@@ -37,7 +38,7 @@ public class AuthorRest extends HttpServlet {
 
         User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
 
-        if (!checkUser(user)) {
+        if (!CheckUser.isAdmin(user) || !CheckUser.isModer(user) || !CheckUser.isRedactor(user)) {
             Logger.log(PROCESS, "Access denied : " + userEmail);
             return Response.status(403).entity("Вибачте, ви не маєте досупу до даної операції").build();
         }
@@ -67,7 +68,7 @@ public class AuthorRest extends HttpServlet {
 
         User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
 
-        if (!checkUser(user)) {
+        if (!CheckUser.isAdmin(user) || !CheckUser.isModer(user) || !CheckUser.isRedactor(user)) {
             Logger.log(PROCESS, "Access denied : " + userEmail);
             return Response.status(403).entity("Вибачте, ви не маєте досупу до даної операції").build();
         }
@@ -152,18 +153,5 @@ public class AuthorRest extends HttpServlet {
         File image = new File(PHOTO_DIRECTORY_PATH + author.getPhoto());
 
         return Response.ok(image).build();
-    }
-
-
-    /**
-     * Returns true if user has access
-     * @param user Entity User object
-     * @return boolean status
-     */
-    private boolean checkUser(User user) {
-        if (user == null) return false;
-        // TODO check user group
-
-        return true;
     }
 }
