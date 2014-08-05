@@ -24,4 +24,16 @@ public interface DaoBookInterface {
     void delete(int id);
     public List<Book> search(String s);
     public List<Book> selectByGenreID(int id);
+
+    List<Book> selectPage(int page);
+
+    public List<Book> orderByTitle(boolean order, int page);
+    public List<Book> orderByAuthor(boolean order, int page);
+    public List<Book> orderByDate(boolean order, int page);
+    public List<Book> orderByPageCount(boolean order, int page);
+    public List<Book> orderByReviewCount(boolean order, int page);
+    public List<Book> orderByPrice(boolean order, int page);
+    public List<Book> orderByBuyCount(boolean order, int page);
+
+
 }

@@ -56,7 +56,7 @@ public class DaoPurchasedBook implements DaoPurchasedBookInterface {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("select pBook from PurchasedBook pBook where pBook.userByUserId.id="+ id);
         if (!query.list().isEmpty()) {
-            List<PurchasedBook> result = (List<PurchasedBook>) query.list().get(0);
+            List<PurchasedBook> result = query.list();
             session.close();
             return result;
         } else session.close();

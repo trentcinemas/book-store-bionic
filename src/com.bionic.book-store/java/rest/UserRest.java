@@ -117,4 +117,11 @@ public class UserRest {
         }
         return userJsons;
     }
+    @GET
+    @Path("get")
+    @Produces("application/json")
+    public UserJson get(@CookieParam("user") String email){
+        User user=DaoFactory.getDaoUserInstance().selectByEmail(email);
+        return new UserJson(user);
+    }
 }
