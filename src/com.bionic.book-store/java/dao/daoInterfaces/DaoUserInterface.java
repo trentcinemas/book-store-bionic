@@ -3,6 +3,7 @@ package dao.daoInterfaces;
 import entities.User;
 import entities.UserGroup;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -24,6 +25,8 @@ public interface DaoUserInterface {
     public List<User> orderByName(boolean order, int page);
     public List<User> search(String str);
     public List<User> selectAll(int limit, boolean order, String orderByWhat);
+    public List<User> selectPage(int page);
     public List<User> selectByUserGroup(UserGroup group, int limit, boolean order, String orderByWhat);
     public List<User> selectByUserGroupType(String type, int limit, boolean order, String orderByWhat);
+    public BigInteger count();
 }

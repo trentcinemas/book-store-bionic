@@ -1,6 +1,7 @@
 package dao;
 
 import dao.daoInterfaces.DaoPurchasedBookInterface;
+import entities.Book;
 import entities.PurchasedBook;
 import entities.User;
 import org.hibernate.Query;
@@ -14,6 +15,16 @@ import java.util.List;
  * Created by Джон on 23.07.2014.
  */
 public class DaoPurchasedBook implements DaoPurchasedBookInterface {
+    public boolean exist(User user, Book book) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from PurchasedBook where userByUserId.id=" + user.getUserId() +
+                "and bookByBookId.id=" + book.getBookId());
+
+        List<PurchasedBook> books = query.list();
+        session.close();
+        return books.size() != 0;
+    }
+
     @Override
     public PurchasedBook selectById(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();

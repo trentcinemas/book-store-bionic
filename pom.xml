@@ -7,6 +7,7 @@
     <groupId>com.bionic</groupId>
     <artifactId>book-store</artifactId>
     <version>1.0</version>
+    <packaging>war</packaging>
 
     <repositories>
         <repository>
@@ -37,7 +38,7 @@
             <version>1.9</version>
         </dependency>
 
-        <!-- multipart jersey -->
+        <!-- multipart jersey  -->
         <dependency>
             <groupId>com.sun.jersey.contribs</groupId>
             <artifactId>jersey-multipart</artifactId>
@@ -58,12 +59,12 @@
             <version>4.3.5.Final</version>
         </dependency>
 
-        <!-- JUnit -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-        </dependency>
+        <!--&lt;!&ndash; JUnit &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>junit</groupId>-->
+            <!--<artifactId>junit</artifactId>-->
+            <!--<version>4.11</version>-->
+        <!--</dependency>-->
 
         <!-- Commons libs (MD5 hex) -->
         <dependency>
@@ -86,5 +87,67 @@
             <version>1.2.1</version>
         </dependency>
 
+        <!-- mail -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4</version>
+        </dependency>
     </dependencies>
+
+
+    <build>
+        <sourceDirectory>src/com.bionic.book-store/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/com.bionic.book-store/resources</directory>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerVersion>1.7</compilerVersion>
+                    <source>1.7</source>
+                    <target>1.7</target>
+
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <warSourceDirectory>src/com.bionic.book-store/web</warSourceDirectory>
+                    <webXml>src/com.bionic.book-store/web/WEB-INF/web.xml</webXml>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>copy</goal></goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.github.jsimone</groupId>
+                                    <artifactId>webapp-runner</artifactId>
+                                    <version>7.0.34.1</version>
+                                    <destFileName>webapp-runner.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -52,7 +52,7 @@
                 </ul>
                 <ul class="nav nav-sidebar">
                     <li><a href="books-admin.html">Книги</a></li>
-                    <li class="active"><a href="addbook-admin.html">Додати книжку</a></li>
+                    <li><a href="addbook-admin.html">Додати книжку</a></li>
                     <li><a href="topics-admin.html">Жанри</a></li>
                     <li><a href="addtopic-admin.html">Додати жанр</a></li>
                     <li><a href="author-admin.html">Автори</a></li>
@@ -60,24 +60,24 @@
                 </ul>
             </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Нова книга</h1>
+          <h1 class="page-header" id="edit_book_title">Редагування</h1>
           
             <form role="form" id="add_book_form">
               <div class="form-group">
                 <label for="title">Назва</label>
-                <input type="text" class="form-control" id="title" name="title" placeholder="Назва книжки">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Завантаження...">
               </div>
               <div class="form-group">
                 <label for="description">Опис</label>
-                <textarea class="form-control" id="description" name="description" placeholder="Невеличкий опис" rows="3"></textarea>
+                <textarea class="form-control" id="description" name="description" placeholder="Завантаження..." rows="3"></textarea>
               </div>
               <div class="form-group">
                 <label for="page_count">Кількість сторінок</label>
-                <input type="text" class="form-control" id="page_count" name="page_count" placeholder="Введіть кількість сторінок">
+                <input type="text" class="form-control" id="page_count" name="page_count" placeholder="Завантаження...">
               </div>
                 <div class="form-group">
                     <label for="page_count">Ціна у гривнях</label>
-                    <input type="text" class="form-control" id="price" name="price" placeholder="Введіть ціну">
+                    <input type="text" class="form-control" id="price" name="price" placeholder="Завантаження...">
                 </div>
               <div class="form-group">
                 <label for="title">Автор:</label>
@@ -125,6 +125,6 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/js/bootstrap.min.js"></script>
     <script src="http://getbootstrap.com/assets/js/docs.min.js"></script>
-    <script src="/js/admin_book_add.js"></script>
+    <script src="/js/admin_book_edit.js"></script>
   </body>
 </html>

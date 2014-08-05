@@ -17,6 +17,22 @@ import java.util.List;
  */
 public class DaoAuthor implements DaoAuthorInterface {
 
+    public Author selectByName(String name) {
+        String firstname = name.split(" ")[0];
+        String lastname = name.split(" ")[1];
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from  Author  where firstname = '" + firstname +
+                "' and lastname = '" + lastname + "'" );
+        if (query.list().size() == 0) {
+            session.close();
+            return null;
+        }
+        Author result = (Author) query.list().get(0);
+        session.close();
+        return result;
+    }
+
     @Override
     public List<Author> selectAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -39,6 +55,10 @@ public class DaoAuthor implements DaoAuthorInterface {
     public Author selectById(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("from Author where authorId = " + id);
+        if (query.list().size() == 0) {
+            session.close();
+            return null;
+        }
         Author result = (Author) query.list().get(0);
         session.close();
         return result;
