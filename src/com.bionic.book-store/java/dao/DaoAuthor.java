@@ -130,4 +130,51 @@ public class DaoAuthor implements DaoAuthorInterface {
             session.getTransaction().rollback();
         }
     }
+
+    @Override
+    public List<Author>  orderByName(boolean order) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true){
+            query = session.createQuery("from  Author order by firstname asc");
+        }else {
+            query = session.createQuery("from  Author order by firstname desc");
+        }
+        if (!query.list().isEmpty()) {
+            List<Author> result = query.list();
+            session.close();
+            return result;
+        } else {
+            session.close();
+            return null;
+        }
+
+    }
+
+    @Override
+    public List<Author> orderBySurname(boolean order) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true){
+            query = session.createQuery("from  Author order by lastname asc");
+        }else {
+            query = session.createQuery("from  Author order by lastname desc");
+        }
+        if (!query.list().isEmpty()) {
+            List<Author> result = query.list();
+            session.close();
+            return result;
+        } else {
+            session.close();
+            return null;
+        }
+    }
+
+    public List<Author> orderBy(String name, boolean order){
+        switch (name){
+            case "name": return orderByName(order);
+            case "lastname": return orderBySurname(order);
+            default: return null;
+        }
+    }
 }
