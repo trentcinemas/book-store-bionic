@@ -5,13 +5,8 @@
 .row {margin: 0 0;}
 body {background:#2F3438; margin: auto;}
 #content {width: 100%;}
-.clearfix:after {
-   content: " "; /* Older browser do not support empty content */
-   visibility: hidden;
-   display: block;
-   height: 0;
-   clear: both;
-}
+.clearfix:after { content: " "; /* Older browser do not support empty content */visibility: hidden;display: block;height: 0; 
+clear: both;}
 
 /* SEARCH Tool*/
 #logo{ padding: 23px; position: absolute;}
@@ -23,7 +18,6 @@ body {background:#2F3438; margin: auto;}
 /* HEADER */
 header { background-color: #2F3438; }
 header nav > form {margin-right: 25px;}
-header .navbar-nav >li{font-weight: bold;}
 header .navbar-nav > li > a {color: white; }
 header .navbar-nav > li > a:hover{color: #f27853;}
 header .nav>li>a:hover {background-color: transparent;}
@@ -38,12 +32,11 @@ header .navbar-form .form-control { width: 350px; }
 
 /* MAIN */
 #content { background: url(../images/new1.png)repeat;}
-/*#content { background: #e5e6e6;}*/
-#content a:hover {color: #333; }
+#content a:hover {color: white; }
 #content p {padding: 0 70px; }
-#content h2 {font-size: 48px; color: #333; padding: 20px; padding-left: 9.4%;}
+#content h2 {font-size: 48px; color:black; padding: 20px; padding-left: 9.4%;}
 #content .row:last-child{padding-bottom: 25px;}
-/*#content span {font:20px sans-serif bold;}*/
+#content span {font:20px sans-serif bold;}
 .book-name  {color:#f27853;}
 .book-price {color: white;}
 .book-img {}
@@ -52,59 +45,61 @@ header .navbar-form .form-control { width: 350px; }
 footer .row {padding: 50px 0px 40px 0px;}
 footer a {text-decoration: underline !important;}
 footer span {font-size: 20px; color:white; }
+footer #callback p:first-child {font-size: 20px; color:white; }
 footer {width: 100%; background: #303539; }
 footer p {color:white; font-size: 16px; margin:8px 0px;}
 footer select {color:black;}
-footer #callback form div > input {margin-top: 5px;}
+footer #callback form  {float: left;}
 footer #callback form > textarea {display: block;}
-footer #callback form div {float:left; padding-left: 120px;}
+footer #callback form div {float:right; }
+footer #callback form div > input {margin-top: 5px;}
 footer #searchFooter div > p:last-child {padding-top: 130px;}
 
 /* Media queries */
 @media (min-width:1200px){
-footer #searchFooter{padding-left:50px; margin: 0px 0px;}
+footer #searchFooter{padding-left:50px; margin: 0;}
 }
 @media (min-width:992px) and (max-width:1200px){
     footer #callback {padding-left: 70px;}
-    footer #searchFooter{padding-left:50px;}
-    footer #callback, #searchFooter{margin: 0;}
+    footer #searchFooter {padding-left:50px;}
+    footer #callback, #searchFooter {margin: 0;}
 }
-@media (min-width:768px) and (max-width:992px){
+@media (min-width:767px) and (max-width:992px){
     footer #callback {padding-left: 70px;}
     footer #searchFooter{padding-left:50px; margin: 0;}
     footer #callback, #searchFooter{margin: 0;}
     footer #callback {padding-left: 70px;}
     footer #searchFooter{padding-left:50px;}
     #content h2 {padding-left:40%;}
-    #content .col-sm-4 {padding-left: 65px; margin-top: 10px;}
+    
     header div .navbar-form {margin-right: 15px !important;}
 }
-@media (max-width:768px){
-    #content .col-sm-4 {padding-left: 65px; margin-top: 10px;}
-    footer #callback {padding-left: 50px;}
-    footer #searchFooter {padding-left: 30px;}
-}
 @media (min-width:320px) and (max-width:767px){
+header nav > form {}    
+header #logo {position: static; text-align: center; float: none !important;}
+header .navbar-form.navbar-right:last-child{ margin-right: auto;}
+header .navbar-form {margin: auto; width: 400px;}
 header #navbarHeader {text-align: center;}
 header #navbarHeader ul {float: none !important;}
-header #logo {position: static; text-align: center; float: none !important;}
-header .navbar-form {margin: auto; width: 400px;}
 header .navbar-form input {float: left; width: 355px;}    
 header .search-tool button {margin-top: 4px;}
-header nav > form {}    
+
+footer #callback {padding-left: 50px;}
+footer #searchFooter {padding-left: 30px;}
 .search-tool{ padding: 0px 0px 0px 3px; height: auto; width:250px;}
 .search-tool input{ height: 25px; margin:7px 0px 0px 4px; width: auto; }
 footer #callback form div > input {margin: 10px 0px 0px 62px; text-align: center;  padding: 10px 30px; margin: auto; margin-top: 5px;}
+footer #callback form { float: none;}
 footer #callback form div {float:none; padding-left: 0px;}
 footer #callback { text-align: center; }
 footer #callback textarea { margin: auto; width: 300px;  }
 footer #searchFooter div .pull-left{ float: none !important; text-align: center;}
 footer #searchFooter div > p:last-child {padding-top: 30px;}
-footer #searchFooter > span {display: none;}
+footer #searchFooter span:first-child {display: none;}
 footer #searchFooter form {display: none;}
 footer #searchFooter, #callback {padding: 0px 0px; }
 footer #callback {padding: 0px 0px;}
-}
+footer #searchFooter div:last-child {float: none !important; text-align: center;}
 
 /* ------------Single page styles ---------------*/
 
