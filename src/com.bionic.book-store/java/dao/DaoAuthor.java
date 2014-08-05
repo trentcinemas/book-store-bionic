@@ -43,6 +43,17 @@ public class DaoAuthor implements DaoAuthorInterface {
     }
 
     @Override
+    public List<Author> selectAllByPage(int page) {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from Author ");
+            query.setFirstResult(0+15*(page-1));
+            query.setMaxResults(15);
+            List<Author> result =query.list();
+            session.close();
+            return result;
+    }
+
+    @Override
     public List<Author> selectAuthorBooks(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("select b from Book b where b.authorByAuthorId = " + id);
@@ -132,7 +143,7 @@ public class DaoAuthor implements DaoAuthorInterface {
     }
 
     @Override
-    public List<Author>  orderByName(boolean order) {
+    public List<Author>  orderByName(boolean order,int page) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = null;
         if (order == true){
@@ -142,6 +153,8 @@ public class DaoAuthor implements DaoAuthorInterface {
         }
         if (!query.list().isEmpty()) {
             List<Author> result = query.list();
+            query.setFirstResult(0+15*(page-1));
+            query.setMaxResults(15);
             session.close();
             return result;
         } else {
@@ -152,7 +165,7 @@ public class DaoAuthor implements DaoAuthorInterface {
     }
 
     @Override
-    public List<Author> orderBySurname(boolean order) {
+    public List<Author> orderBySurname(boolean order, int page) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = null;
         if (order == true){
@@ -162,6 +175,8 @@ public class DaoAuthor implements DaoAuthorInterface {
         }
         if (!query.list().isEmpty()) {
             List<Author> result = query.list();
+            query.setFirstResult(0+15*(page-1));
+            query.setMaxResults(15);
             session.close();
             return result;
         } else {
@@ -170,10 +185,10 @@ public class DaoAuthor implements DaoAuthorInterface {
         }
     }
 
-    public List<Author> orderBy(String name, boolean order){
+    public List<Author> orderBy(String name, boolean order, int page){
         switch (name){
-            case "name": return orderByName(order);
-            case "lastname": return orderBySurname(order);
+            case "name": return orderByName(order,page);
+            case "lastname": return orderBySurname(order, page);
             default: return null;
         }
     }

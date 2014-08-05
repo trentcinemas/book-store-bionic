@@ -212,7 +212,7 @@ public class DaoBook implements DaoBookInterface {
     public List<Book> search(String s) {
         s = s.trim();
         s = s.toLowerCase();
-        String[] words = s.split(" ");
+        String[] words = s.split("[ ,+,,,.]");
 
         Session session;
         session = HibernateUtil.getSessionFactory().openSession();

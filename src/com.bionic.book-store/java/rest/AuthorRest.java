@@ -166,4 +166,34 @@ public class AuthorRest extends HttpServlet {
 
         return true;
     }
+
+    @GET
+    @Path("getAllByPage/{page}")
+    @Produces("application/json")
+    public ArrayList<AuthorJson> getAllAuthorsByPage(@PathParam("page")String page) {
+        int p = Integer.parseInt(page);
+        List<Author> authors = DaoFactory.getDaoAuthorInstance().selectAllByPage(p);
+        ArrayList<AuthorJson> authorJsons = new ArrayList<>();
+        for (Author a : authors) {
+            authorJsons.add(new AuthorJson(a));
+        }
+
+        return authorJsons;
+    }
+
+    @GET
+    @Path("ordered/{page}/{byWhat}/{order}")
+    @Produces("application/json")
+    public ArrayList<AuthorJson> ordered(@PathParam("page")String page,
+                                         @PathParam("byWhat") String byWhat,
+                                         @PathParam("order") boolean order) {
+        int p = Integer.parseInt(page);
+        List<Author> authors = DaoFactory.getDaoAuthorInstance().orderBy(byWhat,order,p);
+        ArrayList<AuthorJson> authorJsons = new ArrayList<>();
+        for (Author a : authors) {
+            authorJsons.add(new AuthorJson(a));
+        }
+
+        return authorJsons;
+    }
 }

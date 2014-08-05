@@ -10,6 +10,7 @@ import java.util.List;
  */
 public interface DaoAuthorInterface {
     public List<Author> selectAll();
+    public List<Author> selectAllByPage(int page);
     public List<Author> selectAuthorBooks(int id);
     public Author selectById(int id);
     public List<Author> selectByFirstName(String fname);
@@ -18,6 +19,6 @@ public interface DaoAuthorInterface {
     public void update(Author author);
     public void delete(Author author);
     public void delete(int id);
-    public List<Author> orderByName(boolean order);
-    public List<Author> orderBySurname(boolean order);
+    public List<Author> orderByName(boolean order,int page);
+    public List<Author> orderBySurname(boolean order, int page);
 }
