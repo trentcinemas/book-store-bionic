@@ -21,12 +21,14 @@ $(document).ready(function() {
                             "<td id='author"+id+"'>" + data[i].author + "</td>" +
                             "<td id='genre"+id+"'>" + data[i].genre + "</td>" +
                             "<td id='pages_cnt"+id+"'>" + data[i].pagesCnt + "</td>" +
-                            "<td id='price"+id+"'>" + data[i].price + "</td>" +
+                            "<td id='price"+id+"'>" + data[i].price + " грн</td>" +
                             "<td id='download_cnt"+id+"'>" + data[i].downloadCnt + "</td>" +
                             "<td id='view_cnt"+id+"'>" + data[i].viewCnt + "</td>" +
                             "<td id='add_date"+id+"'>" + data[i].date + "</td>" +
                             "<td id='user"+id+"'>" + data[i].user + "</td>" +
-                            "<td id='button"+id+"'>" + "<button onclick='editUser(" + data[i].id + ")'>Edit</button>" + "</td>" +
+                            "<td>" +
+                                "<a href=editbook-admin.html?id=" + data[i].id + "><button>Edit</button></a>" + "</td>" +
+                            "<td><button onclick='removeBook(" + data[i].id + ")'>Remove</button></td>" +
                         "</tr>"
                 );
             }
@@ -34,6 +36,21 @@ $(document).ready(function() {
     });
 
 });
+
+function removeBook(id) {
+    if (confirm("Видалити книгу?")) {
+        $.ajax({
+            type: 'post',
+            url: '/rest/book/remove',
+            data: {'id': id},
+            crossDomain: true,
+            success: function (data) {
+                alert("Removed");
+                location.reload();
+            }
+        });
+    }
+}
 
 function addAjaxLoader() {
     // Setup the ajax indicator

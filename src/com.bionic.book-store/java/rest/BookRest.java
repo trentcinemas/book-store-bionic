@@ -17,11 +17,16 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.File;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static util.Logger.Type.PROCESS;
 
 @Path("book/")
 @MultipartConfig(location = "/upload", maxFileSize = 10485760L) // 10MB.
@@ -50,14 +55,12 @@ public class BookRest extends HttpServlet {
         enBook.setTitle(map.getStringParameter("title"));
         enBook.setDescription(map.getStringParameter("description"));
         enBook.setPrice(Float.parseFloat(map.getStringParameter("price")));
-        enBook.setDatePub(new Timestamp(System.currentTimeMillis()));
-        String author_id = map.getStringParameter("author_id");
-        enBook.setAuthorByAuthorId(DaoFactory.getDaoAuthorInstance().selectById(Integer.parseInt(author_id)));
+        enBook.setDatePub(new Timestamp(new Date().getTime()));
+        enBook.setAuthorByAuthorId(DaoFactory.getDaoAuthorInstance().selectByName(map.getStringParameter("author")));
         enBook.setUserByUserId(user);
         enBook.setReviewCnt(0);
         enBook.setDownloadsCnt(0);
-        String genre_id = map.getStringParameter("genre");
-        enBook.setGenreByGenreId(DaoFactory.getDaoGenreInstance().selectById(Integer.parseInt(genre_id)));
+        enBook.setGenreByGenreId(DaoFactory.getDaoGenreInstance().getGenreByType(map.getStringParameter("genre")));
         enBook.setPagesCnt(Integer.parseInt(map.getStringParameter("page_count")));
         enBook.setCover(map.getStringParameter("title") + "/" + map.getFileParameter("sm-cover").getAbsoluteFile().getName());
         enBook.setBigCover(map.getStringParameter("title") + "/" + map.getFileParameter("big-cover").getAbsoluteFile().getName());
@@ -67,6 +70,74 @@ public class BookRest extends HttpServlet {
 
         DaoFactory.getDaoBookInstance().insert(enBook);
 
+        return Response.ok().build();
+    }
+
+    @Path("update")
+    @POST
+    @Consumes("multipart/form-data")
+    public Response updateBook(@CookieParam("user") String userEmail,
+                               @Context HttpServletRequest request) {
+        User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
+
+        if (!checkUser(user)) {
+            Logger.log(Logger.Type.PROCESS, "Access denied : " + userEmail);
+            return Response.status(403).header(RESPONSE_HEADER, "*")
+                    .entity("Вибачте, ви не маєте досупу до даної операції").build();
+        }
+
+        MultipartRequestMap map = new MultipartRequestMap(request);
+        entities.Book enBook = new entities.Book();
+        enBook.setTitle(map.getStringParameter("title"));
+        enBook.setDescription(map.getStringParameter("description"));
+        enBook.setPrice(Float.parseFloat(map.getStringParameter("price")));
+        enBook.setDatePub(new Timestamp(new Date().getTime()));
+        enBook.setAuthorByAuthorId(DaoFactory.getDaoAuthorInstance().selectByName(map.getStringParameter("author")));
+        enBook.setUserByUserId(user);
+        enBook.setReviewCnt(0);
+        enBook.setDownloadsCnt(0);
+        enBook.setGenreByGenreId(DaoFactory.getDaoGenreInstance().getGenreByType(map.getStringParameter("genre")));
+        enBook.setPagesCnt(Integer.parseInt(map.getStringParameter("page_count")));
+        // updating files
+        if (map.getFileParameter("sm-cover") != null) {
+            enBook.setCover(
+                    map.getStringParameter("title") + "/" + map.getFileParameter("sm-cover").getAbsoluteFile().getName());
+        }
+        if (map.getFileParameter("big-cover") != null) {
+            enBook.setBigCover(
+                    map.getStringParameter("title") + "/" + map.getFileParameter("big-cover").getAbsoluteFile().getName());
+        }
+        if (map.getFileParameter("pdf") != null) {
+            enBook.setPdfPath(
+                    map.getStringParameter("title") + "/" + map.getFileParameter("pdf").getAbsoluteFile().getName());
+        }
+        if (map.getFileParameter("doc") != null) {
+            enBook.setDocPath(
+                    map.getStringParameter("title") + "/" + map.getFileParameter("doc").getAbsoluteFile().getName());
+        }
+        if (map.getFileParameter("fb2") != null) {
+            enBook.setFb2Path(
+                    map.getStringParameter("title") + "/" + map.getFileParameter("fb2").getAbsoluteFile().getName());
+        }
+
+        DaoFactory.getDaoBookInstance().update(enBook);
+
+        return Response.ok().build();
+    }
+
+    @POST
+    @Path("remove")
+    public Response removeBook(@CookieParam("user") String userEmail,
+                               @FormParam("id") String idString) {
+
+        User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
+        if (!checkUser(user)) {
+            Logger.log(Logger.Type.PROCESS, "Access denied : " + userEmail);
+            return Response.status(403)
+                    .entity("Вибачте, ви не маєте досупу до даної операції").build();
+        }
+
+        DaoFactory.getDaoBookInstance().delete(Integer.parseInt(idString));
         return Response.ok().build();
     }
 
@@ -170,6 +241,7 @@ public class BookRest extends HttpServlet {
         return new BookJson(DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(id)));
     }
 
+
     @Path("search/{searchstring}")
     @GET
     @Produces("application/json")
@@ -192,6 +264,56 @@ public class BookRest extends HttpServlet {
         // Logger.log(Logger.Type.PROCESS,"SEARCH:"+user!=null?user:"Someone"+" has found "+s);
         return result;
     }
+
+    @GET
+    @Path("getBookPreview")
+    @Produces("application/pdf")
+    public Response getBookPreview() {
+        File file = new File("/home/jsarafajr/present/jQuery-tutorial-for-beginners-1.0.3.pdf");
+        return Response.ok(file).header("X-FRAME-OPTIONS", "SAMEORIGIN").build();
+    }
+
+
+    @GET
+    @Path("user-has")
+    public String hasUserBook(@CookieParam("user") String userEmail,
+                              @QueryParam("id") String bookIdString) {
+
+        User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
+        if (!checkUser(user)) {
+            // Unauthorized
+            return Boolean.toString(false);
+        }
+
+        Book book = DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(bookIdString));
+
+        return Boolean.toString(
+                DaoFactory.getDaoPurchasedBookInstance().exist(user, book));
+    }
+
+    @Path("buy")
+    @POST
+    public Response buyBook(@CookieParam("user") String userEmail,
+                            @FormParam("id") String bookIdString) {
+
+        User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
+        if (!checkUser(user)) {
+            // 401 - Unauthorized
+            return Response.status(401).build();
+        }
+
+        Book book = DaoFactory.getDaoBookInstance()
+                .selectById(Integer.parseInt(bookIdString));
+
+        PurchasedBook purchasedBook = new PurchasedBook();
+        purchasedBook.setUserByUserId(user);
+        purchasedBook.setBookByBookId(book);
+        purchasedBook.setDate(new Timestamp(new Date().getTime()));
+        DaoFactory.getDaoPurchasedBookInstance().insert(purchasedBook);
+
+        return Response.ok().build();
+    }
+
 
     /**
      * Returns true if user has access

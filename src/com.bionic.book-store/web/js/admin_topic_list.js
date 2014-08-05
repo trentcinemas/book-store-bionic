@@ -18,8 +18,8 @@ $(document).ready(function() {
                         "<tr id='book" + id + "'> " +
                         "<td>" + id + "</td>" +
                         "<td id='title"+id+"'>" + data[i].type + "</td>" +
-                        "<td id='button"+id+"'>" + "<button onclick='removeGenre(" + data[i].id + ")'>Remove</button>" + "</td>" +
-                        "<td id= 'editTopic"+id+"'>" + "<button onclick ='editGenre(" + data[i].id + ")'>Edit</button>" + "</td>"+
+                        "<td id='button"+id+"'>" + "<button onclick='editGenre(" + data[i].id + ")'>Edit</button>" + "</td>" +
+                        "<td><button onclick='removeGenre(" + data[i].id + ")'>Remove</button>" + "</td>" +
                         "</tr>"
                 );
             }
@@ -28,22 +28,19 @@ $(document).ready(function() {
 
 });
 
-// Edit Genre
-
 function editGenre(id) {
     var title = $('#title' + id).html();
 
     $('#title' + id).html(
             "<input type='text' value='" + title + "'>"
     );
-    $('#editTopic' + id).html(
+
+    $('#button' + id).html(
             "<button onclick='applyEdit(" + id + ")'>Apply</button>"
     );
-
 }
 
 function applyEdit(id) {
-
     var title = $('#title' + id).children().val();
 
     $('#title' + id).html(title);
@@ -58,33 +55,29 @@ function applyEdit(id) {
         type: 'post',
         url: '/rest/genre/update',
         crossDomain: true,
-        data: {'id': id, 'title': type},
+        data: {'id': id, 'title' : title},
         success: function(data) {
             alert("Success");
-        },
-        error: function (data) {
-            alert("Error")
+            location.reload();
         }
     });
 
     return false;
 }
 
-// end of changes
-
 function removeGenre(id) {
-    var lol;
-
-    $.ajax({
-        type: 'post',
-        url: '/rest/genre/remove',
-        data: {'id': id},
-        crossDomain: true,
-        success: function (data) {
-            alert("Removed");
-            location.reload();
-        }
-    });
+    if (confirm("Видалити жанр?")) {
+        $.ajax({
+            type: 'post',
+            url: '/rest/genre/remove',
+            data: {'id': id},
+            crossDomain: true,
+            success: function (data) {
+                alert("Removed");
+                location.reload();
+            }
+        });
+    }
 }
 
 function addAjaxLoader() {

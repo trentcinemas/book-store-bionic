@@ -93,6 +93,7 @@ public class MultipartRequestMap extends HashMap<String, List<Object>> {
     }
 
     private void processFilePart(Part part, String fileName) throws IOException {
+        if (fileName.length() == 0) return;
         File tempFile = new File(STORAGE, fileName);
         tempFile.createNewFile();
         tempFile.deleteOnExit();
