@@ -82,4 +82,28 @@ public class CommentRest {
 
             return true;
         }
+
+    @Path("search/{searchString}")
+    @GET
+    @Produces ("application/json")
+    public List <CommentJson> searchComments(@PathParam("searchString")String searchString){
+        List<Comment> comments = new LinkedList<>();
+        ArrayList<CommentJson> result = new ArrayList<CommentJson>();
+        try {
+            comments = DaoFactory.getDaoCommentsInstance().search(searchString);
+            if (comments == null)
+                return result;
+            for (Comment c : comments) {
+                CommentJson comment = new CommentJson(c);
+                result.add(comment);
+            }
+        } catch (NullPointerException e) {
+
+        }
+
+
+        // Logger.log(Logger.Type.PROCESS,"SEARCH:"+user!=null?user:"Someone"+" has found "+s);
+        return result;
+    }
+
 }

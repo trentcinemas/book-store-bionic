@@ -22,4 +22,6 @@ public interface DaoCommentInterface {
     void update(Comment comment);
     void delete(Comment comment);
     void delete(int id);
+
+    List<Comment> search(String str);
 }
