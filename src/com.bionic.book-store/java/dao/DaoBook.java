@@ -1,6 +1,7 @@
 package dao;
 
 import dao.daoInterfaces.DaoBookInterface;
+import entities.Author;
 import entities.Book;
 import entities.Distributor;
 import entities.User;
@@ -392,5 +393,46 @@ public class DaoBook implements DaoBookInterface {
         Session session =HibernateUtil.getSessionFactory().openSession();
         SQLQuery query=session.createSQLQuery("select count(1) from Book");
         return (BigInteger) (query.list().get(0));
+    }
+
+    public List<Book> gerRandomBooks(int count) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from Book order by rand()");
+        List<Book> result = query.setMaxResults(count).list();
+        session.close();
+        return result;
+    }
+
+    public Book getMostExpensiveBook() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from Book order by price desc ");
+        Book result = (Book) query.setMaxResults(1).list().get(0);
+        session.close();
+        return result;
+    }
+
+    public Book getMostPopularBook() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from Book order by reviewCnt desc ");
+        Book result = (Book) query.setMaxResults(1).list().get(0);
+        session.close();
+        return result;
+    }
+
+    public Book getLastAddedBook() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from Book order by datePub desc ");
+        Book result = (Book) query.setMaxResults(1).list().get(0);
+        session.close();
+        return result;
+    }
+
+    public List<Book> getRandom(Author author, int count) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from Book where authorByAuthorId.id='" +
+                author.getAuthorId() +"'order by rand()");
+        List<Book> result = query.setMaxResults(count).list();
+        session.close();
+        return result;
     }
 }
