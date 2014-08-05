@@ -25,7 +25,8 @@ $(document).ready(function(){
 
     getComments(id);
 
-    $("#add_comment_form").submit(function(){
+    $("#add_comment_form").submit(function(e){
+        e.preventDefault();
         var comment = $("#comment").val();
 
         addComment(id,comment);
