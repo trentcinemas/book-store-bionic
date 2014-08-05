@@ -4,16 +4,12 @@
 
 function bookContent(data){
     addAjaxLoader();
-    for(var i=0;i<4;i++) {
+    for(var i=0;i<data.length;i++) {
         var singleBook = document.createElement("div");
         singleBook.className = "col-xs-6 col-sm-6 col-md-3 book";
         $("#books_content").append(singleBook);
     }
-    for(var i=4;i<data.length;i++) {
-        var singleBook = document.createElement("div");
-        singleBook.className = "col-xs-6 col-sm-6 col-md-3 book";
-        $("#books_content2").append(singleBook);
-    }
+
     var i=0;
     $(".book").each(function () {
         $(this).html("<div class = 'small-thubnail'><a href='rest/book/getPage/" + data[i].id + "'><img src='rest/file/getimage/" + data[i].sm_cover + "' alt='100%x180'style='height: 203px; width: 142px; display: block;'></a></div>" +
