@@ -23,6 +23,7 @@ public class BookJson {
     int pagesCnt;
     int downloadCnt;
     int viewCnt;
+    boolean newb;
 
     public BookJson(Book book) {
         if (book == null) {
@@ -33,6 +34,8 @@ public class BookJson {
             this.price = 0;
             this.sm_cover = null;
             this.big_cover=null;
+            this.newb=false;
+
         } else {
             this.id=Integer.toString(book.getBookId());
             this.author=book.getAuthorByAuthorId().getFirstname()+" "+book.getAuthorByAuthorId().getLastname();

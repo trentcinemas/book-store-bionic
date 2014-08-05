@@ -378,9 +378,9 @@ public class DaoBook implements DaoBookInterface {
     }
     public List<Book> orderBy (String cell,int page,boolean order){
         switch (cell){
-            case "title": return orderByTitle(order,page);
-            case "author": return orderByAuthor(order,page);
-            case "date": return orderByDate(order,page);
+            case "title": return orderByTitle(order, page);
+            case "author": return orderByAuthor(order, page);
+            case "date": return orderByDate(order, page);
             case "page_count": return orderByPageCount(order,page);
             case "review_count":return orderByReviewCount(order,page);
             case "downloads_count":return orderByBuyCount(order,page);
