@@ -21,7 +21,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-2.1.1.min.js"></script>
-    <script src="js/comments.js"></script>
+    <!--<script src="js/comments.js"></script>-->
 
     <!--     <script language="javascript" src="js/jquery.js"></script>-->
     <script language="javascript" src="js/single_page.js"></script>
@@ -133,10 +133,10 @@
                 <h3 class="page-header">Додати коментар</h3>
 
                 <form role="form" id="add_comment_form" method="post" >
-                    <input type="hidden" id="book">
+                    <input type="hidden" id="book" name="book">
                     <div class="form-group">
                         <label for="comment">Коментар</label>
-                        <input type="text" class="form-control" id="comment">
+                        <input type="text" class="form-control" id="comment" name="comment">
                     </div>
                     <button type="submit" class="btn btn-default" id='submit'>Зберегти</button>
                 </form>

@@ -5,7 +5,7 @@ $(document).ready(function(){
     var URL = window.location.search;
     var getRequest=URL.split("?")[1];
     var id=getRequest.split("=")[1];
-    $("#book").val(id);
+//    $("#book").val(id);
   $.ajax({
        type:"get",
        dataType:"json",
@@ -23,12 +23,12 @@ $(document).ready(function(){
        }
     });
 
-    getComments();
+    getComments(id);
 
     $("#add_comment_form").submit(function(){
         var comment = $("#comment").val();
-        var book =$("#book").val();
-        addComment(book,comment);
+
+        addComment(id,comment);
     });
 
     $('.b-buy').ready(function(){
@@ -149,20 +149,20 @@ function formReplyActionSet() {
     });
 }
 
-    function addComment(book,comm_desc)
+    function addComment(id,comment)
     {
 //        $("#add_comment_form").submit(function () {
 
-            var URL = window.location.search;
-            var getRequest = URL.split("?")[1];
+//            var URL = window.location.search;
+//            var getRequest = URL.split("?")[1];
 
 
             $.ajax({
                 type: "post",
                 url: "rest/comment/addComment",
                 data: {
-                    book: book,
-                    comm_desc: comm_desc
+                    book: id,
+                    comment: comment
                 },
                 success: function (data) {
                     alert("added comment");
@@ -175,7 +175,7 @@ function formReplyActionSet() {
 //        });
     }
 
-        function getComments() {
+        function getComments(id) {
 //            var URL = window.location.search;
 //            var getRequest = URL.split("?")[1];
 //            var id = getRequest.split("=")[1];
