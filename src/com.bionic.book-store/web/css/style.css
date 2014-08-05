@@ -34,7 +34,8 @@ header .navbar-form .form-control { width: 350px; }
 #content p {padding: 0 70px; }
 #content h2 {font-size: 48px; color:black; padding: 20px; padding-left: 9.4%;}
 #content .row:last-child{padding-bottom: 25px;}
-#content span {font:20px sans-serif bold;}
+#content span {font:21px sans-serif bold; color: black;}
+#content .b-title, #content .b-author  {text-shadow: 2px 2px 1px white;}
 .book-name  {color:#f27853;}
 .book-price {color: white;}
 .book-img {}
