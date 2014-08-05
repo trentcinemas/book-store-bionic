@@ -1,6 +1,7 @@
 package rest;
 
 import entities.Genre;
+import entities.User;
 import jsonClasses.GenreJson;
 import util.DaoFactory;
 import util.Logger;
@@ -27,6 +28,27 @@ public class GenreRest {
         DaoFactory.getDaoGenreInstance().insert(genre);
 
         Logger.log(Logger.Type.PROCESS, "Added genre : " + title);
+
+        return Response.ok().build();
+    }
+
+    @POST
+    @Path("update")
+    public Response update(@CookieParam("user") String userEmail,
+                           @FormParam("id") String idString,
+                           @FormParam("title") String newTitle) {
+
+        User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
+        // TODO check user
+
+        int id = Integer.parseInt(idString);
+        Genre genre = DaoFactory.getDaoGenreInstance().selectById(id);
+        String title = genre.getType();
+
+        genre.setType(newTitle);
+        DaoFactory.getDaoGenreInstance().update(genre);
+
+        Logger.log(Logger.Type.PROCESS, "Title: \"" + title + "\" changed to \"" + genre.getType() + "\"");
 
         return Response.ok().build();
     }

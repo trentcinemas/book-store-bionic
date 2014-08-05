@@ -4,40 +4,29 @@
 var authors;
 $(document).ready(function(){
     $.ajax({
-       type:"get",
-       dataType:"json",
-       url:"/rest/author/getAll",
-       success:function(data){
-           authors=data;
-           for(var i=0;i<authors.length;i++){
-               $("#author").append("<option value='"+authors[i].id+"'>"+authors[i].firstName+" "+authors[i].lastName+"</option>");
-
-           }
-           $.ajax({
-               type:"get",
-               dataType:"json",
-               url:"/rest/genre/getAll",
-               success:function(data){
-                   var genres=data;
-                   for(var i=0;i<genres.length;i++){
-                       $("#genre").append("<option value='"+genres[i].id+"'>"+genres[i].type+"</option>");
-                   }
-               }
-
-           });
-
-       }
-
+        type:"get",
+        dataType:"json",
+        url:"/rest/author/getAll",
+        success:function(data){
+            authors=data;
+            for(var i=0;i<authors.length;i++){
+                $("#author").append("<option value='"+authors[i].firstName+" "+authors[i].lastName+"'>"+
+                    authors[i].firstName+" "+authors[i].lastName+"</option>");
+            }
+        }
     });
 
-
-    $("#author").change(function(){
-       $("#selected_author_id").val($('#author option:selected').attr('value'));
+    $.ajax({
+        type:"get",
+        dataType:"json",
+        url:"/rest/genre/getAll",
+        success:function(data){
+            var genres=data;
+            for(var i=0;i<genres.length;i++){
+                $("#genre").append("<option value='"+genres[i].type+"'>"+genres[i].type+"</option>");
+            }
+        }
     });
-    $("#genre").change(function(){
-       $("#selected_genre_id").val($('#genre option:selected').attr('value'));
-    });
-
 
     $('#add_book_form').submit(function(e) {
         e.preventDefault();
@@ -59,5 +48,6 @@ $(document).ready(function(){
         };
         xhr.send(formData);
     });
+
 });
 

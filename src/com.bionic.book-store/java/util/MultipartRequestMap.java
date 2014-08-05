@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Джон on 28.07.2014.
  */
 public class MultipartRequestMap extends HashMap<String, List<Object>> {
-    public static final String UPLOAD_PATH="/home/jsarafajr/book-store/storage";
+    public static final String UPLOAD_PATH="C:/Users/User/book-store-bionic/storage";
 
     private final String DEFAULT_ENCODING="UTF-8";
     private String STORAGE="";
@@ -93,6 +93,7 @@ public class MultipartRequestMap extends HashMap<String, List<Object>> {
     }
 
     private void processFilePart(Part part, String fileName) throws IOException {
+        if (fileName.length() == 0) return;
         File tempFile = new File(STORAGE, fileName);
         tempFile.createNewFile();
         tempFile.deleteOnExit();

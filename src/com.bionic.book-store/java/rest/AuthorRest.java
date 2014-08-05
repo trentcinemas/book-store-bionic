@@ -1,5 +1,6 @@
 package rest;
 
+import dao.DaoAuthor;
 import entities.Author;
 import entities.User;
 import jsonClasses.AuthorJson;
@@ -30,6 +31,7 @@ public class AuthorRest extends HttpServlet {
 
     @POST
     @Path("add")
+    @Consumes("multipart/form-data")
     public Response addAuthor(@CookieParam("user") String userEmail,
                               @Context HttpServletRequest request) {
 
@@ -55,6 +57,47 @@ public class AuthorRest extends HttpServlet {
                 + author.getLastname() + " by " + (user == null ? "null" : user.getEmail()));
 
         return Response.ok().build();
+    }
+
+    @POST
+    @Path("update")
+    @Consumes("multipart/form-data")
+    public Response updateAuthor(@CookieParam("user") String userEmail,
+                              @Context HttpServletRequest request) {
+
+        User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
+
+        if (!checkUser(user)) {
+            Logger.log(PROCESS, "Access denied : " + userEmail);
+            return Response.status(403).entity("Вибачте, ви не маєте досупу до даної операції").build();
+        }
+
+        MultipartRequestMap map = new MultipartRequestMap(request, true);
+
+        Author author = new Author();
+
+        author.setFirstname(map.getStringParameter("au_firstname"));
+        author.setLastname(map.getStringParameter("au_lastname"));
+        author.setDescription(map.getStringParameter("au_description"));
+
+        if (map.getFileParameter("au_photo") != null) {
+            author.setPhoto(map.getFileParameter("au_photo").getAbsoluteFile().getName());
+        }
+
+        DaoFactory.getDaoAuthorInstance().insert(author);
+
+        Logger.log(PROCESS, "Author added : " + author.getFirstname() + " "
+                + author.getLastname() + " by " + (user == null ? "null" : user.getEmail()));
+
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("get/{id}")
+    @Produces("application/json")
+    public AuthorJson getAuthor(@PathParam("id") String idString) {
+        return new AuthorJson(
+                DaoFactory.getDaoAuthorInstance().selectById(Integer.parseInt(idString)));
     }
 
     @GET
