@@ -7,6 +7,7 @@ $(document).ready(function() {
     showReplyMessages();
     showAddedBooks();
     showLastUsers();
+    showLastPurchases();
 
 });
 
@@ -37,7 +38,7 @@ function showReplyMessages() {
 function showAddedBooks() {
     $.ajax({
         type: 'get',
-        url: '/rest/book/list/10/1',
+        url: '/rest/book/list/10/1/datePub',
         crossDomain: true,
         dataType:"json",
         cache: false,
@@ -75,6 +76,31 @@ function showLastUsers() {
                         "<td id='email"+id+"'>" + data[i].email + "</td>" +
                         "<td id='group"+id+"'>" + data[i].group + "</td>" +
                         "<td id='pages_cnt"+id+"'>" + "2014.08.01 12:00" + "</td>" +
+                        "</tr>"
+                );
+            }
+        }
+    });
+}
+
+function showLastPurchases() {
+    $.ajax({
+        type: 'get',
+        url: '/rest/purchase/getLast',
+        crossDomain: true,
+        dataType:"json",
+        cache: false,
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                var id = data[i].id;
+                $('#last_purchases').append(
+                        "<tr id='purchase" + id + "'> " +
+                        "<td>" + id + "</td>" +
+                        "<td id='purchase_title"+id+"'>" + data[i].book_title + "</td>" +
+                        "<td id='purchase_author"+id+"'>" + data[i].book_author + "</td>" +
+                        "<td id='purchase_price"+id+"'>" + data[i].price + "</td>" +
+                        "<td id='purchase_user"+id+"'>" + data[i].user + "</td>" +
+                        "<td id='purchase_date"+id+"'>" + data[i].date + "</td>" +
                         "</tr>"
                 );
             }
