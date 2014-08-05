@@ -21,9 +21,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script language="javascript" src="js/jquery.js"></script>
-    <script language="javascript" src="js/user-cabinet.js"></script>
+
     <script language="javascript" src="js/hide.js"></script>
+    <script language="JavaScript" src="js/user-cabinet.js"></script>
 
   </head>
   <body>
@@ -39,18 +39,11 @@
                         </button>
                         <div class="pull-left" id="logo">
                             <a href="index.html">
-                                <img src="images/logo-copy.png" alt="Розумна книга лого" height="50px">
+                                <img src="images/logo.png" alt="Розумна книга лого" height="70px">
                             </a>
                         </div>
                     </div>
                     <div class="collapse navbar-collapse" id="navbarHeader">
-                            <ul class="nav navbar-nav pull-right">
-                                <li class="active"><a href="index.html">Головна</a></li>		
-                                <li><a href="#">Усі книжки</a></li>
-                                <li><a href="#">Як придбати</a></li>
-                                <li><a href="#">Про видавництво</a></li>
-                                <li><a href="#" id = "enter">Увійти </a></li>
-                            </ul>
                     </div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <form class="navbar-form navbar-right search-tool" role="search" >
@@ -62,72 +55,144 @@
                 </nav>
             </div><!-- /ROW end -->
         </header> <!-- End of header -->
-    <div class="container" id="userCabinet">
-        <div class="row">
-            <div class="col-lg-12" id="userForm">
-                <p class="userName"></p>
-                <p class="userMail"></p>
-       <!--         <div class="tableForm">
-                    <div class="tableRow">
-                        <div class="cell"><label>Новый пароль </label></div>
-                        <div class="cell"><input type="password" class="userPasswordNew"></div>
+            <div class="container-fluid" id="userCabinet">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-5">
+                            <div class="well well-sm">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12" id="userProfile">
+                                    <div class="btn-group">
+                                        <a class="btn dropdown-toggle btn-info edit" data-toggle="dropdown" href="#">Редактировать 
+                                            <span class="glyphicon glyphicon-wrench"></span>
+                                        </a>
+                                    </div>
+                                        <h4 class="userName">Antony</h4>
+                                    <i class="glyphicon glyphicon-envelope" style = "margin: 10px;"></i><span class="userMail">email@example.com</span>
+                                    <br>
+                                        <div id="userForm">
+                                            <form>
+                                                <div class="tableForm">
+                                                    <div class="tableRow">
+                                                        <div class="cell"><label>Новый пароль </label></div>
+                                                        <div class="cell"><input type="password" class="userPasswordNew"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="tableForm">
+                                                    <div class="tableRow">
+                                                        <div class="cell"><label>Повторите пароль</label></div>
+                                                        <div class="cell"><input type="text" class="userPasswordNewRepeat"></div>
+                                                    </div>
+                                                </div>
+                                            <button type="submit" id="UserPasswordChange" class="btn btn-info">Сохранить</button>
+                                            </form>
+                                        </div> <!--End of USER FORM -->
+                                    </div> <!-- End of USER PROFILE  -->
+                                </div> <!-- End of ROW -->
+                            </div> <!-- End class well (decoration) --> 
+                        </div> <!-- End of LAYOUT -->
+                    </div><!-- End of ROW -->
+                </div>  <!-- End of CONTAINER -->
+            <div class="container">
+                <div class="row" id="bought">
+                <h2 class='bought_label'></h2>
+
+                 </div>
+
+            </div>
+           <!-- End of row -->
+                <div class="row" id="recommend">
+                    <h2>Рекомендовані:</h2>
+                    <div class="col-xs-6 col-sm-4 col-md-2 col-md-offset-1 popular">
+                        <div class="small-thubnail">
+                            <a href="/rest/book/getPage/5">
+                                <img src="/rest/file/getimage/Аюрведа/aurveda-s.png" alt="100%x180" style="height: 203px; width: 142px; display: block;">
+                            </a>
+                        </div>
+                        <div class="b-title">
+                        <a href="#">
+                                <span class="title">Аюрведа</span>
+                            </a> 
+                        </div>
+                        <div class="b-author">
+                            <a href="#"><span class="author">Томас Ярема</span></a>
+                        </div>
+                        <span class="price">400 грн<span></span>
+                        </span>
+                         <div class="btn-group">
+                            <p><a class="btn dropdown-toggle btn-warning download" data-toggle="dropdown" href="#">Скачать 
+                                <span class="glyphicon glyphicon-download-alt"></span>
+                            </a></p>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-2 col-sm-4 popular">
+
+                    </div>
+                    <div class="col-xs-6 col-md-2 col-sm-4 popular">
+
+                    </div>
+                    <div class="col-xs-6 col-md-2 col-sm-4 popular">
+
+                    </div>
+                    <div class="col-xs-6 col-md-2 col-sm-4 popular">
+
+                    </div>
+                    <div class="col-xs-6 col-md-2 col-sm-4 hidden-lg hidden-md popular">
+
                     </div>
                 </div>
-                <div class="tableForm">
-                    <div class="tableRow">
-                        <div class="cell"><label>Повторите пароль</label></div>
-                        <div class="cell"><input type="text" class="userPasswordNewRepeat"></div>
-                    </div>
-                </div>-->
-            </div>
-        </div>
-      </div>
-      <div class="container">
+        <!-- End of row -->
+            
+        </div> <!-- End of Container -->
+    </div> <!-- End of CONTAINER-->
+      <footer>
+        <div class="container">
             <div class="row">
-                <a href="#"><h2>Придбані</h2></a>
-                <div class="col-xs-6 col-sm-4 col-md-2 col-md-offset-1 new">
-                    <div class="col-xs-6 col-md-2 col-sm-4 new">
+                <div class="col-lg-6 col-lg-offset-1 col-md-6 col-sm-6 col-xs-10 col-xs-offset-1" id="callback">
+                    <p>Написати до видавництва</p>
+                        <form class="clearfix">
+                            <p>До кого</p>
+                            <p> 
+                                <select>
+                                    <option>Менеджер</option>
+                                    <option>Редактор</option>
+                                </select>
+                            </p>
+                            <p>Ваша електронна адреса</p>
+                            <p><input type="text" required="Заповніть це поле" name="email" placeholder="Введіть email" style="color:black;"></p>
+                            <p>Текст повідомлення</p>
+                            <textarea name="message" rows="4" cols="32" ></textarea>
+                            <div>
+                                <input type="submit" name="submit" class="btn btn-success">
+                            </div>
+                        </form>
                     </div>
-                    
-                    <div class="col-xs-6 col-md-2 col-sm-4 new">
-                    </div>
-                    
-                    <div class="col-xs-6 col-md-2 col-sm-4 new">
 
-                    </div>
-                    
-                    <div class="col-xs-6 col-md-2 col-sm-4 new">
-                    
-                    </div>
-                    <div class="col-xs-6 col-md-2 col-sm-4 hidden-lg hidden-md new">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-8 col-xs-offset-2 clearfix" id="searchFooter">
+                    <span>Пошук</span>
 
+                    <div>
+                        <form class="navbar-form search-tool pull-left" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Пошук" name="q">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="pull-left">
+                        <p><a href="#">Як придбати книгу</a></p>
+
+                        <p><a href="#">Умови надання послуг</a></p>
+
+                        <p><span>© Видавництво "Розумна книга"</span></p>
                     </div>
                 </div>
-        <!-- End of row -->
-        <div class="row">
-            <a href="#"><h2>Рекомендовані</h2></a>
-
-            <div class="col-xs-6 col-md-2 col-md-offset-1 col-sm-4 popular">
-
+                <!-- close right footer -->
             </div>
-            <div class="col-xs-6 col-md-2 col-sm-4 popular">
-
-            </div>
-            <div class="col-xs-6 col-md-2 col-sm-4 popular">
-
-            </div>
-            <div class="col-xs-6 col-md-2 col-sm-4 popular">
-
-            </div>
-            <div class="col-xs-6 col-md-2 col-sm-4 popular">
-
-            </div>
-            <div class="col-xs-6 col-md-2 col-sm-4 hidden-lg hidden-md popular">
-
-            </div>
+            <!-- close ROW -->
         </div>
-        <!-- End of row -->
-    </div>
-      </div>
+        <!-- Close col-lg-12 -->
+    </footer>
 </body>
 </html>
