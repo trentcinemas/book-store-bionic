@@ -12,6 +12,7 @@ public class Comment {
     private Timestamp date;
     private User userByUserId;
     private Book bookByBookId;
+    private String commentDescription;
 
     @Id
     @Column(name = "comm_id", nullable = false, insertable = true, updatable = true)
@@ -21,6 +22,16 @@ public class Comment {
 
     public void setCommId(int commId) {
         this.commId = commId;
+    }
+
+    @Basic
+    @Column(name = "comment_description", nullable = true, insertable = true, updatable = true)
+    public String getCommDesc() {
+        return commentDescription;
+    }
+
+    public void setCommDesc(String commDesc) {
+        this.commentDescription = commDesc;
     }
 
     @Basic

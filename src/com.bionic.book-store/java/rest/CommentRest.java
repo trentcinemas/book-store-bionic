@@ -70,7 +70,7 @@ public class CommentRest {
         comment.setDate(new Timestamp(new Date().getTime()));
         comment.setBookByBookId(book);
         comment.setUserByUserId(user);
-        comment.setComment_description(description);
+        comment.setCommDesc(description);
         DaoFactory.getDaoCommentsInstance().insert(comment);
 
         return javax.ws.rs.core.Response.ok().build();
