@@ -18,4 +18,6 @@ public interface DaoAuthorInterface {
     public void update(Author author);
     public void delete(Author author);
     public void delete(int id);
+    public List<Author> orderByName(boolean order);
+    public List<Author> orderBySurname(boolean order);
 }

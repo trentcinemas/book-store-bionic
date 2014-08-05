@@ -4,7 +4,8 @@
 $(document).ready(function(){
     var URL = window.location.search;
     var getRequest=URL.split("?")[1];
-    var id=getRequest.split("=")[1];
+    id=getRequest.split("=")[1];
+//    $("#book").val(id);
   $.ajax({
        type:"get",
        dataType:"json",
@@ -22,6 +23,14 @@ $(document).ready(function(){
        }
     });
 
+    getComments(id);
+
+    $("#add_comment_form").submit(function(){
+        var comment = $("#comment").val();
+
+        addComment(id,comment);
+    });
+
     $('.b-buy').ready(function(){
         $(".b-buy").click(function(){
             $(".b-form").slideToggle("slow");
@@ -32,8 +41,37 @@ $(document).ready(function(){
 
     addAuthorization();
     formReplyActionSet();
+    addBuyBookAction();
 
 });
+
+
+function addBuyBookAction() {
+    $('#buy_book_form').submit(function() {
+        $.ajax({
+            type: 'post',
+            url: '/rest/book/buy',
+            crossDomain: true,
+            data: {'id' : id},
+            success: function (data) {
+                alert("Success");
+                // TODO redirect "дякуємо за покупку"
+                location.reload();
+            },
+            statusCode: {
+                // HTTP 401 - unauthorized
+                401: function (data) {
+                    alert("Ви не зареєстровані");
+                },
+                // HTTP 307 - redirect
+                307: function (data) {
+                    document.location.href = data.responseText;
+                }
+            }
+        });
+        return false;
+    });
+}
 
 
 function addAuthorization() {
@@ -122,7 +160,7 @@ function loginButtonEnable() {
 }
 
 function formReplyActionSet() {
-    $('#reply_form').submit(function() {
+    $('#reply_form').submit(function () {
         var email = $('#reply_email').val();
         var receiver = $('#reply_receiver').val();
         var text = $('#reply_text').val();
@@ -131,11 +169,65 @@ function formReplyActionSet() {
             type: 'post',
             url: '/rest/reply/send',
             crossDomain: true,
-            data: {'email': email, 'receiver' : receiver, 'text' : text},
-            success: function() {
+            data: {'email': email, 'receiver': receiver, 'text': text},
+            success: function () {
                 location.reload();
             }
         });
         return false;
     });
 }
+
+    function addComment(id,comment)
+    {
+//        $("#add_comment_form").submit(function () {
+
+//            var URL = window.location.search;
+//            var getRequest = URL.split("?")[1];
+
+
+            $.ajax({
+                type: "post",
+                url: "rest/comment/addComment",
+                data: {
+                    book: id,
+                    comment: comment
+                },
+                success: function (data) {
+                    alert("added comment");
+                },
+                error: function (data) {
+                    alert(data);
+                }
+
+            });
+//        });
+    }
+
+        function getComments(id) {
+//            var URL = window.location.search;
+//            var getRequest = URL.split("?")[1];
+//            var id = getRequest.split("=")[1];
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "/rest/comment/forBook/" + id,
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        /*   $("#user").html(data[i].user);
+                         $("#date").html(data[i].date);
+                         $("#comm_desc").html(data[i].comm_desc);*/
+                        $(".comments").append("<div>" +
+                            "<h3 class='comm_desc'>" + data[i].comm_desc + "</h3>" +
+                            "<h4 class='date'>" + data[i].date + "</h4>" +
+                            "<a class='user'>" + data[i].user + "</a>" +
+                            "</div>")
+
+                    }
+                }
+            });
+        }
+
+
+
+

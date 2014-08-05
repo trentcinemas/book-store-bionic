@@ -1,13 +1,38 @@
 /* Global Layout - User Cabinet */  
-#userCabinet {color:white;}
+.download {margin-top: 5px;} 
+.download span { top: 2px; left: 5px;}
+
+/* USER CABINET */
+#userCabinet {background: url(../images/new1.png)repeat;}
+#userCabinet .well {  padding: 20px 0px; border-radius: 10px; border: 1px solid black; box-shadow: inset 0px 0px 15px grey;}
+#userCabinet > .container {padding-top: 35px;}
+#userCabinet img {margin: auto; margin-top: 10px;}
+#userCabinet h2 {font: 42px sans-serif; padding-left: 10%;}
+#userCabinet .btn-group {display: block;}
+
+/* USER PROFILE */
+#userProfile > .btn-group {float: right; }
+#userProfile h4  {padding-top: 15px;}
+#userProfile .glyphicon  {left:5px; top:2px;}
 
 /* User form */
-
+#userForm {padding-top: 25px;}
 #userForm label {width: 150px; font: 16px sans-serif;}
 #userForm .userName {font: 26px sans-serif;}
 #userForm .userMail {font: 22px sans-serif;}
+#userForm small {display: block; line-height: 1.428571429; color: #999;}
+#userForm .glyphicon {  margin-bottom: 10px;margin-right: 10px;}
 
 /* Divs like a table  */
 .tableForm{display:table;}
 .tableRow {display:table-row;}
 .cell {display: table-cell; width: 100px;}
+#UserPasswordChange {float: right; padding-right: 10px; margin-top: 15px }
+
+
+
+/* media queries */
+@media (min-width:480px) and (max-width:768px){
+    #UserPasswordChange {margin: 0px 35px 0px 0px; }
+    #userProfile > .btn-group {padding-right: 35px}
+}
