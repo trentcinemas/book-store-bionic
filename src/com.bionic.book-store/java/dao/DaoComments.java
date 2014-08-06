@@ -18,10 +18,12 @@ import java.util.List;
 public class DaoComments implements DaoCommentInterface {
 
     @Override
-    public List<Comment> selectAll() {
+    public List<Comment> selectAll(int page) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("FROM Comment");
-        List<Comment> result =query.list();
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15);
+        List<Comment> result = query.list();
         session.close();
         return result;
     }
@@ -198,5 +200,62 @@ public class DaoComments implements DaoCommentInterface {
             session.close();
             return null;
         }
+    }
+    @Override
+    public List<Comment> orderByEmail(boolean order, int page) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true){
+            query = session.createQuery("from Comment comment order by comment.userByUserId.email asc ");
+        }else
+        {
+            query = session.createQuery("from Comment comment order by comment.userByUserId.email desc ");
+        }
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15);
+        List<Comment> result = query.list();
+        session.close();
+        return result;
+    }
+
+    public List<Comment> orderBy (String cell,int page,boolean order){
+        switch (cell){
+            case "title": return orderByTitle(order,page);
+            case "email": return orderByEmail(order,page);
+            case "date": return orderByDate(order,page);
+            default: return null;
+        }
+    }
+    @Override
+    public List<Comment> orderByTitle(boolean order, int page) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true){
+            query = session.createQuery("from Comment comment order by comment.bookByBookId.title asc ");
+        }else
+        {
+            query = session.createQuery("from Comment comment order by comment.bookByBookId.title desc ");
+        }
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15);
+        List<Comment> result = query.list();
+        session.close();
+        return result;
+    }
+    @Override
+    public List<Comment> orderByDate(boolean order, int page) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true){
+            query = session.createQuery("from Comment comment order by comment.date asc ");
+        }else
+        {
+            query = session.createQuery("from Comment comment order by comment.date desc ");
+        }
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15);
+        List<Comment> result = query.list();
+        session.close();
+        return result;
     }
 }
