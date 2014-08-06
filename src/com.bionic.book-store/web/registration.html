@@ -23,7 +23,7 @@
     <script language="javascript" src="js/jquery-2.1.1.min.js"></script>
 
      <script language="javascript" src="js/registration.js"></script>
-     <script language="javascript" src="js/index.js"></script>
+
      <script src="js/searchHide.js"></script>
   </head>
 <body>
@@ -89,10 +89,10 @@
                         <form id="regist_field" method="post">
                             <h1 id="ff-proof" class="ribbon">Реєстрація &nbsp;&nbsp;</h1>
                             <fieldset id="inputs">
-                                <lable for="email" class = 'email-fail' style = 'display:none; color: red'>не верний пароль</lable>
+                                <label for="registration_email" class = 'email-fail' style = 'display:none; color: red'>не коректний мейл</label>
                                 <input type="email" id="registration_email" name="email" placeholder="Введіть e-mail" />
-                                
                                 <input type="text" id="registration_name" name="name" placeholder="Введіть ім'я">
+                                <label for="registration_password" class = 'password-fail' style = 'display:none; color: red'>не співпадають паролі</label>
                                 <input type="password" id="registration_password" name="password" placeholder="Введіть пароль" />
                                 <input type="password" id="registration_conf_pass" placeholder="Повторіть пароль">
                                 <br>
