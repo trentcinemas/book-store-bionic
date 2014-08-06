@@ -1,6 +1,7 @@
 package rest;
 
 
+import util.DaoFactory;
 import util.MultipartRequestMap;
 
 import javax.ws.rs.GET;
@@ -17,17 +18,28 @@ import java.io.File;
 public class FileRest {
     private static final String FILE_BOOK_PATH= MultipartRequestMap.UPLOAD_PATH + "/";
 
+
     @GET
-    @Path("getimage/{path:.+}")
+    @Path("getsmallimage/{id}")
     @Produces("image/png")
-    public Response getImage(@PathParam("path")String relativeFilePath) {
-
-        File file = new File(FILE_BOOK_PATH+relativeFilePath);
-
-        //Response.ResponseBuilder response = Response.ok((Object) file);
-        /*response.header("Content-Disposition",
-                "attachment; filename=image_from_server.png");
-        */return Response.ok(file).build();
-
+    public Response getImage(@PathParam("id")String id){
+        File file = new File(FILE_BOOK_PATH+ DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(id)).getCover());
+        return Response.ok(file).build();
     }
+    @GET
+    @Path("getbigimage/{id}")
+    @Produces("images/png")
+    public Response getBigImage(@PathParam("id")String id){
+        File file = new File(FILE_BOOK_PATH+ DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(id)).getBigCover());
+        return Response.ok(file).build();
+    }
+
+    @GET
+    @Path("getreviewfile/{id}")
+    @Produces("application/pdf")
+    public Response getPreview(@PathParam("id")String id){
+        File file = new File(FILE_BOOK_PATH+ DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(id)).getPreview());
+        return Response.ok(file).build();
+    }
+
 }
