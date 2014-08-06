@@ -32,7 +32,7 @@ function fillPurchasedBook(data){
 function fillRecommendsTable(data){
     $(".recommend_label").html("Рекомендовані")
     for(var i=0;i<data.length;i++){
-        $("#bought").append("<div class='col-xs-6 col-sm-4 col-md-2'>"+
+        $("#recommend").append("<div class='col-xs-6 col-sm-4 col-md-2'>"+
             "<div class='small-thubnail'>"+
             "<a href='/rest/book/getPage/"+data[i].id+"'>"+
             "<img src='/rest/file/getimage/"+data[i].sm_cover+"' alt='100%x180' style='height: 203px; width: 142px; display: block;'>"+
@@ -47,11 +47,11 @@ function fillRecommendsTable(data){
             "<a href='#'><span class='author'>"+data[i].athor+"</span></a>"+
             "</div>"+
             "<span class='price'>"+data[i].price+" грн</span><br>"+
-            "<div class='btn-group'>"+
-            "<p><a class='btn dropdown-toggle btn-warning download' data-toggle='dropdown' href='single-page.html?id='"+data[i].id+"'>Купить"+
-            "<span class='glyphicon glyphicon-download-alt'></span>"+
-            "</a></p>"+
-            "</div>"+
+//            "<div class='btn-group'>"+
+//            "<p><a class='btn dropdown-toggle btn-warning download' data-toggle='dropdown' href='single-page.html?id='"+data[i].id+"'>Купить"+
+//            "<span class='glyphicon glyphicon-download-alt'></span>"+
+//            "</a></p>"+
+//            "</div>"+
             "</div>");
     }
 }

@@ -2,7 +2,7 @@
 #filterGenre nav > .container {width: auto !important;}
 #filterGenre .navbar-fixed-top {position: static; background-color: inherit !important; border-color: transparent;}
 .navbar-form.navbar-right:last-child { margin-right: 25px; }
-
+#books_content .col-md-3, #books_content .col-sm-6  { height: 330px;}
 /* Content */
 #content img { margin-top: 10px;}
 #content .col-md-9 {padding: 35px 0px 10px 30px;}

@@ -3,6 +3,7 @@
 .clearfix {display: inline-block;}
 .container {padding: 0 0;}
 .row {margin: 0 0;}
+
 body {background:#2F3438; margin: auto;}
 #content {width: 100%;}
 
@@ -30,12 +31,13 @@ header .navbar-form .form-control { width: 250px; }
 #logo img {height: 70px !important;}
 /* MAIN */
 #content { background: url(../images/new1.png)repeat;}
-#content a:hover {color: white; }
 #content p {padding: 0 70px; }
 #content h2 {font-size: 48px; color:black; padding: 20px; padding-left: 9.4%;}
 #content .row:last-child {padding-bottom: 25px;}
-#content span {font:21px sans-serif bold; color: black;}
-#content .b-title, #content .b-author  {text-shadow: 2px 2px 1px lightyellow;}
+#content span {font:19px sans-serif bold; color: black;}
+#content span .b-author {font:18px sans-serif bold; color: black;}
+#content .b-title  {text-shadow: 2px 2px 1px lightyellow;}
+#content .b-author  {text-shadow: 2px 2px 1px white;}
 #books_content img {height: 203px; width: 142px; display: block;}
 .book-name  {color:#f27853;}
 .book-price {color: white;}
@@ -77,6 +79,7 @@ footer #searchFooter div > p:last-child {padding-top: 130px;}
     footer #searchFooter{padding-left:50px;}
     
 }
+
 @media (min-width:320px) and (max-width:767px) {
     header .search-tool-style {
         width: 350px !important;
