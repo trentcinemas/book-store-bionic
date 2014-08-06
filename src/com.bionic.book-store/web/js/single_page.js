@@ -4,7 +4,7 @@
 $(document).ready(function(){
     var URL = window.location.search;
     var getRequest=URL.split("?")[1];
-    var id=getRequest.split("=")[1];
+    id=getRequest.split("=")[1];
 //    $("#book").val(id);
   $.ajax({
        type:"get",
@@ -25,7 +25,8 @@ $(document).ready(function(){
 
     getComments(id);
 
-    $("#add_comment_form").submit(function(){
+    $("#add_comment_form").submit(function(e){
+        e.preventDefault();
         var comment = $("#comment").val();
 
         addComment(id,comment);
@@ -41,8 +42,37 @@ $(document).ready(function(){
 
     addAuthorization();
     formReplyActionSet();
+    addBuyBookAction();
 
 });
+
+
+function addBuyBookAction() {
+    $('#buy_book_form').submit(function() {
+        $.ajax({
+            type: 'post',
+            url: '/rest/book/buy',
+            crossDomain: true,
+            data: {'id' : id},
+            success: function (data) {
+                alert("Success");
+                // TODO redirect "дякуємо за покупку"
+                location.reload();
+            },
+            statusCode: {
+                // HTTP 401 - unauthorized
+                401: function (data) {
+                    alert("Ви не зареєстровані");
+                },
+                // HTTP 307 - redirect
+                307: function (data) {
+                    document.location.href = data.responseText;
+                }
+            }
+        });
+        return false;
+    });
+}
 
 
 function addAuthorization() {

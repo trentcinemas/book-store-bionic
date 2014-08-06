@@ -15,6 +15,23 @@ import java.util.List;
  * Created by Джон on 23.07.2014.
  */
 public class DaoPurchasedBook implements DaoPurchasedBookInterface {
+
+    public List<PurchasedBook> getLast() {
+        Session session;
+        session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        query = session.createQuery("FROM PurchasedBook order by date desc ");
+        if (!query.list().isEmpty()) {
+            List<PurchasedBook> result = query.list();
+            session.close();
+            return result;
+        } else {
+            session.close();
+            return null;
+        }
+    }
+
+
     public boolean exist(User user, Book book) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("from PurchasedBook where userByUserId.id=" + user.getUserId() +
@@ -56,7 +73,7 @@ public class DaoPurchasedBook implements DaoPurchasedBookInterface {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("select pBook from PurchasedBook pBook where pBook.userByUserId.id="+ id);
         if (!query.list().isEmpty()) {
-            List<PurchasedBook> result = (List<PurchasedBook>) query.list().get(0);
+            List<PurchasedBook> result = query.list();
             session.close();
             return result;
         } else session.close();

@@ -4,6 +4,7 @@ import entities.Book;
 import entities.PurchasedBook;
 import entities.User;
 import jsonClasses.BookJson;
+import jsonClasses.PurchasedBookJson;
 import util.DaoFactory;
 import util.Logger;
 import util.MultipartRequestMap;
@@ -18,15 +19,12 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static util.Logger.Type.PROCESS;
 
 @Path("book/")
 @MultipartConfig(location = "/upload", maxFileSize = 10485760L) // 10MB.
@@ -125,6 +123,7 @@ public class BookRest extends HttpServlet {
         return Response.ok().build();
     }
 
+
     @POST
     @Path("remove")
     public Response removeBook(@CookieParam("user") String userEmail,
@@ -160,10 +159,10 @@ public class BookRest extends HttpServlet {
     @Path("list/{limit}/{order}/{byWhat}")
     @GET
     @Produces("application/json")
-    public ArrayList<BookJson> GetLastAddedBooks(@PathParam("limit") String limit, @PathParam("order") String order, @PathParam("byWhat")String byWhat) {
+    public ArrayList<BookJson> GetLastAddedBooks(@PathParam("limit") String limit, @PathParam("order") String order, @PathParam("byWhat") String byWhat) {
 
         ArrayList<BookJson> booksJson = new ArrayList<BookJson>();
-        List<Book> books = DaoFactory.getDaoBookInstance().selectAllOrdered(byWhat  , Integer.parseInt(order) == 0 ? false : true);
+        List<Book> books = DaoFactory.getDaoBookInstance().selectAllOrdered(byWhat, Integer.parseInt(order) == 0 ? false : true);
         int lim = Integer.parseInt(limit);
         List<Book> orderedBooks = books.subList(0, lim > books.size() ? books.size() : lim);
 
@@ -179,23 +178,20 @@ public class BookRest extends HttpServlet {
     @GET
     @Path("getUserBooks")
     @Produces("application/json")
-    public ArrayList<BookJson> getUserBooks(@CookieParam("user") String userEmail) {
-        if (userEmail == null) {
+    public ArrayList<PurchasedBookJson> getUserBooks(@CookieParam("user") String userEmail) {
+        if (userEmail == null ) {
             return new ArrayList<>();
         }
 
         User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
 
-        if (!checkUser(user)) {
-            return new ArrayList<>();
-        }
 
-        ArrayList<BookJson> booksJson = new ArrayList<BookJson>();
+        ArrayList<PurchasedBookJson> booksJson = new ArrayList<PurchasedBookJson>();
         List<PurchasedBook> purchasedBooks = DaoFactory.getDaoPurchasedBookInstance().selectByUserId(user.getUserId());
 
         for (entities.PurchasedBook purchasedBook : purchasedBooks) {
 
-            BookJson bookJson = new BookJson(purchasedBook);
+            PurchasedBookJson bookJson = new PurchasedBookJson(purchasedBook);
             booksJson.add(bookJson);
         }
 
@@ -218,6 +214,18 @@ public class BookRest extends HttpServlet {
         return booksJson;
     }
 
+   @Path("getFromPage/{page}")
+   @GET
+   public ArrayList<BookJson> getFromPage(@PathParam("page") String page)
+   {
+       ArrayList<BookJson> bookJsons = new ArrayList<BookJson>();
+       List<Book> books = DaoFactory.getDaoBookInstance().selectPage(Integer.parseInt(page));
+
+       for(Book book: books){
+           bookJsons.add(new BookJson(book));
+       }
+       return bookJsons;
+   }
     @Path("getPage/{id}")
     @GET
     public Response getSinglePage(@PathParam("id") String id){
@@ -312,6 +320,41 @@ public class BookRest extends HttpServlet {
         DaoFactory.getDaoPurchasedBookInstance().insert(purchasedBook);
 
         return Response.ok().build();
+    }
+
+
+    @GET
+    @Path("getPage/{page}")
+    @Produces("applicaion/json")
+    public ArrayList<BookJson> getBooks(@PathParam("page")String page){
+        ArrayList<BookJson> bookJsons = new ArrayList<BookJson>();
+        List<Book> books = DaoFactory.getDaoBookInstance().selectPage(Integer.parseInt(page));
+
+        for(Book book: books){
+            bookJsons.add(new BookJson(book));
+        }
+        return bookJsons;
+    }
+
+
+    @GET
+    @Path("getPageCount")
+    @Produces("text/plain")
+    public String getPageCount(){
+        return DaoFactory.getDaoBookInstance().count().toString();
+    }
+
+
+    @GET
+    @Path("sort/{page}/{byWhat}/{order}")
+    @Produces("application/json")
+    public ArrayList<BookJson> sort(@PathParam("page")String page,@PathParam("byWhat") String byWhat,@PathParam("order") String order) {
+        ArrayList<BookJson> bookJsons = new ArrayList<BookJson>();
+        List<Book> books =DaoFactory.getDaoBookInstance().orderBy(byWhat,Integer.parseInt(page),Boolean.valueOf(order));
+        for(Book book: books){
+            bookJsons.add(new BookJson(book));
+        }
+        return bookJsons;
     }
 
 

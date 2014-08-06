@@ -1,14 +1,17 @@
 package dao;
 
 import dao.daoInterfaces.DaoBookInterface;
+import entities.Author;
 import entities.Book;
 import entities.Distributor;
 import entities.User;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -248,5 +251,188 @@ public class DaoBook implements DaoBookInterface {
             session.close();
             return null;
         }
+    }
+
+    @Override
+    public List<Book> selectPage(int page){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from Book");
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15);
+        List<Book> result =query.list();
+        session.close();
+        return result;
+    }
+    @Override
+    public List<Book> orderByTitle(boolean order, int page) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true){
+            query = session.createQuery("from Book book order by book.title asc ");
+        }else
+        {
+            query = session.createQuery("from Book book order by book.title desc ");
+        }
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15);
+        List<Book> result = query.list();
+        session.close();
+        return result;
+    }
+
+    @Override
+    public List<Book> orderByDate(boolean order, int page) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true){
+            query = session.createQuery("from Book book order by book.datePub asc ");
+        }else
+        {
+            query = session.createQuery("from Book book order by book.datePub desc ");
+        }
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15);
+        List<Book> result = query.list();
+        session.close();
+        return result;
+    }
+
+    @Override
+    public List<Book> orderByAuthor(boolean order, int page) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true){
+            query = session.createQuery("from Book book order by book.authorByAuthorId.lastname asc ");
+        }else
+        {
+            query = session.createQuery("from Book book order by book.authorByAuthorId.lastname desc ");
+        }
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15);
+        List<Book> result = query.list();
+        session.close();
+        return result;
+    }
+    @Override
+    public List<Book> orderByPageCount(boolean order, int page) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true){
+            query = session.createQuery("from Book book order by book.pagesCnt asc ");
+        }else
+        {
+            query = session.createQuery("from Book book order by book.pagesCnt desc ");
+        }
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15);
+        List<Book> result = query.list();
+        session.close();
+        return result;
+    }
+    @Override
+    public List<Book> orderByPrice(boolean order, int page) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true){
+            query = session.createQuery("from Book book order by book.price asc ");
+        }else
+        {
+            query = session.createQuery("from Book book order by book.price desc ");
+        }
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15);
+        List<Book> result = query.list();
+        session.close();
+        return result;
+    }
+    @Override
+    public List<Book> orderByBuyCount(boolean order, int page) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true){
+            query = session.createQuery("from Book book order by book.downloadsCnt asc ");
+        }else
+        {
+            query = session.createQuery("from Book book order by book.downloadsCnt desc ");
+        }
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15);
+        List<Book> result = query.list();
+        session.close();
+        return result;
+    }
+    @Override
+    public List<Book> orderByReviewCount(boolean order, int page) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true){
+            query = session.createQuery("from Book book order by book.reviewCnt asc ");
+        }else
+        {
+            query = session.createQuery("from Book book order by book.reviewCnt desc ");
+        }
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15);
+        List<Book> result = query.list();
+        session.close();
+        return result;
+    }
+    public List<Book> orderBy (String cell,int page,boolean order){
+        switch (cell){
+            case "title": return orderByTitle(order, page);
+            case "author": return orderByAuthor(order, page);
+            case "date": return orderByDate(order, page);
+            case "page_count": return orderByPageCount(order,page);
+            case "review_count":return orderByReviewCount(order,page);
+            case "downloads_count":return orderByBuyCount(order,page);
+            case "price":return orderByPrice(order,page);
+            default: return null;
+        }
+    }
+    public BigInteger count(){
+        Session session =HibernateUtil.getSessionFactory().openSession();
+        SQLQuery query=session.createSQLQuery("select count(1) from Book");
+        return (BigInteger) (query.list().get(0));
+    }
+
+    public List<Book> gerRandomBooks(int count) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from Book order by rand()");
+        List<Book> result = query.setMaxResults(count).list();
+        session.close();
+        return result;
+    }
+
+    public Book getMostExpensiveBook() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from Book order by price desc ");
+        Book result = (Book) query.setMaxResults(1).list().get(0);
+        session.close();
+        return result;
+    }
+
+    public Book getMostPopularBook() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from Book order by reviewCnt desc ");
+        Book result = (Book) query.setMaxResults(1).list().get(0);
+        session.close();
+        return result;
+    }
+
+    public Book getLastAddedBook() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from Book order by datePub desc ");
+        Book result = (Book) query.setMaxResults(1).list().get(0);
+        session.close();
+        return result;
+    }
+
+    public List<Book> getRandom(Author author, int count) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from Book where authorByAuthorId.id='" +
+                author.getAuthorId() +"'order by rand()");
+        List<Book> result = query.setMaxResults(count).list();
+        session.close();
+        return result;
     }
 }

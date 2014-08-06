@@ -12,7 +12,7 @@
 #filterGenre ul li { color: black;}
 #btnHide .btn {background: #f27853;}
 #btnHide .btn:first-child {background: #f27853; padding: 6px 43px; } 
-#btnHide ul {background: #2F3438;border-radius: 10px;padding: 40px 10px 40px 30px;box-shadow: inset 0px 0px 15px whitesmoke}
+#btnHide ul {background: #2F3438;border-radius: 10px;padding: 40px 15px 40px 30px;box-shadow: inset 0px 0px 15px whitesmoke}
 #filterGenre ul li { color:  white; list-style-type:none;}
 
 /* MEDIA QUERIES */
@@ -23,6 +23,6 @@ body {padding-top: 20px;}
 #filterGenre  nav .container {background: transparent; text-align: center;}
 #filterGenre .navbar-fixed-top {position: fixed;}
 #btnHide ul {text-align: center;}
-#btnHide {border: white 1px solid; border-radius: 4px; position: absolute;right: -62px;top: 261px; transform: rotate(90deg)}
+#btnHide {border: white 1px solid; border-radius: 4px; position: absolute;right: -62px;top: 280px; transform: rotate(90deg)}
 #btnHide ul {; padding: 0;}
 #btnHide ul {transform: rotate(270deg);position: absolute;padding-top: 30px;padding-bottom: 33px;top: 30px;right: -2px;}

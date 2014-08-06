@@ -61,18 +61,22 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                       <h1 class="page-header">Добавленные книги</h1>
             <div class="table-responsive">
+                <form method="get" id="searchFrom" name="searchForm">
+                    <input type="search" id="search" name="search">
+                    <input type="submit" value="Пошук">
+                </form>
             <table class="table table-striped" id="all_books_table">
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Назва</th>
-                  <th>Автор</th>
+                  <th id="title">Назва</th>
+                  <th id="author">Автор</th>
                   <th>Жанр</th>
-                  <th>Сторінок</th>
-                  <th>Ціна</th>
-                  <th>Пукупок</th>
-                  <th>Переглядів</th>
-                  <th>Дата</th>
+                  <th id="pagecount">Сторінок</th>
+                  <th id="price">Ціна</th>
+                  <th id="downcount">Покупок</th>
+                  <th id="reviewcount">Переглядів</th>
+                  <th id="date">Дата</th>
                   <th>Додав</th>
                   <th></th>
                   <th></th>
@@ -84,6 +88,17 @@
             </table>
           </div>
         <div id="ajax_loading_div" style="margin: 10px auto 10px auto"></div>
+            <ul class="pagination" id="list-nav">
+                <li class="disabled"><a href="#">«</a></li>
+                <!--<li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">»</a></li>
+                <li> <a href="#">»</a>/li>-->
+            </ul>
+
         </div>
       </div>
     </div>

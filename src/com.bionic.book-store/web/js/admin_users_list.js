@@ -55,20 +55,7 @@ $(document).ready(function() {
     });
 
 
-    $('.pagination').on('click','li', function(){
-        $(this).addClass('active').siblings().removeClass('active');
-        current_page=$(this).val();
-        $.ajax({
-            type: 'get',
-            url: '/rest/user/getPage/'+current_page,
-            crossDomain: true,
-            dataType: "json",
-            cache: false,
-            success: function (data) {
-                fillTable(data);
-            }
-        });
-    });
+
 
     $("th#email").click(function(){
 

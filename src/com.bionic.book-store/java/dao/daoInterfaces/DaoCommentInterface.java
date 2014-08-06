@@ -22,8 +22,9 @@ public interface DaoCommentInterface {
     void update(Comment comment);
     void delete(Comment comment);
     void delete(int id);
-    public List<Comment> search(String searchstring);
+    List<Comment> search(String str);
     public List<Comment> orderByEmail(boolean order, int page);
     public List<Comment> orderByTitle(boolean order, int page);
     public List<Comment> orderByDate(boolean order, int page);
+    List<Comment> search(String str);
 }

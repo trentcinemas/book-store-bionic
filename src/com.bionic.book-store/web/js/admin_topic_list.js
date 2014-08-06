@@ -1,31 +1,55 @@
 /**
  * Created by jsarafajr on 31.07.14.
  */
-$(document).ready(function() {
+var order=true;
+function fillTable(data) {
+    $("#books_table").html("");
+    for (var i = 0; i < data.length; i++) {
+        var id = data[i].id;
+        $('#all_genre_table').append(
+                "<tr id='book" + id + "'> " +
+                "<td>" + id + "</td>" +
+                "<td id='title" + id + "'>" + data[i].type + "</td>" +
+                "<td id='button" + id + "'>" + "<button onclick='editGenre(" + data[i].id + ")'>Edit</button>" + "</td>" +
+                "<td><button onclick='removeGenre(" + data[i].id + ")'>Remove</button>" + "</td>" +
+                "</tr>"
+        );
+    }
+}
 
+$(document).ready(function () {
     addAjaxLoader();
-
     $.ajax({
         type: 'get',
         url: '/rest/genre/getAll',
         crossDomain: true,
-        dataType:"json",
+        dataType: "json",
         cache: false,
         success: function (data) {
-            for (var i = 0; i < data.length; i++) {
-                var id = data[i].id;
-                $('#all_genre_table').append(
-                        "<tr id='book" + id + "'> " +
-                        "<td>" + id + "</td>" +
-                        "<td id='title"+id+"'>" + data[i].type + "</td>" +
-                        "<td id='button"+id+"'>" + "<button onclick='editGenre(" + data[i].id + ")'>Edit</button>" + "</td>" +
-                        "<td><button onclick='removeGenre(" + data[i].id + ")'>Remove</button>" + "</td>" +
-                        "</tr>"
-                );
-            }
+            fillTable(data);
         }
     });
 
+    $("th#type").click(function(){
+        var url='/rest/genre/sort/'+order.toString();
+        if(order==false) order=true;
+        else {
+            order=false;
+        }
+        $.ajax({
+            type: 'get',
+            url: url,
+            crossDomain: true,
+            dataType: "json",
+            cache: false,
+            success: function (data) {
+                fillTable(data);
+            },
+            error:function(){
+                alert("error");
+            }
+        });
+    });
 });
 
 function editGenre(id) {
@@ -55,8 +79,8 @@ function applyEdit(id) {
         type: 'post',
         url: '/rest/genre/update',
         crossDomain: true,
-        data: {'id': id, 'title' : title},
-        success: function(data) {
+        data: {'id': id, 'title': title},
+        success: function (data) {
             alert("Success");
             location.reload();
         }
@@ -97,8 +121,8 @@ function addAjaxLoader() {
 }
 
 // Ajax activity indicator bound to ajax start/stop document events
-$(document).ajaxStart(function(){
+$(document).ajaxStart(function () {
     $('#ajaxBusy').show();
-}).ajaxStop(function(){
+}).ajaxStop(function () {
     $('#ajaxBusy').hide();
 });
