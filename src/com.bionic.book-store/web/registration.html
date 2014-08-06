@@ -72,8 +72,8 @@
                         <form id="login" action="none" method = "post">
                             <fieldset id="inputs">
                                 
-                                <input id="email" type="text" onblur="if(this.value=='')this.value='Логін';" onfocus="if(this.value=='Логін')this.value='';" value="Логін" />
-                                <input id="password" type="password" onblur="if(this.value=='')this.value='Пароль';" onfocus="if(this.value=='Пароль')this.value='';" value="Пароль" />
+                                <input id="email_login" type="text" onblur="if(this.value=='')this.value='Логін';" onfocus="if(this.value=='Логін')this.value='';" value="Логін" />
+                                <input id="password_login" type="password" onblur="if(this.value=='')this.value='Пароль';" onfocus="if(this.value=='Пароль')this.value='';" value="Пароль" />
                             </fieldset>
                             <fieldset id="actions">
                                 <input type="submit" id="submit" value="Увійти"/>
@@ -90,11 +90,11 @@
                             <h1 id="ff-proof" class="ribbon">Реєстрація &nbsp;&nbsp;</h1>
                             <fieldset id="inputs">
                                 <lable for="email" class = 'email-fail' style = 'display:none; color: red'>не верний пароль</lable>
-                                <input type="email" id="email" name="email" placeholder="Введіть e-mail" />
+                                <input type="email" id="registration_email" name="email" placeholder="Введіть e-mail" />
                                 
-                                <input type="text" id="name" name="name" placeholder="Введіть ім'я">
-                                <input type="password" id="password" name="password" placeholder="Введіть пароль" />
-                                <input type="password" id="conf_pass" placeholder="Повторіть пароль">
+                                <input type="text" id="registration_name" name="name" placeholder="Введіть ім'я">
+                                <input type="password" id="registration_password" name="password" placeholder="Введіть пароль" />
+                                <input type="password" id="registration_conf_pass" placeholder="Повторіть пароль">
                                 <br>
                             </fieldset>
                             <fieldset id="actions">
