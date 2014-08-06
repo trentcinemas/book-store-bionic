@@ -40,7 +40,7 @@ function fillPagination(data){
 
 }
 function fillTable(data) {
-
+$("#comments_table").html("");
     for (var i = 0; i < data.length; i++) {
         var id = data[i].id;
         $('#comments_table').append(
