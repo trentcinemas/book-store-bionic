@@ -82,4 +82,54 @@ public class CommentRest {
 
             return true;
         }
+
+    @Path("search/{searchString}")
+    @GET
+    @Produces ("application/json")
+    public List <CommentJson> searchComments(@PathParam("searchString")String searchString){
+        List<Comment> comments = new LinkedList<>();
+        ArrayList<CommentJson> result = new ArrayList<CommentJson>();
+        try {
+            comments = DaoFactory.getDaoCommentsInstance().search(searchString);
+            if (comments == null)
+                return result;
+            for (Comment c : comments) {
+                CommentJson comment = new CommentJson(c);
+                result.add(comment);
+            }
+        } catch (NullPointerException e) {
+
+        }
+
+
+        // Logger.log(Logger.Type.PROCESS,"SEARCH:"+user!=null?user:"Someone"+" has found "+s);
+        return result;
+    }
+
+    @Path("allcomments/{page}")
+    @GET
+    @Produces("application/json")
+    public List <CommentJson> allComments (@PathParam("page") String page){
+        List<Comment> comments = DaoFactory.getDaoCommentsInstance().selectAll(Integer.parseInt(page));
+        ArrayList<CommentJson> commentJsons = new ArrayList<>();
+
+        for (Comment c : comments) {
+            commentJsons.add(new CommentJson(c));
+        }
+
+        return commentJsons;
+    }
+
+
+    @GET
+    @Path("sort/{page}/{byWhat}/{order}")
+    @Produces("application/json")
+    public ArrayList<CommentJson> sort(@PathParam("page")String page,@PathParam("byWhat") String byWhat,@PathParam("order") String order) {
+        ArrayList<CommentJson> commentJsons = new ArrayList<CommentJson>();
+        List<Comment> comments =DaoFactory.getDaoCommentsInstance().orderBy(byWhat,Integer.parseInt(page),Boolean.valueOf(order));
+        for(Comment comment : comments){
+            commentJsons.add(new CommentJson(comment));
+        }
+        return commentJsons;
+    }
 }
