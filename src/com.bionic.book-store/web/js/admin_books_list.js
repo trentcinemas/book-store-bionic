@@ -59,7 +59,7 @@ function fillTable(data){
                 "<td id='add_date"+id+"'>" + data[i].date + "</td>" +
                 "<td id='user"+id+"'>" + data[i].user + "</td>" +
                 "<td>" +
-                "<a href=editbook-admin.html?id=" + data[i].id + "><button>Edit</button></a>" + "</td>" +
+                "<a href=/rest/admin/editbook?id=" + data[i].id + "><button>Edit</button></a>" + "</td>" +
                 "<td><button onclick='removeBook(" + data[i].id + ")'>Remove</button></td>" +
                 "</tr>"
         );

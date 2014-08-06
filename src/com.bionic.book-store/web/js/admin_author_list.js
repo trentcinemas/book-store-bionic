@@ -54,7 +54,7 @@ function fillTable(data){
                 "<td id='firstname"+id+"'>" + data[i].firstName + "</td>" +
                 "<td id='lastname"+id+"'>" + data[i].lastName + "</td>" +
                 "<td id='description"+id+"'>" + data[i].description + "</td>" +
-                "<td><a href='editauthor-admin.html?id=" + id + "'><button>Edit</button></a></td>" +
+                "<td><a href='/rest/admin/edit-author?id=" + id + "'><button>Edit</button></a></td>" +
                 "<td><button onclick='removeAuthor(" + id + ")'>Remove</button></td>" +
                 "</tr>"
         );

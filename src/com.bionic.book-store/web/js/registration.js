@@ -5,17 +5,17 @@
 $(document).ready(function() {
     var regexp =/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
     var email = $('#email').val();
-    if(!email.match(regexp)){
-        $("#email").css({ border:"2px solid red"});
-        $(".email-fail").css({display:"block"});
-    }
+//    if(!email.match(regexp)){
+//        $("#email").css({ border:"2px solid red"});
+//        $(".email-fail").css({display:"block"});
+//    }
 
     $('#regist_field').submit(function(e) {
         e.preventDefault();
-        var email = $('#email').val();
-        var password = $('#password').val();
-        var name = $("#name").val();
-        if(password=$("#conf_pass").val()) {
+        var email = $('#registration_email').val();
+        var password = $('#registration_password').val();
+        var name = $("#registration_name").val();
+        if(password==$("#registration_conf_pass").val()) {
             $.ajax({
                 type: 'post',
                 url: '/rest/register',
@@ -35,9 +35,12 @@ $(document).ready(function() {
 
             });
 
-            return false;
+        } else {
+            alert("Не правильні паролі");
         }
+        return false;
     });
+
 });
 
 function addAuthorization() {
@@ -78,6 +81,10 @@ $('#navbarHeader').ready(function () {
             }
         }
     });
+
+
+    addAuthorization();
+    formReplyActionSet();
 
 });
 
