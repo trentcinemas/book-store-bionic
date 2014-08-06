@@ -3,7 +3,6 @@ package rest;
 import entities.Author;
 import entities.User;
 import jsonClasses.AuthorJson;
-import jsonClasses.UserJson;
 import util.CheckUser;
 import util.DaoFactory;
 import util.Logger;
@@ -68,14 +67,14 @@ public class AuthorRest extends HttpServlet {
 
         User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
 
-        if (!CheckUser.isAdmin(user) || !CheckUser.isModer(user) || !CheckUser.isRedactor(user)) {
+        if (!CheckUser.isAdmin(user) && !CheckUser.isModer(user) && !CheckUser.isRedactor(user)) {
             Logger.log(PROCESS, "Access denied : " + userEmail);
             return Response.status(403).entity("Вибачте, ви не маєте досупу до даної операції").build();
         }
 
         MultipartRequestMap map = new MultipartRequestMap(request, true);
 
-        Author author = new Author();
+        Author author = DaoFactory.getDaoAuthorInstance().selectById(Integer.parseInt(map.getStringParameter("author_id")));
 
         author.setFirstname(map.getStringParameter("au_firstname"));
         author.setLastname(map.getStringParameter("au_lastname"));
@@ -85,9 +84,9 @@ public class AuthorRest extends HttpServlet {
             author.setPhoto(map.getFileParameter("au_photo").getAbsoluteFile().getName());
         }
 
-        DaoFactory.getDaoAuthorInstance().insert(author);
+        DaoFactory.getDaoAuthorInstance().update(author);
 
-        Logger.log(PROCESS, "Author added : " + author.getFirstname() + " "
+        Logger.log(PROCESS, "Author updated: " + author.getFirstname() + " "
                 + author.getLastname() + " by " + (user == null ? "null" : user.getEmail()));
 
         return Response.ok().build();
@@ -156,7 +155,7 @@ public class AuthorRest extends HttpServlet {
     }
 
     @GET
-    @Path("getPage/{page}")
+    @Path("getFromPage/{page}")
     @Produces("applicaion/json")
     public ArrayList<AuthorJson> getAuthors(@PathParam("page")String page){
         ArrayList<AuthorJson> authorJsons = new ArrayList<AuthorJson>();
@@ -183,6 +182,18 @@ public class AuthorRest extends HttpServlet {
     public ArrayList<AuthorJson> sort(@PathParam("page")String page,@PathParam("byWhat") String byWhat,@PathParam("order") String order) {
         ArrayList<AuthorJson> authorJsons = new ArrayList<AuthorJson>();
         List<Author> authors = DaoFactory.getDaoAuthorInstance().orderBy(byWhat, Integer.parseInt(page), Boolean.valueOf(order));
+        for(Author author : authors){
+            authorJsons.add(new AuthorJson(author));
+        }
+        return authorJsons;
+    }
+
+    @GET
+    @Path("search/{search}")
+    @Produces("application/json")
+    public ArrayList<AuthorJson> search(@PathParam("search") String search){
+        ArrayList<AuthorJson> authorJsons = new ArrayList<AuthorJson>();
+        List<Author> authors = DaoFactory.getDaoAuthorInstance().search(search);
         for(Author author : authors){
             authorJsons.add(new AuthorJson(author));
         }

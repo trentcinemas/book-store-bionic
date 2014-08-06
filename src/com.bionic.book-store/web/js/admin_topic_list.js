@@ -2,6 +2,21 @@
  * Created by jsarafajr on 31.07.14.
  */
 var order=true;
+function addAjaxLoader() {
+    // Setup the ajax indicator
+    $('#ajax_loading_div').append('<div id="ajaxBusy"><img src="/images/ajax-loader.gif"></div>');
+
+    $('#ajaxBusy').css({
+        display: "none",
+        paddingLeft: "40%",
+        paddingTop: "0px",
+        paddingBottom: "0px",
+        position: "relative",
+        right: "3px",
+        top: "3px",
+        width: "auto"
+    });
+}
 function fillTable(data) {
     $("#books_table").html("");
     for (var i = 0; i < data.length; i++) {
@@ -16,41 +31,26 @@ function fillTable(data) {
         );
     }
 }
-
-$(document).ready(function () {
-    addAjaxLoader();
+function getOrderedByNameOfGenre(){
+    var url='/rest/genre/sort/'+order.toString();
+    if(order==false) order=true;
+    else {
+        order=false;
+    }
     $.ajax({
         type: 'get',
-        url: '/rest/genre/getAll',
+        url: url,
         crossDomain: true,
         dataType: "json",
         cache: false,
         success: function (data) {
             fillTable(data);
+        },
+        error:function(){
+            alert("error");
         }
     });
-
-    $("th#type").click(function(){
-        var url='/rest/genre/sort/'+order.toString();
-        if(order==false) order=true;
-        else {
-            order=false;
-        }
-        $.ajax({
-            type: 'get',
-            url: url,
-            crossDomain: true,
-            dataType: "json",
-            cache: false,
-            success: function (data) {
-                fillTable(data);
-            },
-            error:function(){
-                alert("error");
-            }
-        });
-    });
-});
+}
 
 function editGenre(id) {
     var title = $('#title' + id).html();
@@ -104,21 +104,25 @@ function removeGenre(id) {
     }
 }
 
-function addAjaxLoader() {
-    // Setup the ajax indicator
-    $('#ajax_loading_div').append('<div id="ajaxBusy"><img src="/images/ajax-loader.gif"></div>');
-
-    $('#ajaxBusy').css({
-        display: "none",
-        paddingLeft: "40%",
-        paddingTop: "0px",
-        paddingBottom: "0px",
-        position: "relative",
-        right: "3px",
-        top: "3px",
-        width: "auto"
+$(document).ready(function () {
+    addAjaxLoader();
+    $.ajax({
+        type: 'get',
+        url: '/rest/genre/getAll',
+        crossDomain: true,
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+            fillTable(data);
+        }
     });
-}
+
+    $("th#type").click(function () {
+        getOrderedByNameOfGenre();
+    });
+
+});
+
 
 // Ajax activity indicator bound to ajax start/stop document events
 $(document).ajaxStart(function () {

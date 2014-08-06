@@ -6,10 +6,41 @@ var order_author=true;
 var order_pagecount=true;
 var order_price=true;
 var order_downcount=true;
-var order_rewiewcount=true;
+var order_reviewcount=true;
 var order_date=true;
 var current_page=1;
 
+function addAjaxLoader() {
+    // Setup the ajax indicator
+    $('#ajax_loading_div').append('<div id="ajaxBusy"><img src="/images/ajax-loader.gif"></div>');
+
+    $('#ajaxBusy').css({
+        display: "none",
+        paddingLeft: "40%",
+        paddingTop: "0px",
+        paddingBottom: "0px",
+        position: "relative",
+        right: "3px",
+        top: "3px",
+        width: "auto"
+    });
+}
+
+// функція яка заповняє список сторінок
+function fillPagination(data){
+    var count = parseInt(data)/15;
+    $("#list-nav").append("<li class='disabled prev'><a>«</a></li>");
+    for(var i=1;i<=count+1;i++){
+        if(i==current_page)
+            $("#list-nav").append("<li value='"+i+"' class='active'><a>"+i+"</a></li>");
+        else
+            $("#list-nav").append("<li value='"+i+"'><a>"+i+"</a></li>");
+    }
+    if(count<1)
+    $("#list-nav").append("<li class='disabled next'><a>»</a>")
+    else
+    $("#list-nav").append("<li class='next'><a>»</a>")
+}
 
 function fillTable(data){
     $("#books_table").html("");
@@ -35,64 +66,37 @@ function fillTable(data){
     }
 
 }
-
-function fillPagination(data){
-    var count = parseInt(data)/15;
-    for(var i=0;i<count;i++){
-        if(i==0)
-            $("#list-nav").append("<li value='"+(i+1)+"' class='active'><a>"+(i+1)+"<span class='sr-only'>(current)</span></a></li>");
-        else
-            $("#list-nav").append("<li value='"+(i+1)+"'><a>"+(i+1)+"</a></li>");
-    }
-}
-
-
-$(document).ready(function() {
-
-    
-    addAjaxLoader();
-
+// функція яка виводить таблицю список сторінок та книжок
+function showBooks(){
     $.ajax({
-        type:'get',
+        type: 'get',
         url: '/rest/book/getPageCount',
-        crossDomain:true,
+        crossDomain: true,
         cache: false,
         success: function (data) {
-         fillPagination(data);
-            $.ajax({
-                type: 'get',
-                url: '/rest/book/getFromPage/'+current_page,
-                crossDomain: true,
-                dataType:"json",
-                cache: false,
-                success: function (data) {
-                    fillTable(data)
-                }
-            });
-
+            fillPagination(data);
+            getBooksFromPage(current_page);
         }
-    })  ;
 
-// сторінки
-
-    $('.pagination').on('click','li', function(){
-        $(this).addClass('active').siblings().removeClass('active');
-        current_page=$(this).val();
-        $.ajax({
-            type: 'get',
-            url: '/rest/user/getFromPage/'+current_page,
-            crossDomain: true,
-            dataType: "json",
-            cache: false,
-            success: function (data) {
-                fillTable(data);
-            }
-        });
     });
+}
+// функція яка виводить авторів з певної сторінки
+function getBooksFromPage(page){
+    $.ajax({
+        type: 'get',
+        url: '/rest/book/getFromPage/' + page,
+        crossDomain: true,
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+            fillTable(data);
+        }
+    });
+}
 
-
-    $("th#title").click(function(){
+function getOrderedByTitle(){
     var url='/rest/book/sort/'+current_page+"/title/"+order_title.toString();
+
     if(order_title==false) order_title=true;
     else {
         order_title=false;
@@ -107,130 +111,119 @@ $(document).ready(function() {
             fillTable(data);
         }
     });
-});
+}
+function getOrderedByAuthor(){
+    var url='/rest/book/sort/'+current_page+"/author/"+order_author.toString();
+    if(order_author==false) order_author=true;
+    else {
+        order_author=false;
+    }
 
-    $("th#author").click(function(){
-        var url='/rest/book/sort/'+current_page+"/author/"+order_author.toString();
-        if(order_author==false) order_author=true;
-        else {
-            order_author=false;
+    $.ajax({
+        type: 'get',
+        url: url,
+        crossDomain: true,
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+            fillTable(data);
         }
-
-        $.ajax({
-            type: 'get',
-            url: url,
-            crossDomain: true,
-            dataType: "json",
-            cache: false,
-            success: function (data) {
-                fillTable(data);
-            }
-        });
     });
-
-    $("th#pagecount").click(function(){
-        var url='/rest/book/sort/'+current_page+"/page_count/"+order_pagecount.toString();
-        if(order_pagecount==false) order_pagecount=true;
-        else {
-            order_pagecount=false;
+}
+function getOrderedByPageCount(){
+    var url='/rest/book/sort/'+current_page+"/page_count/"+order_pagecount.toString();
+    if(order_pagecount==false) order_pagecount=true;
+    else {
+        order_pagecount=false;
+    }
+    $.ajax({
+        type: 'get',
+        url: url,
+        crossDomain: true,
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+            fillTable(data);
         }
-        $.ajax({
-            type: 'get',
-            url: url,
-            crossDomain: true,
-            dataType: "json",
-            cache: false,
-            success: function (data) {
-                fillTable(data);
-            }
-        });
     });
-
-    $("th#price").click(function(){
-        var url='/rest/book/sort/'+current_page+"/price/"+order_price.toString();
-        if(order_price==false) order_price=true;
-        else {
-            order_price=false;
+}
+function getOrderedByPrice(){
+    var url='/rest/book/sort/'+current_page+"/price/"+order_price.toString();
+    if(order_price==false) order_price=true;
+    else {
+        order_price=false;
+    }
+    $.ajax({
+        type: 'get',
+        url: url,
+        crossDomain: true,
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+            fillTable(data);
         }
-        $.ajax({
-            type: 'get',
-            url: url,
-            crossDomain: true,
-            dataType: "json",
-            cache: false,
-            success: function (data) {
-                fillTable(data);
-            }
-        });
     });
-
-    $("th#downcount").click(function(){
-        var url='/rest/book/sort/'+current_page+"/downloads_count/"+order_downcount.toString();
-        if(order_downcount==false) order_downcount=true;
-        else {
-            order_downcount=false;
+}
+function getOrderedByDownloadCount(){
+    var url='/rest/book/sort/'+current_page+"/downloads_count/"+order_downcount.toString();
+    if(order_downcount==false) order_downcount=true;
+    else {
+        order_downcount=false;
+    }
+    $.ajax({
+        type: 'get',
+        url: url,
+        crossDomain: true,
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+            fillTable(data);
         }
-        $.ajax({
-            type: 'get',
-            url: url,
-            crossDomain: true,
-            dataType: "json",
-            cache: false,
-            success: function (data) {
-                fillTable(data);
-            }
-        });
     });
-    $("th#reviewcount").click(function(){
-        var url='/rest/book/sort/'+current_page+"/review_count/"+order_rewiewcount.toString();
-        if(order_reviewcount==false) order_reviewcount=true;
-        else {
-            order_reviewcount=false;
+}
+function getOrderedByReviewCount(){
+    var url='/rest/book/sort/'+current_page+"/review_count/"+order_reviewcount.toString();
+    if(order_reviewcount==false) order_reviewcount=true;
+    else {
+        order_reviewcount=false;
+    }
+    $.ajax({
+        type: 'get',
+        url: url,
+        crossDomain: true,
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+            fillTable(data);
         }
-        $.ajax({
-            type: 'get',
-            url: url,
-            crossDomain: true,
-            dataType: "json",
-            cache: false,
-            success: function (data) {
-                fillTable(data);
-            }
-        });
     });
-    $("th#date").click(function(){
-        var url='/rest/book/sort/'+current_page+"/date/"+order_date.toString();
-        if(order_date==false) order_date=true;
-        else {
-            order_date=false;
+}
+function getOrderedByDate(){
+    var url='/rest/book/sort/'+current_page+"/date/"+order_date.toString();
+    if(order_date==false) order_date=true;
+    else {
+        order_date=false;
+    }
+    $.ajax({
+        type: 'get',
+        url: url,
+        crossDomain: true,
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+            fillTable(data);
         }
-        $.ajax({
-            type: 'get',
-            url: url,
-            crossDomain: true,
-            dataType: "json",
-            cache: false,
-            success: function (data) {
-                fillTable(data);
-            }
-        });
     });
-
-    $("#searchFrom").submit(function(e){
-        e.preventDefault();
-        var searchstring=$("#search").val();
-        $.ajax({
-            type:"get",
-            url:"/rest/book/search/"+searchstring,
-            success:function(data){
-                fillTable(data);
-            }
-        });
+}
+function search(searchstring){
+    $.ajax({
+        type:"get",
+        url:"/rest/book/search/"+searchstring,
+        success:function(data){
+            fillTable(data);
+        }
     });
-
-});
-
-
+}
 
 function removeBook(id) {
     if (confirm("Видалити книгу?")) {
@@ -247,21 +240,95 @@ function removeBook(id) {
     }
 }
 
-function addAjaxLoader() {
-    // Setup the ajax indicator
-    $('#ajax_loading_div').append('<div id="ajaxBusy"><img src="/images/ajax-loader.gif"></div>');
 
-    $('#ajaxBusy').css({
-        display: "none",
-        paddingLeft: "40%",
-        paddingTop: "0px",
-        paddingBottom: "0px",
-        position: "relative",
-        right: "3px",
-        top: "3px",
-        width: "auto"
+
+
+$(document).ready(function() {
+
+    
+    addAjaxLoader();
+    showBooks();
+
+    $('.pagination').on('click','li', function(){
+        if($(this).hasClass("disabled")){
+            return false;
+        }
+
+        if($(this).hasClass("prev")|| $(this).hasClass("next")){
+            if($(this).hasClass("prev")){
+                $(".pagination .active").addClass("temp");
+                $(".pagination .active").prev().addClass("active")
+                $(".pagination .temp").removeClass("active");
+                $(".pagination .temp").removeClass("temp");
+                current_page--;
+            }
+            else
+            if($(this).hasClass("next")){
+                $(".pagination .active").addClass("temp");
+                $(".pagination .active").next().addClass("active")
+                $(".pagination .temp").removeClass("active");
+                $(".pagination .temp").removeClass("temp");
+                current_page++;
+            }
+
+        }
+        else{
+            current_page=$(this).val();
+            $(this).addClass('active').siblings().removeClass('active');
+        }
+
+        if(current_page-1==0)
+            $(".pagination .prev").addClass("disabled");
+        else
+            $(".pagination .prev").removeClass("disabled");
+
+        if($(".pagination .active").next().hasClass("next"))
+            $(".pagination .next").addClass("disabled");
+        else
+            $(".pagination .next").removeClass("disabled");
+
+        getBooksFromPage($(".pagination .active"))
     });
-}
+
+
+    $("th#title").click(function(){
+    getOrderedByTitle()
+    });
+
+    $("th#author").click(function(){
+    getOrderedByAuthor();
+    });
+
+    $("th#pagecount").click(function(){
+    getOrderedByPageCount();
+    });
+
+    $("th#price").click(function(){
+    getOrderedByPrice();
+    });
+
+    $("th#downcount").click(function(){
+    getOrderedByDownloadCount();
+    });
+    $("th#reviewcount").click(function(){
+    getOrderedByReviewCount();
+    });
+    $("th#date").click(function(){
+    getOrderedByDate();
+    });
+
+    $("#searchFrom").submit(function(e){
+        e.preventDefault();
+        search($("#search").val());
+    });
+
+});
+
+
+
+
+
+
 
 // Ajax activity indicator bound to ajax start/stop document events
 $(document).ajaxStart(function(){

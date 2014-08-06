@@ -12,6 +12,7 @@ import java.util.List;
  */
 public interface DaoCommentInterface {
     public List<Comment> selectAll();
+    public List<Comment> selectPage(int page);
     public Comment selectById(int id);
     public List<Comment> selectByUser(User user);
     public List<Comment> selectByUserId(int id);
@@ -24,4 +25,10 @@ public interface DaoCommentInterface {
     void delete(int id);
 
     List<Comment> search(String str);
+
+    List<Comment> orderByEmail(boolean order, int page);
+
+    List<Comment> orderByTitle(boolean order, int page);
+
+    List<Comment> orderByDate(boolean order, int page);
 }

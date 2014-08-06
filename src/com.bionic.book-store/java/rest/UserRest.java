@@ -75,7 +75,7 @@ public class UserRest {
     }
 
     @GET
-    @Path("getPage/{page}")
+    @Path("getFromPage/{page}")
     @Produces("applicaion/json")
     public ArrayList<UserJson> getUsers(@PathParam("page")String page){
         ArrayList<UserJson> userJsons = new ArrayList<UserJson>();

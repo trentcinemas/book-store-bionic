@@ -1,19 +1,13 @@
 package rest;
 
-import com.mysql.fabric.Response;
 import entities.Book;
 import entities.Comment;
 import entities.User;
-import jsonClasses.BookJson;
 import jsonClasses.CommentJson;
 import util.DaoFactory;
 import util.Logger;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,8 +15,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
-* Created by UFO on 03.08.2014.
-*/
+ * Created by UFO on 03.08.2014.
+ */
 @Path("comment/")
 public class CommentRest {
 
@@ -76,12 +70,12 @@ public class CommentRest {
         return javax.ws.rs.core.Response.ok().build();
     }
 
-        private boolean checkUser(User user) {
-            if (user == null) return false;
-            // TODO check user group
+    private boolean checkUser(User user) {
+        if (user == null) return false;
+        // TODO check user group
 
-            return true;
-        }
+        return true;
+    }
 
     @Path("search/{searchString}")
     @GET
@@ -106,4 +100,37 @@ public class CommentRest {
         return result;
     }
 
+    @GET
+    @Path("getPageCount")
+    @Produces("text/plain")
+    public String getPageCount(){
+        return DaoFactory.getDaoCommentsInstance().count().toString();
+    }
+
+    @Path("getFromPage/{page}")
+    @GET
+    @Produces("application/json")
+    public List <CommentJson> allComments (@PathParam("page") String page){
+        List<Comment> comments = DaoFactory.getDaoCommentsInstance().selectPage(Integer.parseInt(page));
+        ArrayList<CommentJson> commentJsons = new ArrayList<>();
+
+        for (Comment c : comments) {
+            commentJsons.add(new CommentJson(c));
+        }
+
+        return commentJsons;
+    }
+
+
+    @GET
+    @Path("sort/{page}/{byWhat}/{order}")
+    @Produces("application/json")
+    public ArrayList<CommentJson> sort(@PathParam("page")String page,@PathParam("byWhat") String byWhat,@PathParam("order") String order) {
+        ArrayList<CommentJson> commentJsons = new ArrayList<CommentJson>();
+        List<Comment> comments =DaoFactory.getDaoCommentsInstance().orderBy(byWhat,Integer.parseInt(page),Boolean.valueOf(order));
+        for(Comment comment : comments){
+            commentJsons.add(new CommentJson(comment));
+        }
+        return commentJsons;
+    }
 }

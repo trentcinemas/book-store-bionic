@@ -183,8 +183,8 @@ public class DaoAuthor implements DaoAuthorInterface {
 
     public List<Author> orderBy (String cell,int page,boolean order){
         switch (cell){
-            case "firstname": return orderByName(order, page);
-            case "lastname": return orderBySurname(order, page);
+            case "name": return orderByName(order, page);
+            case "surname": return orderBySurname(order, page);
             default: return null;
         }
     }
@@ -193,5 +193,30 @@ public class DaoAuthor implements DaoAuthorInterface {
         Session session =HibernateUtil.getSessionFactory().openSession();
         SQLQuery query=session.createSQLQuery("select count(1) from Author");
         return (BigInteger) (query.list().get(0));
+    }
+
+    @Override
+    public List<Author> search(String s) {
+        s = s.trim();
+        s = s.toLowerCase();
+        String[] words = s.split(" ");
+
+        Session session;
+        session = HibernateUtil.getSessionFactory().openSession();
+
+        String selectQuery = "select b from Author b where lower(b.firstname) like '%" + s + "%' or lower(b.lastname) like '%" + s + "%'";
+        for (String w : words)
+            selectQuery += "or lower(b.firstname) like '%\" + w + \"%' or lower(b.lastname) like '%\" + w + \"%')";
+
+
+        Query query = session.createQuery(selectQuery);
+        if (!query.list().isEmpty()) {
+            List<Author> result = query.list();
+            session.close();
+            return result;
+        } else {
+            session.close();
+            return null;
+        }
     }
 }

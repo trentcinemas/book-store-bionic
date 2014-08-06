@@ -1,14 +1,12 @@
 package jsonClasses;
 
-import entities.Book;
 import entities.Comment;
-import entities.User;
 
 /**
  * Created by UFO on 03.08.2014.
  */
 public class CommentJson {
-
+    private String id;
     private String date;
     private String user;
     private String book;
@@ -16,14 +14,16 @@ public class CommentJson {
 
     public CommentJson(Comment comment) {
         if (comment == null) {
+            this.id = null;
             this.date = null;
             this.user = null;
             this.book = null;
             this.comm_desc = null;
         } else {
+            this.id=Integer.toString(comment.getCommId());
             this.date = comment.getDate().toString();
             this.user = comment.getUserByUserId().getName();
-            this.book = Integer.toString(comment.getBookByBookId().getBookId());
+            this.book = comment.getBookByBookId().getTitle();
             this.comm_desc = comment.getCommDesc();
 
         }
@@ -59,5 +59,13 @@ public class CommentJson {
 
     public void setComm_desc(String comm_desc) {
         this.comm_desc = comm_desc;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

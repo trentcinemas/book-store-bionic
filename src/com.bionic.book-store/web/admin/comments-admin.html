@@ -9,7 +9,6 @@
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/admin-panel.css" rel="stylesheet">
-      <script src="/js/bootstrap.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,9 +31,9 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><p class = "helloword">Привіт, Сергій!</p></li>
+            <li><p class = "helloword">Здравсвуйте, Сергей!</p></li>
             <li><a href="#">Профайл</a></li>
-            <li><a href="#">Вихід</a></li>
+            <li><a href="#">Выход</a></li>
           </ul>
           
         </div>
@@ -42,55 +41,45 @@
     </div>
 
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar" id = "sidebar">
-            <ul class="nav nav-sidebar">
-            <li><a href="admin-admin.html">Перегляд</a></li>
-            <li><a href="users-admin.html">Користувачі</a></li>
-            <li><a href="orders-admin.html">Покупки</a></li>
-            <li><a href="comments-admin.html">Комментарі</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="books-admin.html">Книги</a></li>
-            <li><a href="addbook-admin.html">Додати книжку</a></li>
-            <li><a href="topics-admin.html">Жанри</a></li>
-            <li ><a href="addtopic-admin.html">Додати жанр</a></li>
-            <li class="active"><a href="author-admin.html">Автори</a></li>
-            <li><a href="addauthor-admin.html">Додати автора</a></li>
-          </ul>
-        </div>
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar" id = "sidebar">
+                <ul class="nav nav-sidebar">
+                    <li><a href="admin-admin.html">Перегляд</a></li>
+                    <li><a href="users-admin.html">Користувачі</a></li>
+                    <li><a href="orders-admin.html">Покупки</a></li>
+                    <li class="active"><a href="comments-admin.html">Комментарі</a></li>
+                </ul>
+                <ul class="nav nav-sidebar">
+                    <li ><a href="books-admin.html">Книги</a></li>
+                    <li><a href="addbook-admin.html">Додати книжку</a></li>
+                    <li><a href="topics-admin.html">Жанри</a></li>
+                    <li><a href="addtopic-admin.html">Додати жанр</a></li>
+                    <li><a href="author-admin.html">Автори</a></li>
+                    <li><a href="addauthor-admin.html">Додати автора</a></li>
+                </ul>
+            </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h1 class="page-header">Автори</h1>
-            <form method="get" id="searchFrom" name="searchForm">
-                <input type="search" id="search" name="search">
-                <input type="submit" value="Пошук">
-            </form>
+                      <h1 class="page-header">Коментарі</h1>
             <div class="table-responsive">
-            <table class="table table-striped" >
+            <table class="table table-striped" id="all_books_table">
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th id="name">Ім'я</th>
-                  <th id="surname">Прізвище</th>
-                  <th>Опис</th>
-                  <th></th>
+                  <th id = "sortemail">Користувач</th>
+                  <th id="sorttitle">Книжка</th>
+                  <th id="sortdate">Дата</th>
+                  <th>Коментар</th>
                   <th></th>
                   </tr>
               </thead>
-              <tbody id='authors_table'>
+              <tbody id='comments_table'>
+
               </tbody>
             </table>
           </div>
-            <div id="ajax_loading_div" style="margin: 10px auto 10px auto"></div>
+        <div id="ajax_loading_div" style="margin: 10px auto 10px auto"></div>
             <ul class="pagination" id="list-nav">
 
-                <!--<li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">»</a></li>
-                <li> <a href="#">»</a>/li>-->
             </ul>
         </div>
       </div>
@@ -100,7 +89,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/js/bootstrap.min.js"></script>
-    <script src="http://getbootstrap.com/assets/js/docs.min.js"></script>
-    <script src="/js/admin_author_list.js"></script>
+    <script src="/js/admin_comments.js"></script>
+      <script src="http://getbootstrap.com/assets/js/docs.min.js"></script>
   </body>
 </html>

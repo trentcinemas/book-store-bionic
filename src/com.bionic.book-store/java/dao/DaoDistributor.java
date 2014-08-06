@@ -1,4 +1,4 @@
-package dao;
+    package dao;
 
 import dao.daoInterfaces.DaoDistributorInterface;
 import entities.Distributor;

@@ -18,8 +18,10 @@
     <![endif]-->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+
+
     <script language="javascript" src="js/jquery-2.1.1.min.js"></script>
+
      <script language="javascript" src="js/registration.js"></script>
   </head>
 <body>
@@ -41,6 +43,7 @@
                     </div>
                     </div>
                     <div class="collapse navbar-collapse" id="navbarHeader">
+
                         <!-- Menu -->
                     </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -64,7 +67,7 @@
 <div class="container" id="content">  
                         <!-- Авторизация -->
                         
-                        <form id="login" action="none" mathod = "post">
+                        <form id="login" action="none" method = "post">
                             <fieldset id="inputs">
                                 
                                 <input id="email_login" type="text" onblur="if(this.value=='')this.value='Логін';" onfocus="if(this.value=='Логін')this.value='';" value="Логін" />
@@ -72,7 +75,7 @@
                             </fieldset>
                             <fieldset id="actions">
                                 <input type="submit" id="submit" value="Увійти"/>
-                               <p class="option"><a href="#">Забув пароль?</a>&nbsp;&nbsp;|<a href="#">Реєстрація</a></p>
+                               <p class="option"><a href="password-restore.html">Забув пароль?</a>&nbsp;&nbsp;|<a href="#">Реєстрація</a></p>
                                 
                             </fieldset>
                         </form>
@@ -81,7 +84,7 @@
                        <!----- Регистрация --->
     
             
-                        <form id="regist_field">
+                        <form id="regist_field" method="post">
                             <h1 id="ff-proof" class="ribbon">Реєстрація &nbsp;&nbsp;</h1>
                             <fieldset id="inputs">
                                 <lable for="email" class = 'email-fail' style = 'display:none; color: red'>не верний пароль</lable>
@@ -133,8 +136,7 @@
                             <div class="form-group" >
                                 <input type="text" class="form-control" placeholder="Пошук" name="search">
                                     <!--<div class="input-group-btn"> -->
-                                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                                   <!--</div> -->
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                             </div>
                         </form>
                         <p><a href="#">Як придбати книгу</a></p>

@@ -22,4 +22,6 @@ public interface DaoAuthorInterface {
 
     public List<Author> orderByName(boolean order,int page);
     public List<Author> orderBySurname(boolean order, int page);
+
+    List<Author> search(String s);
 }

@@ -7,10 +7,11 @@ $(document).ready(function() {
     var email = $('#email').val();
     if(!email.match(regexp)){
         $("#email").css({ border:"2px solid red"});
-        $(".email-fail").css({display:block});
+        $(".email-fail").css({display:"block"});
     }
 
-    $('#regist_field').submit(function() {
+    $('#regist_field').submit(function(e) {
+        e.preventDefault();
         var email = $('#email').val();
         var password = $('#password').val();
         var name = $("#name").val();
