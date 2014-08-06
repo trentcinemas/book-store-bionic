@@ -29,6 +29,32 @@ function fillPurchasedBook(data){
             "</div>");
     }
 }
+function fillRecommendsTable(data){
+    $(".recommend_label").html("Рекомендовані")
+    for(var i=0;i<data.length;i++){
+        $("#bought").append("<div class='col-xs-6 col-sm-4 col-md-2'>"+
+            "<div class='small-thubnail'>"+
+            "<a href='/rest/book/getPage/"+data[i].id+"'>"+
+            "<img src='/rest/file/getimage/"+data[i].sm_cover+"' alt='100%x180' style='height: 203px; width: 142px; display: block;'>"+
+            "</a>"+
+            "</div>"+
+            "<div class='b-title'>"+
+            "<a href='#'>"+
+            "<span class='title'>"+data[i].title+"</span>"+
+            "</a>"+
+            "</div>"+
+            "<div class='b-author'>"+
+            "<a href='#'><span class='author'>"+data[i].athor+"</span></a>"+
+            "</div>"+
+            "<span class='price'>"+data[i].price+" грн</span><br>"+
+            "<div class='btn-group'>"+
+            "<p><a class='btn dropdown-toggle btn-warning download' data-toggle='dropdown' href='single-page.html?id='"+data[i].id+"'>Купить"+
+            "<span class='glyphicon glyphicon-download-alt'></span>"+
+            "</a></p>"+
+            "</div>"+
+            "</div>");
+    }
+}
 $(document).ready(function(){
     // set action on login form
     addAuthorization();
@@ -48,6 +74,13 @@ $(document).ready(function(){
                success:function(data){
                 fillPurchasedBook(data);
                }
+            });
+            $.ajax({
+                type:"get",
+                url:"rest/user/recomendation-books",
+                success:function(data){
+                    fillRecommendsTable(data);
+                }
             });
         },
         error:function(data){
