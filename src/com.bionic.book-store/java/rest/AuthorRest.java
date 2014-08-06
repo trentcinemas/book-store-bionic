@@ -38,7 +38,7 @@ public class AuthorRest extends HttpServlet {
 
         User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
 
-        if (!CheckUser.isAdmin(user) || !CheckUser.isModer(user) || !CheckUser.isRedactor(user)) {
+        if (!(CheckUser.isAdmin(user) || CheckUser.isModer(user) || CheckUser.isRedactor(user))) {
             Logger.log(PROCESS, "Access denied : " + userEmail);
             return Response.status(403).entity("Вибачте, ви не маєте досупу до даної операції").build();
         }
@@ -68,7 +68,7 @@ public class AuthorRest extends HttpServlet {
 
         User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
 
-        if (!CheckUser.isAdmin(user) || !CheckUser.isModer(user) || !CheckUser.isRedactor(user)) {
+        if (!(CheckUser.isAdmin(user) || CheckUser.isModer(user) || CheckUser.isRedactor(user))) {
             Logger.log(PROCESS, "Access denied : " + userEmail);
             return Response.status(403).entity("Вибачте, ви не маєте досупу до даної операції").build();
         }
