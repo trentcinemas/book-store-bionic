@@ -62,6 +62,7 @@ public class BookRest extends HttpServlet {
         enBook.setPagesCnt(Integer.parseInt(map.getStringParameter("page_count")));
         enBook.setCover(map.getStringParameter("title") + "/" + map.getFileParameter("sm-cover").getAbsoluteFile().getName());
         enBook.setBigCover(map.getStringParameter("title") + "/" + map.getFileParameter("big-cover").getAbsoluteFile().getName());
+        enBook.setPreview(map.getStringParameter("title") + "/" + map.getFileParameter("preview").getAbsoluteFile().getName());
         enBook.setPdfPath(map.getStringParameter("title") + "/" + map.getFileParameter("pdf").getAbsoluteFile().getName());
         enBook.setDocPath(map.getStringParameter("title") + "/" + map.getFileParameter("doc").getAbsoluteFile().getName());
         enBook.setFb2Path(map.getStringParameter("title") + "/" + map.getFileParameter("fb2").getAbsoluteFile().getName());
@@ -104,6 +105,9 @@ public class BookRest extends HttpServlet {
         if (map.getFileParameter("big-cover") != null) {
             enBook.setBigCover(
                     map.getStringParameter("title") + "/" + map.getFileParameter("big-cover").getAbsoluteFile().getName());
+        }
+        if (map.getFileParameter("preview") != null) {
+            enBook.setPreview(map.getStringParameter("title") + "/" + map.getFileParameter("preview").getAbsoluteFile().getName());
         }
         if (map.getFileParameter("pdf") != null) {
             enBook.setPdfPath(
