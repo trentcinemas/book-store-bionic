@@ -7,7 +7,6 @@ bionic-book-store.iml
 .idea/workspace.xml
 src/com.bionic.book-store/java/util/MultipartRequestMap.java
 pom.xml
-src/com.bionic.book-store/java/rest/BookRest.java
 .idea/artifacts/bionic_book_store_war_exploded.xml
 bionic-book-store.iml
 .idea/artifacts/bionic_book_store_war_exploded.xml
