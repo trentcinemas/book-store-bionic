@@ -77,34 +77,122 @@ footer #searchFooter div > p:last-child {padding-top: 130px;}
     footer #searchFooter{padding-left:50px;}
     
 }
-@media (min-width:320px) and (max-width:767px){
-header .search-tool-style {width:350px !important;}
-header nav > form {}
-header #logo {position: static; text-align: center; float: none !important;}
-header .navbar-form.navbar-right:last-child{ margin-right: auto !important;}
-header .navbar-form {margin: auto; width: 400px;}
-header #navbarHeader {text-align: center;}
-header #navbarHeader ul {float: none !important;}
-header .navbar-form input {float: left; width: 355px;}    
-header .search-tool button {margin-top: 4px;}
+@media (min-width:320px) and (max-width:767px) {
+    header .search-tool-style {
+        width: 350px !important;
+    }
 
-.search-tool{ padding: 0px 0px 0px 3px; height: auto; width:250px;}
-.search-tool input{ height: 25px; margin:7px 0px 0px 4px; width: auto; }
-footer #callback {padding-left: 50px;}
-footer #searchFooter {padding-left: 30px;}
-footer #callback form div > input {margin: 10px 0px 0px 62px; text-align: center;  padding: 10px 30px; margin: auto; margin-top: 5px;}
-footer #callback form { float: none;}
-footer #callback form div {float:none; padding-left: 0px;}
-footer #callback { text-align: center; }
-footer #callback textarea { margin: auto; width: 300px;  }
-footer #searchFooter div .pull-left{ float: none !important; text-align: center;}
-footer #searchFooter div > p:last-child {padding-top: 30px;}
-footer #searchFooter span:first-child {display: none;}
-footer #searchFooter form {display: none;}
-footer #searchFooter, #callback {padding: 0px 0px; }
-footer #callback {padding: 0px 0px;}
-footer #searchFooter div:last-child {float: none !important; text-align: center;}
+    header nav > form {
+    }
 
+    header #logo {
+        position: static;
+        text-align: center;
+        float: none !important;
+    }
+
+    header .navbar-form.navbar-right:last-child {
+        margin-right: auto !important;
+    }
+
+    header .navbar-form {
+        margin: auto;
+        width: 400px;
+    }
+
+    header #navbarHeader {
+        text-align: center;
+    }
+
+    header #navbarHeader ul {
+        float: none !important;
+    }
+
+    header .navbar-form input {
+        float: left;
+        width: 355px;
+    }
+
+    header .search-tool button {
+        margin-top: 4px;
+    }
+
+    .search-tool {
+        padding: 0px 0px 0px 3px;
+        height: auto;
+        width: 250px;
+    }
+
+    .search-tool input {
+        height: 25px;
+        margin: 7px 0px 0px 4px;
+        width: auto;
+    }
+
+    footer #callback {
+        padding-left: 50px;
+    }
+
+    footer #searchFooter {
+        padding-left: 30px;
+    }
+
+    footer #callback form div > input {
+        margin: 10px 0px 0px 62px;
+        text-align: center;
+        padding: 10px 30px;
+        margin: auto;
+        margin-top: 5px;
+    }
+
+    footer #callback form {
+        float: none;
+    }
+
+    footer #callback form div {
+        float: none;
+        padding-left: 0px;
+    }
+
+    footer #callback {
+        text-align: center;
+    }
+
+    footer #callback textarea {
+        margin: auto;
+        width: 300px;
+    }
+
+    footer #searchFooter div .pull-left {
+        float: none !important;
+        text-align: center;
+    }
+
+    footer #searchFooter div > p:last-child {
+        padding-top: 30px;
+    }
+
+    footer #searchFooter span:first-child {
+        display: none;
+    }
+
+    footer #searchFooter form {
+        display: none;
+    }
+
+    footer #searchFooter, #callback {
+        padding: 0px 0px;
+    }
+
+    footer #callback {
+        padding: 0px 0px;
+    }
+
+    footer #searchFooter div:last-child {
+        float: none !important;
+        text-align: center;
+    }
+}
 /* ------------Single page styles ---------------*/
 
 
