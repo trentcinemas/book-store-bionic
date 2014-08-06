@@ -1,9 +1,9 @@
 package rest;
 
-import dao.DaoAuthor;
 import entities.Author;
 import entities.User;
 import jsonClasses.AuthorJson;
+import jsonClasses.UserJson;
 import util.CheckUser;
 import util.DaoFactory;
 import util.Logger;
@@ -19,7 +19,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static util.Logger.Type.*;
+import static util.Logger.Type.PROCESS;
 
 /**
  * Created by jsarafajr on 29.07.14.
@@ -153,5 +153,39 @@ public class AuthorRest extends HttpServlet {
         File image = new File(PHOTO_DIRECTORY_PATH + author.getPhoto());
 
         return Response.ok(image).build();
+    }
+
+    @GET
+    @Path("getPage/{page}")
+    @Produces("applicaion/json")
+    public ArrayList<AuthorJson> getAuthors(@PathParam("page")String page){
+        ArrayList<AuthorJson> authorJsons = new ArrayList<AuthorJson>();
+        List<Author> authors = DaoFactory.getDaoAuthorInstance().selectPage(Integer.parseInt(page));
+
+        for(Author author: authors){
+            authorJsons.add(new AuthorJson(author));
+        }
+        return authorJsons;
+    }
+
+
+    @GET
+    @Path("getPageCount")
+    @Produces("text/plain")
+    public String getPageCount(){
+        return DaoFactory.getDaoAuthorInstance().count().toString();
+    }
+
+
+    @GET
+    @Path("sort/{page}/{byWhat}/{order}")
+    @Produces("application/json")
+    public ArrayList<AuthorJson> sort(@PathParam("page")String page,@PathParam("byWhat") String byWhat,@PathParam("order") String order) {
+        ArrayList<AuthorJson> authorJsons = new ArrayList<AuthorJson>();
+        List<Author> authors = DaoFactory.getDaoAuthorInstance().orderBy(byWhat, Integer.parseInt(page), Boolean.valueOf(order));
+        for(Author author : authors){
+            authorJsons.add(new AuthorJson(author));
+        }
+        return authorJsons;
     }
 }

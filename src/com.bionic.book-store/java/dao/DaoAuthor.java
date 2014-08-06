@@ -2,14 +2,10 @@ package dao;
 
 import dao.daoInterfaces.DaoAuthorInterface;
 import entities.Author;
-import entities.Book;
-import entities.User;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import util.HibernateUtil;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -132,7 +128,18 @@ public class DaoAuthor implements DaoAuthorInterface {
     }
 
     @Override
-    public List<Author>  orderByName(boolean order) {
+    public List<Author> selectPage(int page){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from Author");
+        query.setFirstResult(0+15*(page-1));
+        query.setMaxResults(15);
+        List<Author> result =query.list();
+        session.close();
+        return result;
+    }
+
+    @Override
+    public List<Author>  orderByName(boolean order,int page) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = null;
         if (order == true){
@@ -141,6 +148,8 @@ public class DaoAuthor implements DaoAuthorInterface {
             query = session.createQuery("from  Author order by firstname desc");
         }
         if (!query.list().isEmpty()) {
+            query.setFirstResult(0+15*(page-1));
+            query.setMaxResults(15);
             List<Author> result = query.list();
             session.close();
             return result;
@@ -152,7 +161,7 @@ public class DaoAuthor implements DaoAuthorInterface {
     }
 
     @Override
-    public List<Author> orderBySurname(boolean order) {
+    public List<Author> orderBySurname(boolean order,int page) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = null;
         if (order == true){
@@ -161,6 +170,8 @@ public class DaoAuthor implements DaoAuthorInterface {
             query = session.createQuery("from  Author order by lastname desc");
         }
         if (!query.list().isEmpty()) {
+            query.setFirstResult(0+15*(page-1));
+            query.setMaxResults(15);
             List<Author> result = query.list();
             session.close();
             return result;
@@ -170,11 +181,17 @@ public class DaoAuthor implements DaoAuthorInterface {
         }
     }
 
-    public List<Author> orderBy(String name, boolean order){
-        switch (name){
-            case "name": return orderByName(order);
-            case "lastname": return orderBySurname(order);
+    public List<Author> orderBy (String cell,int page,boolean order){
+        switch (cell){
+            case "firstname": return orderByName(order, page);
+            case "lastname": return orderBySurname(order, page);
             default: return null;
         }
+    }
+
+    public BigInteger count(){
+        Session session =HibernateUtil.getSessionFactory().openSession();
+        SQLQuery query=session.createSQLQuery("select count(1) from Author");
+        return (BigInteger) (query.list().get(0));
     }
 }

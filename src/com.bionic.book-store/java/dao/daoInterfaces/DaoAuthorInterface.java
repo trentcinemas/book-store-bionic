@@ -1,7 +1,6 @@
 package dao.daoInterfaces;
 
 import entities.Author;
-import entities.Book;
 
 import java.util.List;
 
@@ -18,6 +17,9 @@ public interface DaoAuthorInterface {
     public void update(Author author);
     public void delete(Author author);
     public void delete(int id);
-    public List<Author> orderByName(boolean order);
-    public List<Author> orderBySurname(boolean order);
+
+    List<Author> selectPage(int page);
+
+    public List<Author> orderByName(boolean order,int page);
+    public List<Author> orderBySurname(boolean order, int page);
 }
