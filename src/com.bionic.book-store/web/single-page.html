@@ -25,6 +25,7 @@
 
     <!--<script language="javascript" src="js/jquery.js"></script>-->
     <script language="javascript" src="js/single_page.js"></script>
+    <script language="javascript" src="js/index.js"></script>
     <script>
         $(document).ready(function () {
             $("#b-buy").click(function () {
@@ -70,7 +71,19 @@
 <!-- End of header -->
 
 <div class="container" id="content">
+    <!-- Авторизация -->
 
+    <form id="login" action="none" method = "post">
+        <fieldset id="inputs">
+
+            <input id="email" type="text" onblur="if(this.value=='')this.value='Логін';" onfocus="if(this.value=='Логін')this.value='';" value="Логін" />
+            <input id="password" type="password" onblur="if(this.value=='')this.value='Пароль';" onfocus="if(this.value=='Пароль')this.value='';" value="Пароль" />
+        </fieldset>
+        <fieldset id="actions">
+            <input type="submit" id="submit" value="Увійти"/>
+            <p class="option"><a href="#">Забув пароль?</a>&nbsp;&nbsp;|<a href="registration.html">Реєстрація</a></p>
+        </fieldset>
+    </form>
     <!--          SINGLE BOOK CONTENT START-->
 
     <div class="row">

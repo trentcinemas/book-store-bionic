@@ -1,5 +1,5 @@
 
-#login { /* box formulaire */
+#login, #login_form { /* box formulaire */
 	background-color:#2F3438;
 	background-size:16px 16px;
 	-webkit-background-size:16px 16px;
@@ -185,7 +185,7 @@ fieldset#inputs{ /* contour des inputs */
 #actions {
     margin: 25px 0 0 0;
 }
-#submit {/* bouton de connection */
+#submit, #submit_login {/* bouton de connection */
     background-color: #ffb94b;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#C94700), to(#B84100));
     background-image: -webkit-linear-gradient(top, #C94700, #B84100);
@@ -213,7 +213,7 @@ fieldset#inputs{ /* contour des inputs */
     color: #FFF;
     text-transform:  capitalize;
 }
-#submit:hover,#submit:focus {
+#submit:hover,#submit:focus, #submit_login:hover, #submit_login:focus {
     background-color: #C94700;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#B84100), to(#C94700));
     background-image: -webkit-linear-gradient(top, #B84100, #C94700);
@@ -222,13 +222,14 @@ fieldset#inputs{ /* contour des inputs */
     background-image: -o-linear-gradient(top, #B84100, #C94700);
     background-image: linear-gradient(top, #B84100, #C94700);
 }
-#submit:active {
+#submit:active, #submit_login:active {
     outline: none;
      -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
      -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
 }
 #submit::-moz-focus-inner {border: none;}
+#submit_login::-moz-focus-inner {border: none;}
 #actions a {
     color: #000000;
     float: none;

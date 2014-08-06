@@ -1,5 +1,9 @@
 package rest;
 
+import entities.User;
+import util.CheckUser;
+import util.DaoFactory;
+
 import javax.servlet.ServletContext;
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
@@ -15,13 +19,17 @@ import java.io.InputStream;
 public class Security {
 
     @GET
-    @Path("secure")
+    @Path("admin")
     @Produces("text/html")
-    public InputStream getSecurePage(@CookieParam("user") String user,
+    public InputStream getAdminPage(@CookieParam("user") String userEmail,
                                      @Context ServletContext context) {
 
-        if (user == null) return context.getResourceAsStream("/WEB-INF/pages/404.html");
+        User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
 
-        return context.getResourceAsStream("/WEB-INF/pages/secure.html");
+        if (CheckUser.isAdmin(user) || CheckUser.isRedactor(user) || CheckUser.isModer(user)) {
+            return context.getResourceAsStream("/WEB-INF/pages/admin-admin.html");
+        }
+
+        return context.getResourceAsStream("/404.html");
     }
 }

@@ -14,7 +14,7 @@ public class CommentJson {
 
     public CommentJson(Comment comment) {
         if (comment == null) {
-            this.id = null;
+            this.id=null;
             this.date = null;
             this.user = null;
             this.book = null;
