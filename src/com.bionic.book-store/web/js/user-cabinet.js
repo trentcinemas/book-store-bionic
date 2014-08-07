@@ -59,7 +59,6 @@ $(document).ready(function(){
     // set action on login form
     addAuthorization();
     formReplyActionSet();
-
     addAjaxLoader();
     $.ajax({
         type:"get",
