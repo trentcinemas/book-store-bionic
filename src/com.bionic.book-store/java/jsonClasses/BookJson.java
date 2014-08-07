@@ -10,6 +10,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "JBook")
 public class BookJson {
+    public String getAthorid() {
+        return athorid;
+    }
+
+    public void setAthorid(String athorid) {
+        this.athorid = athorid;
+    }
+
+    String athorid;
     String id;
     String title;
     String description;
@@ -27,6 +36,7 @@ public class BookJson {
 
     public BookJson(Book book) {
         if (book == null) {
+            this.athorid=null;
             this.id=null;
             this.author=null;
             this.title = null;
@@ -37,6 +47,7 @@ public class BookJson {
             this.newb=false;
 
         } else {
+            this.athorid=Integer.toString(book.getAuthorByAuthorId().getAuthorId());
             this.id=Integer.toString(book.getBookId());
             this.author=book.getAuthorByAuthorId().getFirstname()+" "+book.getAuthorByAuthorId().getLastname();
             this.title = book.getTitle();

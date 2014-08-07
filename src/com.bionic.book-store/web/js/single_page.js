@@ -18,6 +18,7 @@ $(document).ready(function(){
            }*/
             currentBook = data;
             $("#athor").html(data.author);
+            $("#athor").attr("href","/rest/author/getAuthPage/"+data.athorid);
             $("#title").html(data.title);
             $("#description").html(data.description);
             $("#price").html(data.price + " грн");
