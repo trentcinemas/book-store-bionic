@@ -456,4 +456,20 @@ public class DaoBook implements DaoBookInterface {
         session.close();
         return result;
     }
+
+    @Override
+    public List<Book> selectByAuthorId(int id) {
+        Session session;
+        session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("select b from Book b join b.authorByAuthorId c where c.authorId =" + id);
+        if (!query.list().isEmpty()) {
+            List<Book> result = query.list();
+            session.close();
+            return result;
+        } else {
+            session.close();
+            return null;
+        }
+    }
+
 }

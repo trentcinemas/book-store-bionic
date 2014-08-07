@@ -1,8 +1,10 @@
 package rest;
 
 import entities.Author;
+import entities.Book;
 import entities.User;
 import jsonClasses.AuthorJson;
+import jsonClasses.BookJson;
 import util.CheckUser;
 import util.DaoFactory;
 import util.Logger;
@@ -15,7 +17,10 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static util.Logger.Type.PROCESS;
@@ -143,7 +148,7 @@ public class AuthorRest extends HttpServlet {
     }
 
     @GET
-    @Path("photo{id}")
+    @Path("photo/{id}")
     @Produces("image/*")
     public Response getImage(@PathParam("id") String id) {
         Integer authorId = Integer.parseInt(id);
@@ -166,6 +171,21 @@ public class AuthorRest extends HttpServlet {
         }
         return authorJsons;
     }
+    @Path("getAuthPage/{id}")
+    @GET
+    public Response getSinglePage(@PathParam("id") String id){
+        URI location;
+        Author author =DaoFactory.getDaoAuthorInstance().selectById(Integer.parseInt(id));
+        try {
+            location = new URI("../single-author.html?id="+id);
+        }
+        catch(URISyntaxException e){
+            return null;
+        }
+        return Response.temporaryRedirect(location).build();
+    }
+
+
 
 
     @GET
@@ -199,4 +219,6 @@ public class AuthorRest extends HttpServlet {
         }
         return authorJsons;
     }
+
+
 }

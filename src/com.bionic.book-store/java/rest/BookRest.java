@@ -24,6 +24,7 @@ import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Path("book/")
@@ -375,4 +376,19 @@ public class BookRest extends HttpServlet {
 
         return true;
     }
+
+    @Path("authorbooks/{id}")
+    @GET
+    @Produces("application/json")
+    public LinkedList<BookJson> authorBooks(@PathParam("id") String authId){
+        LinkedList<BookJson> bookJsons = new LinkedList<BookJson>();
+        List<Book> books = DaoFactory.getDaoBookInstance().selectByAuthorId(Integer.parseInt(authId));
+        for(Book book:books){
+            bookJsons.add(new BookJson(book));
+        }
+        return bookJsons;
+    }
+
+
+
 }

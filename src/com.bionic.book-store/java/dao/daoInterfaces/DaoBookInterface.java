@@ -27,6 +27,7 @@ public interface DaoBookInterface {
     void delete(int id);
     public List<Book> search(String s);
     public List<Book> selectByGenreID(int id);
+    public List<Book> selectByAuthorId(int id);
 
     List<Book> selectPage(int page);
 

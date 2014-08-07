@@ -18,12 +18,13 @@ import java.io.File;
 public class FileRest {
     private static final String FILE_BOOK_PATH= MultipartRequestMap.UPLOAD_PATH + "/";
     @GET
-    @Path("getauthorimage/{id}")
+    @Path("getAuthImage/{id}")
     @Produces("image/*")
-    public Response getAuthorImage(@PathParam("id") String id){
-        File file = new File(FILE_BOOK_PATH+ DaoFactory.getDaoAuthorInstance().selectById(Integer.parseInt(id)).getPhoto());
+    public Response getAuthImage(@PathParam("id")String id){
+        File file = new File(AuthorRest.PHOTO_DIRECTORY_PATH + DaoFactory.getDaoAuthorInstance().selectById(Integer.parseInt(id)).getPhoto());
         return Response.ok(file).build();
     }
+
     @GET
     @Path("getsmallimage/{id}")
     @Produces("image/*")
