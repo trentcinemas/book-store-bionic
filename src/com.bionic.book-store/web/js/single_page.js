@@ -13,15 +13,15 @@ $(document).ready(function(){
        dataType:"json",
        url:"/rest/book/get/"+id,
        success:function(data){
-           if(data.newb==true){
+        /*   if(data.newb==true){
                $('.b-badge').css("display","block");
-           }
+           }*/
             currentBook = data;
             $("#athor").html(data.author);
             $("#title").html(data.title);
             $("#description").html(data.description);
             $("#price").html(data.price + " грн");
-            $("#big-cover").attr("src","/rest/file/getimage/"+data.big_cover);
+            $("#big-cover").attr("src","/rest/file/getbigimage/"+data.id);
        }
 
     });

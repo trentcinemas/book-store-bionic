@@ -21,14 +21,14 @@ public class FileRest {
 
     @GET
     @Path("getsmallimage/{id}")
-    @Produces("image/png")
+    @Produces("image/*")
     public Response getImage(@PathParam("id")String id){
         File file = new File(FILE_BOOK_PATH+ DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(id)).getCover());
         return Response.ok(file).build();
     }
     @GET
     @Path("getbigimage/{id}")
-    @Produces("images/png")
+    @Produces("images/*")
     public Response getBigImage(@PathParam("id")String id){
         File file = new File(FILE_BOOK_PATH+ DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(id)).getBigCover());
         return Response.ok(file).build();

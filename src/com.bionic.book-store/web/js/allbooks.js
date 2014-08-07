@@ -12,7 +12,7 @@ function bookContent(data){
 
     var i=0;
     $(".book").each(function () {
-        $(this).html("<div class = 'small-thubnail'><a href='rest/book/getPage/" + data[i].id + "'><img src='rest/file/getimage/" + data[i].sm_cover + "' alt='100%x180'style='height: 203px; width: 142px; display: block;'></a></div>" +
+        $(this).html("<div class = 'small-thubnail'><a href='rest/book/getPage/" + data[i].id + "'><img src='rest/file/getsmallimage/" + data[i].id + "' alt='100%x180'style='height: 203px; width: 142px; display: block;'></a></div>" +
             "<div class= 'b-title'>" +
             "<a href='#'><span class = 'title'>" + data[i].title + "</span></a>" +
             "</div>" +

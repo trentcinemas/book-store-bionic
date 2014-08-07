@@ -287,7 +287,7 @@ $(document).ready(function() {
         else
             $(".pagination .next").removeClass("disabled");
 
-        getBooksFromPage($(".pagination .active"))
+        getBooksFromPage($(".pagination .active").val());
     });
 
 
