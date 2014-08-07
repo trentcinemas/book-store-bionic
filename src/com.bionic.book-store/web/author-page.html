@@ -10,6 +10,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/registration.css" rel="stylesheet">
+    <link href="css/author-page.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -34,6 +35,7 @@
             });
         });
     </script>
+    <script src="js/searchHide.js"></script>
 </head>
 <body>
 <header class="container" id="header-nav">
@@ -75,11 +77,11 @@
     <!--          SINGLE BOOK CONTENT START-->
 
     <div class="row">
-        <div class="col-xs-12 col-md-6 col-lg-5 col-lg-offset-1" id="author-img">
+        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 col-lg-offset-1" id="author-img">
 
             <img id="author-pic" src="images/brain-rules-blog-pic-300.png" alt="100%x180">
         </div>
-        <div class="col-xs-12 col-md-6 col-lg-5" id="author-books">
+        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5" id="author-books">
                 <h3 id="author-name">Стас Михайлов</h3>
                 <h4 id="description">Книги</h4>
                 <ul id = 'author-books'>
@@ -99,7 +101,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-lg-offset-1 col-md-6 col-sm-6 col-xs-10 col-xs-offset-1" id="callback">
-                <span>Написати до видавництва</span>
+                <p>Написати до видавництва</p>
 
                 <form id="reply_form">
                     <p>До кого</p>
