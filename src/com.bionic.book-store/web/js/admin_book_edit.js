@@ -31,7 +31,7 @@ $(document).ready(function(){
 
     var URL = window.location.search;
     var getRequest = URL.split("?")[1];
-    var id = getRequest.split("=")[1];
+    id = getRequest.split("=")[1];
 
     $.ajax({
         type:"get",
@@ -60,7 +60,7 @@ $(document).ready(function(){
         var formData = new FormData(this);
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "/rest/book/update");
+        xhr.open("POST", "/rest/book/update/" + id);
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {

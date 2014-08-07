@@ -160,7 +160,7 @@ public class Security {
     }
 
     @GET
-    @Path("admin/edit-book")
+    @Path("admin/editbook")
     @Produces("text/html")
     public InputStream getEditBooksPage(@CookieParam("user") String userEmail,
                                         @QueryParam("id") String id,

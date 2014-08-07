@@ -72,10 +72,11 @@ public class BookRest extends HttpServlet {
         return Response.ok().build();
     }
 
-    @Path("update")
+    @Path("update/{id}")
     @POST
     @Consumes("multipart/form-data")
     public Response updateBook(@CookieParam("user") String userEmail,
+                               @PathParam("id") String idString,
                                @Context HttpServletRequest request) {
         User user = DaoFactory.getDaoUserInstance().selectByEmail(userEmail);
 
@@ -86,7 +87,8 @@ public class BookRest extends HttpServlet {
         }
 
         MultipartRequestMap map = new MultipartRequestMap(request);
-        entities.Book enBook = new entities.Book();
+        int id = Integer.parseInt(idString);
+        entities.Book enBook = DaoFactory.getDaoBookInstance().selectById(id);
         enBook.setTitle(map.getStringParameter("title"));
         enBook.setDescription(map.getStringParameter("description"));
         enBook.setPrice(Float.parseFloat(map.getStringParameter("price")));
@@ -123,6 +125,7 @@ public class BookRest extends HttpServlet {
         }
 
         DaoFactory.getDaoBookInstance().update(enBook);
+        Logger.log(Logger.Type.PROCESS, "Book changed : " + enBook.getTitle() + " by " + user.getEmail());
 
         return Response.ok().build();
     }
