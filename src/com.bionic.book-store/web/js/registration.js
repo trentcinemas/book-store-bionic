@@ -57,8 +57,7 @@ $("#registration_email").change(function(){
                 data: {'email': email, 'name': name, 'password': password},
                 response: 'text', // response type
                 success: function (data) {
-                    $('#status').html("Success");
-                    location.reload();
+                    location.href = '/thnks.html';
                 },
                 statusCode: {
                 	// HTTP 409 - Conflict

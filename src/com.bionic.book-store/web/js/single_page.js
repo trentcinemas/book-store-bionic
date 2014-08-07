@@ -29,12 +29,7 @@ $(document).ready(function(){
 
     getComments(id);
 
-    $("#add_comment_form").submit(function(e){
-        e.preventDefault();
-        var comment = $("#comment").val();
 
-        addComment(id,comment);
-    });
 
     $('.b-buy').ready(function(){
         $(".b-buy").click(function(){
@@ -60,18 +55,12 @@ function addBuyBookAction() {
             crossDomain: true,
             data: {'id' : id},
             success: function (data) {
-                alert("Success");
-                // TODO redirect "дякуємо за покупку"
-                location.reload();
+                location.href = '/thnkstocustomer.html';
             },
             statusCode: {
                 // HTTP 401 - unauthorized
                 401: function (data) {
                     alert("Ви не зареєстровані");
-                },
-                // HTTP 307 - redirect
-                307: function (data) {
-                    document.location.href = data.responseText;
                 }
             }
         });
@@ -117,6 +106,12 @@ $('#navbarHeader').ready(function() {
             } else {
                 logoutButtonEnable(data.name);
                 sendCommentsEnabe();
+                $("#add_comment_form").submit(function(e){
+                    e.preventDefault();
+                    var comment = $("#comment").val();
+
+                    addComment(id,comment);
+                });
             }
         }
     });
@@ -220,6 +215,7 @@ function sendCommentsDisable() {
                 },
                 success: function (data) {
                     alert("added comment");
+                    location.reload();
                 },
                 error: function (data) {
                     alert(data);

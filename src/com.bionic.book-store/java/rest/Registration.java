@@ -60,7 +60,6 @@ public class Registration {
 
         MailService.send(user.getEmail(), "Registration", "Дякуємо, за реєстрацію на нашому веб-сайті!" +
                 "\nВаш логін:" + email +
-                "\nВаш пароль:" + password +
                 "\nБудь ласка, не повідомляйте свій пароль стороннім особам!");
 
         return Response.ok().build();
