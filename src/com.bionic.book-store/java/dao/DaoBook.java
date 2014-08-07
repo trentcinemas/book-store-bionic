@@ -19,6 +19,26 @@ import java.util.List;
  */
 public class DaoBook implements DaoBookInterface {
     @Override
+    public List<Book> selectOrdered(String byWhat,int howmuch,boolean order){
+        Session session;
+        session = HibernateUtil.getSessionFactory().openSession();
+        Query query = null;
+        if (order == true)
+            query = session.createQuery("FROM Book order by " + byWhat + " asc");
+        else
+            query = session.createQuery("FROM Book order by " + byWhat + " desc");
+        if (!query.list().isEmpty()) {
+            query.setFirstResult(0);
+            query.setMaxResults(howmuch);
+            List<Book> result = query.list();
+            session.close();
+            return result;
+        } else {
+            session.close();
+            return null;
+        }
+    }
+    @Override
     public List<Book> selectAllOrdered(String byWhat, boolean order) {
         Session session;
         session = HibernateUtil.getSessionFactory().openSession();

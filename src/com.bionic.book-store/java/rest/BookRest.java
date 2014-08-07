@@ -166,9 +166,7 @@ public class BookRest extends HttpServlet {
     public ArrayList<BookJson> GetLastAddedBooks(@PathParam("limit") String limit, @PathParam("order") String order, @PathParam("byWhat") String byWhat) {
 
         ArrayList<BookJson> booksJson = new ArrayList<BookJson>();
-        List<Book> books = DaoFactory.getDaoBookInstance().selectAllOrdered(byWhat, Integer.parseInt(order) == 0 ? false : true);
-        int lim = Integer.parseInt(limit);
-        List<Book> orderedBooks = books.subList(0, lim > books.size() ? books.size() : lim);
+        List<Book> books = DaoFactory.getDaoBookInstance().selectOrdered(byWhat, Integer.parseInt(limit), Integer.parseInt(order) == 0 ? false : true);
 
         for (entities.Book book : books) {
             BookJson bookJson = new BookJson(book);
