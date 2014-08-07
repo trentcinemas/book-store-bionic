@@ -1,13 +1,13 @@
 package rest;
 
 
+import entities.Book;
+import entities.User;
+import util.CheckUser;
 import util.DaoFactory;
 import util.MultipartRequestMap;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.File;
 
@@ -47,4 +47,43 @@ public class FileRest {
         return Response.ok(file).build();
     }
 
+    @GET
+    @Path("getpdf/{id}")
+    @Produces("application/pdf")
+    public Response getPdf(@CookieParam("user")String email,@PathParam("id") String id){
+        User user= DaoFactory.getDaoUserInstance().selectByEmail(email);
+        Book book= DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(id));
+        if(user == null || book ==null) return Response.serverError().build();
+        if(CheckUser.isAdmin(user) || DaoFactory.getDaoPurchasedBookInstance().selectByUser(user).contains(book)){
+            File file = new File(FILE_BOOK_PATH+DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(id)).getPdfPath());
+            return Response.ok(file).build();
+        }
+        else return Response.serverError().build();
+    }
+    @GET
+    @Path("getdoc/{id}")
+    @Produces("*/*")
+    public Response getDoc(@CookieParam("user")String email,@PathParam("id") String id){
+        User user= DaoFactory.getDaoUserInstance().selectByEmail(email);
+        Book book= DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(id));
+        if(user == null || book ==null) return Response.serverError().build();
+        if(CheckUser.isAdmin(user) || DaoFactory.getDaoPurchasedBookInstance().selectByUser(user).contains(book)){
+            File file = new File(FILE_BOOK_PATH+DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(id)).getDocPath());
+            return Response.ok(file).build();
+        }
+        else return Response.serverError().build();
+    }
+    @GET
+    @Path("getfb2/{id}")
+    @Produces("*/*")
+    public Response getfb2(@CookieParam("user")String email,@PathParam("id") String id){
+        User user= DaoFactory.getDaoUserInstance().selectByEmail(email);
+        Book book= DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(id));
+        if(user == null || book ==null) return Response.serverError().build();
+        if(CheckUser.isAdmin(user) || DaoFactory.getDaoPurchasedBookInstance().selectByUser(user).contains(book)){
+            File file = new File(FILE_BOOK_PATH+DaoFactory.getDaoBookInstance().selectById(Integer.parseInt(id)).getFb2Path());
+            return Response.ok(file).build();
+        }
+        else return Response.serverError().build();
+    }
 }

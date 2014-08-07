@@ -3,6 +3,7 @@ package rest;
 import dao.DaoBook;
 import entities.Book;
 import entities.User;
+import jsonClasses.BookJson;
 import jsonClasses.UserJson;
 import util.DaoFactory;
 import util.Logger;
@@ -130,18 +131,17 @@ public class UserRest {
     @GET
     @Path("recomendation-books")
     @Produces("application/json")
-    public ArrayList<Book> getRecomendation() {
+    public ArrayList<BookJson> getRecomendation() {
         int count = 5;
-
-        ArrayList<Book> userRecomendations = new ArrayList<>(count);
+        ArrayList<BookJson> userRecomendations = new ArrayList<>(count);
 
         DaoBook dao = DaoFactory.getDaoBookInstance();
-        userRecomendations.add(dao.getMostExpensiveBook());
-        userRecomendations.add(dao.getMostPopularBook());
-        userRecomendations.add(dao.getLastAddedBook());
-        userRecomendations.addAll(
-                        DaoFactory.getDaoBookInstance().gerRandomBooks(count - userRecomendations.size()));
-
+        ArrayList<Book> temp=new ArrayList<>();
+        temp.addAll(dao.gerRandomBooks(5));
+        for(Book book:temp){
+            userRecomendations.add(new BookJson(book));
+        }
         return userRecomendations;
     }
 }
+

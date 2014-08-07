@@ -442,7 +442,8 @@ public class DaoBook implements DaoBookInterface {
     public Book getLastAddedBook() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query query = session.createQuery("from Book order by datePub desc ");
-        Book result = (Book) query.setMaxResults(1).list().get(0);
+        query.setMaxResults(1);
+        Book result = (Book) query.list().get(0);
         session.close();
         return result;
     }

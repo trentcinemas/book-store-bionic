@@ -1,52 +1,65 @@
 /**
  * Created by Джон on 03.08.2014.
  */
-function fillPurchasedBook(data){
+function fillPurchasedBook(data) {
     $(".bought_label").html("Придбані")
-    for(var i=0;i<data.length;i++){
-        $("#bought").append("<div class='col-xs-6 col-sm-4 col-md-2'>"+
-            "<div class='small-thubnail'>"+
-            "<a href='/rest/book/getPage/"+data[i].book_id+"'>"+
-            "<img src='/rest/file/getimage/"+data[i].sm_cover+"' alt='100%x180' style='height: 203px; width: 142px; display: block;'>"+
-            "</a>"+
-            "</div>"+
-            "<div class='b-title'>"+
-            "<a href='#'>"+
-            "<span class='title'>"+data[i].book_title+"</span>"+
-            "</a>"+
-            "</div>"+
-            "<div class='b-author'>"+
-            "<a href='#'><span class='author'>"+data[i].book_author+"</span></a>"+
-            "</div>"+
-            "<span class='price'>"+data[i].price+" грн</span><br>"+
-            "<span class='date_of_buy'>Придбано:"+data[i].date+"<span></span>"+
-            "</span>"+
-            "<div class='btn-group'>"+
-            "<p><a class='btn dropdown-toggle btn-warning download' data-toggle='dropdown' href='single-page.html?id='"+data[i].id+"'>Скачать"+
-            "<span class='glyphicon glyphicon-download-alt'></span>"+
-            "</a></p>"+
-            "</div>"+
-            "</div>");
+    for (var i = 0; i < data.length; i++) {
+        $("#bought").append("<div class='col-xs-6 col-sm-4 col-md-2'>" +
+            "<div class='small-thubnail'>" +
+            "<a href='/rest/book/getPage/" + data[i].book_id + "'>" +
+            "<img src='/rest/file/getsmallimage/" + data[i].book_id + "' alt='100%x180' style='height: 203px; width: 142px; display: block;'>" +
+            "</a>" +
+            "</div>" +
+            "<div class='b-title'>" +
+            "<a href='#'>" +
+            "<span class='title'>" + data[i].book_title + "</span>" +
+            "</a>" +
+            "</div>" +
+            "<div class='b-author'>" +
+            "<a href='#'><span class='author'>" + data[i].book_author + "</span></a>" +
+            "</div>" +
+            "<span class='price'>" + data[i].price + " грн</span><br>" +
+            "<span class='date_of_buy'>Придбано:" + data[i].date + "<span></span>" +
+            "</span>" +
+            "<div class='btn-group'>" +
+            "<a class='btn dropdown-toggle btn-info prevue' data-toggle='dropdown' href='#'>Переглянути" +
+            "<span class='glyphicon glyphicon-search'></span>" +
+            "</a>" +
+            "</div>" +
+            "<div class='btn-group'>" +
+            "<button type='button' class='btn dropdown-toggle btn-warning download' data-toggle='dropdown'>Скачать" +
+            "<span class='glyphicon glyphicon-download-alt'></span>" +
+            "</button>" +
+            "<ul class='dropdown-menu' role='menu'>"+
+                "<li><a href='rest/file/getpdf/"+data[i].book_id+"'>pdf</a></li>"+
+                "<li><a href='rest/file/getfb2/"+data[i].book_id+"'>fb2</a></li>"+
+                "<li><a href='rest/file/getdoc/"+data[i].book_id+"'>doc</a></li>"+
+            "</ul>" +
+        "</div>" +
+            "</div>" +
+        "</div>"
+    )
+        ;
     }
 }
-function fillRecommendsTable(data){
+function fillRecommendsTable(data) {
     $(".recommend_label").html("Рекомендовані")
-    for(var i=0;i<data.length;i++){
-        $("#recommend").append("<div class='col-xs-6 col-sm-4 col-md-2'>"+
-            "<div class='small-thubnail'>"+
-            "<a href='/rest/book/getPage/"+data[i].id+"'>"+
-            "<img src='/rest/file/getimage/"+data[i].sm_cover+"' alt='100%x180' style='height: 203px; width: 142px; display: block;'>"+
-            "</a>"+
-            "</div>"+
-            "<div class='b-title'>"+
-            "<a href='#'>"+
-            "<span class='title'>"+data[i].title+"</span>"+
-            "</a>"+
-            "</div>"+
-            "<div class='b-author'>"+
-            "<a href='#'><span class='author'>"+data[i].athor+"</span></a>"+
-            "</div>"+
-            "<span class='price'>"+data[i].price+" грн</span><br>"+
+    for (var i = 0; i < data.length; i++) {
+        $("#recommend").append("<div class='col-xs-6 col-sm-4 col-md-2'>" +
+            "<div class='small-thubnail'>" +
+            "<a href='/rest/book/getPage/" + data[i].id + "'>" +
+            "<img src='/rest/file/getsmallimage/" + data[i].id + "' alt='100%x180' style='height: 203px; width: 142px; display: block;'>" +
+            "</a>" +
+            "</div>" +
+            "<div class='b-title'>" +
+            "<a href='#'>" +
+            "<span class='title'>" + data[i].title + "</span>" +
+            "</a>" +
+            "</div>" +
+            "<div class='b-author'>" +
+            "<a href='#'><span class='author'>" + data[i].author + "</span></a>" +
+            "</div>" +
+            "<span class='price'>" + data[i].price + " грн</span><br>" +
 //            "<div class='btn-group'>"+
 //            "<p><a class='btn dropdown-toggle btn-warning download' data-toggle='dropdown' href='single-page.html?id='"+data[i].id+"'>Купить"+
 //            "<span class='glyphicon glyphicon-download-alt'></span>"+
@@ -55,37 +68,37 @@ function fillRecommendsTable(data){
             "</div>");
     }
 }
-$(document).ready(function(){
+$(document).ready(function () {
     // set action on login form
     addAuthorization();
     formReplyActionSet();
     addAjaxLoader();
     $.ajax({
-        type:"get",
-        url:"rest/user/get",
-        dataType:"json",
-        success:function(data){
+        type: "get",
+        url: "rest/user/get",
+        dataType: "json",
+        success: function (data) {
             $(".userName").html(data.name);
             $(".userMail").html(data.email);
             $.ajax({
-               type:"get",
-               url:"rest/book/getUserBooks",
-               success:function(data){
-                fillPurchasedBook(data);
-               }
+                type: "get",
+                url: "rest/book/getUserBooks",
+                success: function (data) {
+                    fillPurchasedBook(data);
+                }
             });
             $.ajax({
-                type:"get",
-                url:"rest/user/recomendation-books",
-                success:function(data){
+                type: "get",
+                url: "rest/user/recomendation-books",
+                success: function (data) {
                     fillRecommendsTable(data);
                 }
             });
         },
-        error:function(data){
+        error: function (data) {
 
         }
-    }) ;
+    });
 });
 
 
