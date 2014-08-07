@@ -9,7 +9,7 @@
 
 /* Filter genre */
 #filterGenre { padding-top: 50px; }
-#filterGenre ul li { color: black;}
+#filterGenre ul a:hover { color: white;}
 #btnHide .btn {background: #f27853;}
 #btnHide .btn:first-child {background: #f27853; padding: 6px 43px; } 
 #btnHide ul {background: #2F3438;border-radius: 10px;padding: 40px 15px 40px 30px;box-shadow: inset 0px 0px 15px whitesmoke}
