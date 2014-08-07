@@ -145,7 +145,7 @@ function fillBookContent(data, clas) {
                 crossDomain: true,
                 data: {'email': email, 'receiver': receiver, 'text': text},
                 success: function () {
-                    location.href = '/thnksforfeedback.html';
+                    location.href = '/thnksforfeedback.html'
                 }
             });
             return false;

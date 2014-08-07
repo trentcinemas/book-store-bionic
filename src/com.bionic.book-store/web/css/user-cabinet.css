@@ -1,6 +1,8 @@
 /* Global Layout - User Cabinet */  
 .download {margin-top: 5px;} 
-.download span { top: 2px; left: 5px;}
+.download  span { top: 2px; left: 5px;}
+.prevue span { top: 3px; left: 4px;}
+.col-xs-6 { text-align:center; }
 
 /* USER CABINET */
 #userCabinet {background: url(../images/new1.png)repeat;}
@@ -9,6 +11,10 @@
 #userCabinet img {margin: auto; margin-top: 10px;}
 #userCabinet h2 {font: 42px sans-serif; padding-left: 10%;}
 #userCabinet .btn-group {display: block;}
+#userCabinet .btn-group>.btn, .btn-group-vertical>.btn {float: none;}
+#userCabinet ul li a  {text-align: center;}
+#userCabinet .prevue  {margin-top: 10px}
+#userCabinet ul {   background: #ec971f; border-radius: 10px;border: 1px solid black; box-shadow: inset 0px 0px 15px white;}
 
 /* USER PROFILE */
 #userProfile > .btn-group {float: right; }
@@ -28,7 +34,6 @@
 .tableRow {display:table-row;}
 .cell {display: table-cell; width: 100px;}
 #UserPasswordChange {float: right; padding-right: 10px; margin-top: 15px }
-
 
 
 /* media queries */

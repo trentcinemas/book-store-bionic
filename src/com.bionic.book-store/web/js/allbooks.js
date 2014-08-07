@@ -3,7 +3,6 @@
  */
 
 function bookContent(data){
-    addAjaxLoader();
     for(var i=0;i<data.length;i++) {
         var singleBook = document.createElement("div");
         singleBook.className = "col-xs-6 col-sm-6 col-md-3 book";
@@ -32,7 +31,7 @@ function genreContent(data){
     }
 }
 $(document).ready(function () {
-
+    addAjaxLoader();
     var path=window.location.search;
     if(path=="") {
         $.ajax({
@@ -78,8 +77,7 @@ $(document).ready(function () {
 
 function addAjaxLoader() {
     // Setup the ajax indicator
-    $('#ajax_loading_div1').append('<div class="ajaxBusy"><img src="/images/ajax-loader_circle.gif"></div>');
-    $('#ajax_loading_div2').append('<div class="ajaxBusy"><img src="/images/ajax-loader_circle.gif"></div>');
+    $('#ajax_loading_div').append('<div class="ajaxBusy"><img src="/images/ajax-loader_circle.gif"></div>');
 
     $('.ajaxBusy').css({
         display: "none",
