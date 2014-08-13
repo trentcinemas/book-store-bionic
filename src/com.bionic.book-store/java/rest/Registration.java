@@ -51,7 +51,7 @@ public class Registration {
 
         user.setName(name);
         user.setEmail(email);
-        user.setPassword(DigestUtils.md5Hex(password));
+        user.setPassword(DigestUtils.sha1Hex(password));
         user.setUserGroupByGroupId(DaoFactory.getDaoUserGroupInstance().getGroupByType("Користувач"));
 
         Logger.log(PROCESS, "Registered : " + email);

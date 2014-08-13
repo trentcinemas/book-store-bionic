@@ -30,7 +30,7 @@ public class Session {
 
         User user = dao.selectByEmail(email);
 
-        String hexedPassword = DigestUtils.md5Hex(password);
+        String hexedPassword = DigestUtils.sha1Hex(password);
 
         // User not exist
         if (user == null) {
