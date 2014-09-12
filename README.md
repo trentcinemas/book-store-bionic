@@ -3,4 +3,4 @@ Book Store
 
 Bionic Tech Summer School project "Book Store" 
 <br>
-J-4
+**http://book-bionicschool.rhcloud.com/**
